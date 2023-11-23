@@ -1,0 +1,44 @@
+New young landlords They need software to efficiently handle their real estate; need refined way to communicate with tenants. Ability to track and know about maintenance requests. Need to manage all employs working under them.  Paperless. 
+Developing for an individual landlord or 
+•	Stop the need to rely on agents to manage their property.
+•	Reducing operational cost and improve their profits.
+•	Ability to do every step digitally, tax automation, generating legal documents.
+•	Storing information securely
+•	One platform to manage their security surveillance.
+•	To manage staff working under him.
+•	Ability for tenants to raise maintenance requests and track them.
+•	To collect rent and bills. Generate receipts.
+•	Issue checks for people working under him.
+•	Remind landlord about different inspections and etc that is needed to be done. Gas inspection. Fire safety certifications. 
+•	Let landlord know when certifications end when bills on property is due. 
+
+-	To stop the need for Landlords to manage their apartments.
+-	Remove the need to deal with paper documents.(Data management)
+-	Digitalisation of the process.
+-	Automation of rent collection.
+-	Improve communication with tenants.
+-	Give the landlord the ability to see the entire portfolio.
+-	Manage staff working. (See when they clocked In and out, issue pay check, store their details )
+-	To view surveillance camera
+
+
+Scope
+The scope of a software project refers to the specific activities, deliverables, and timelines that the project will deliver. It defines what the project is expected to achieve and what it will not do. Here are some elements that are typically included in the scope of a software project:
+
+Project Objectives: The main goals or outcomes that the project aims to achieve.
+
+Deliverables: The tangible items that the project will deliver. These could be software products, documentation, training materials, etc.
+
+Milestones: The key dates by which major parts of the project are to be completed.
+
+Tasks: The specific activities that need to be performed to deliver the project.
+
+Resources: The personnel, equipment, and materials needed to carry out the project tasks.
+
+Budget: The financial resources allocated to the project.
+
+Boundaries: The limits of the project, including what is not included in the project.
+
+Risks: Potential issues that could impact the project’s success and plans for mitigating them.
+
+Defining the scope of a software project is a critical step in project management. It helps to set expectations, manage resources, and measure project success. It’s important to note that project scope can change over time due to various factors, so it should be regularly reviewed and updated as necessary.
