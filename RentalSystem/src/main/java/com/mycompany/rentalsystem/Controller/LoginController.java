@@ -10,11 +10,13 @@ import com.mycompany.rentalsystem.Model.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author HP
+ * @author Richard
  */
-public class LoginController implements ActionListener{
+public class LoginController{
     LoginView loginView;
     LoginModel loginModel;
     
@@ -23,25 +25,35 @@ public class LoginController implements ActionListener{
         this.loginView = loginView;
         this.loginModel = loginModel;
         
-        this.loginView.addLoginListener(new LoginListener());
+        loginView.addLoginButtonListener(new LoginListener());
     }
     
-    class LoginListener impplements ActionListener{
-        @override
-        public void actionPerformed(ActionEvent e){
-            String username, password;
+    class LoginListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent event){
+            String username, password, usermode;
             
             try{
                 username = loginView.getUsername();
                 password = loginView.getPassword();
+                usermode = loginView.getUsermode();
                 
-                boolean validation = loginModel.validate(username, password);
-                
-                if (validation){
-                    loginView.dispose();
+                // checking for usertype input
+                if (usermode.equals("Please Select")){
+                    JOptionPane.showMessageDialog(loginView, "Please select a user type!", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
                 
-                
+                //does validation and moves to dashboard
+                if (loginModel.validate(username, password, usermode)){
+                    //loginView.dispose();
+                    System.out.println("logged in");
+                    //call for dashboard
+                } else {
+                    JOptionPane.showMessageDialog(loginView, "Wrong credentials", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } 
+            catch (Exception exception){
+                System.out.println(exception);
             }
         }
             
@@ -50,9 +62,5 @@ public class LoginController implements ActionListener{
 
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    
 }
