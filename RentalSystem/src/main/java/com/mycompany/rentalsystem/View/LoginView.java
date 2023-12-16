@@ -6,6 +6,7 @@ package com.mycompany.rentalsystem.View;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 /**
  *
@@ -38,6 +39,10 @@ public class LoginView extends JFrame {
     
     public void addLoginButtonListener(ActionListener loginButtonListener){
         loginButton.addActionListener(loginButtonListener);
+    }
+
+    public void addforgotPasswordListener(MouseListener forgotPasswordListener){
+        forgotPasswordLabel.addMouseListener(forgotPasswordListener);
     }
     
     

@@ -7,8 +7,11 @@ package com.mycompany.rentalsystem.Controller;
 import com.mycompany.rentalsystem.View.*;
 import com.mycompany.rentalsystem.Model.*;
 
+import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JOptionPane;
 
@@ -26,6 +29,7 @@ public class LoginController{
         this.loginModel = loginModel;
         
         loginView.addLoginButtonListener(new LoginListener());
+        loginView.addforgotPasswordListener(new ForgotPasswordListener());
     }
     
     class LoginListener implements ActionListener{
@@ -57,6 +61,54 @@ public class LoginController{
             }
         }
             
+    }
+
+    class ForgotPasswordListener implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            String userMode;
+            try {
+                userMode = loginView.getUsermode();
+                
+                switch (userMode) {
+                    case "Please Select":
+                        JOptionPane.showMessageDialog(loginView, "Please select a user type!", "Warning", JOptionPane.WARNING_MESSAGE);
+                        break;
+                    case "Tenant":
+                        JOptionPane.showMessageDialog(loginView, "Contact Landlord!", "Reset", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+        
+                    case "Landlord":
+                        JOptionPane.showMessageDialog(loginView, "Contact Admin!", "Reset", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+        
+                    case "Admin":
+                        String pin = JOptionPane.showInputDialog("Enter your secert key:");
+                        loginModel.resetPassword(pin);
+                        break;
+                }
+            } catch (Exception exe) {
+                System.out.println(exe);
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
     }
     
 

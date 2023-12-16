@@ -103,4 +103,11 @@ public class LoginModel {
             return false;
         }
     }
+
+    public void resetPassword(String pin) {
+        if (pin.equals("123456798")){
+           System.out.println("reset password allowed");
+        }
+    }
 }
+
