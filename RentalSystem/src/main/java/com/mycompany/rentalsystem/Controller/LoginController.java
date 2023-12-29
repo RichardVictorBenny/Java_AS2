@@ -19,70 +19,80 @@ import javax.swing.JOptionPane;
  *
  * @author Richard
  */
-public class LoginController{
+public class LoginController {
     LoginView loginView;
     LoginModel loginModel;
-    
-    
+
     public LoginController(LoginView loginView, LoginModel loginModel) {
         this.loginView = loginView;
         this.loginModel = loginModel;
-        
+
         loginView.addLoginButtonListener(new LoginListener());
         loginView.addforgotPasswordListener(new ForgotPasswordListener());
+        
     }
-    
-    class LoginListener implements ActionListener{
+
+    class LoginListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent event){
+        public void actionPerformed(ActionEvent event) {
             String username, password, usermode;
-            
-            try{
+
+            try {
                 username = loginView.getUsername();
                 password = loginView.getPassword();
                 usermode = loginView.getUsermode();
-                
+
                 // checking for usertype input
-                if (usermode.equals("Please Select")){
-                    JOptionPane.showMessageDialog(loginView, "Please select a user type!", "Warning", JOptionPane.WARNING_MESSAGE);
+                if (usermode.equals("Please Select")) {
+                    JOptionPane.showMessageDialog(loginView, "Please select a user type!", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
                 }
-                
-                //does validation and moves to dashboard
-                if (loginModel.validate(username, password, usermode)){
-                    //loginView.dispose();
-                    System.out.println("logged in");
-                    //call for dashboard
+
+                // does validation and moves to dashboard
+
+                if (loginModel.validate(username, password, usermode)) {
+                    loginView.dispose();
+                    TenantView view = new TenantView();
+                    TenantModel model = new TenantModel();
+                    TenantController controller = new TenantController(view, model);
+
+                    java.awt.EventQueue.invokeLater(() -> {
+                        view.setVisible(true);
+                    });
+                    // call for dashboard
                 } else {
                     JOptionPane.showMessageDialog(loginView, "Wrong credentials", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } 
-            catch (Exception exception){
+            } catch (Exception exception) {
                 System.out.println(exception);
             }
         }
-            
+
     }
 
-    class ForgotPasswordListener implements MouseListener{
+    class ForgotPasswordListener implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
             String userMode;
             try {
                 userMode = loginView.getUsermode();
-                
+
                 switch (userMode) {
                     case "Please Select":
-                        JOptionPane.showMessageDialog(loginView, "Please select a user type!", "Warning", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(loginView, "Please select a user type!", "Warning",
+                                JOptionPane.WARNING_MESSAGE);
                         break;
                     case "Tenant":
-                        JOptionPane.showMessageDialog(loginView, "Contact Landlord!", "Reset", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(loginView, "Contact Landlord!", "Reset",
+                                JOptionPane.INFORMATION_MESSAGE);
                         break;
-        
+
                     case "Landlord":
-                        JOptionPane.showMessageDialog(loginView, "Contact Admin!", "Reset", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(loginView, "Contact Admin!", "Reset",
+                                JOptionPane.INFORMATION_MESSAGE);
                         break;
-        
+
                     case "Admin":
                         String pin = JOptionPane.showInputDialog("Enter your secert key:");
                         loginModel.resetPassword(pin);
@@ -108,11 +118,7 @@ public class LoginController{
         @Override
         public void mouseExited(MouseEvent e) {
         }
-        
+
     }
-    
 
-
-
-    
 }

@@ -15,25 +15,19 @@ import java.util.ArrayList;
 import com.mycompany.rentalsystem.funcitons.*;
 
 /**
- *
+ * Does the necessary calculations and validates the user and password.
  * @author Richard
  *         refernce https://www.baeldung.com/sha-256-hashing-java
  *         https://www.tutorialspoint.com/java_cryptography/java_cryptography_message_digest.htm
  */
 public class LoginModel {
-    // should have login verification.
-    // variables to hold values.
-
-    // hash the given password and validate the user.
-
-    //
 
     public boolean validate(String username, String password, String userMode) {
         String hashPassword, fileUsername, filename;
         String filePassword = "";
         ArrayList<String> credentials = new ArrayList<>();
 
-        // determining the user type.
+        // determining the file needed for validations as per the user type.
         switch (userMode) {
             case "Tenant":
                 filename = "src/main/java/com/mycompany/rentalsystem/files/TenatLogin.bin";
