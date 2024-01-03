@@ -4,7 +4,20 @@
  */
 package com.mycompany.rentalsystem.View;
 
-import javax.swing.JFrame;
+
+import com.mycompany.rentalsystem.Controller.LandlordController;
+import com.mycompany.rentalsystem.Model.House;
+import com.mycompany.rentalsystem.Model.Landlord;
+import com.mycompany.rentalsystem.Model.Tenant;
+
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,6 +32,61 @@ public class LandlordView extends javax.swing.JFrame {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Dashboard");
+    }
+
+    public void addDashboardButtonListener(ActionListener menubarListener){
+        dashboardButton.addActionListener(menubarListener);
+    }
+
+    public void addHousesButtonListener(ActionListener menubarListener){
+        housesButton.addActionListener(menubarListener);
+    }
+
+    public void addTenantsButtonListener(ActionListener menubarListener){
+        tenantsButton.addActionListener(menubarListener);
+    }
+    public void addMaintenanceButtonListener(ActionListener menubarListener){
+        maintenanceButton.addActionListener(menubarListener);
+    }
+    public void addPaymentButtonListener(ActionListener menubarListener){
+        paymentButton.addActionListener(menubarListener);
+    }
+    public void addOtherButtonListener(ActionListener menubarListener){
+        otherButton.addActionListener(menubarListener);
+    }
+    public void addSignoutButtonListener(ActionListener menubarListener){
+        signoutButton.addActionListener(menubarListener);
+    }
+    
+    public void houseAddButtonListener(ActionListener houseListener){
+        houseAddButton.addActionListener(houseListener);
+    }
+    
+    public void houseClearFormButtonListener(ActionListener houseListener){
+        houseClearFormButton.addActionListener(houseListener);
+    }
+    
+    public void houseUpdateButtonListener(ActionListener houseListener){
+        houseUpdateButton.addActionListener(houseListener);
+    }
+    public void houseDeleteButtonListener(ActionListener houseListener){
+        houseDeleteButton.addActionListener(houseListener);
+    }
+
+    public void tenantAddButtonListener(ActionListener tenantListener){
+        tenantAddButton.addActionListener(tenantListener);
+    }
+
+    public void tenantClearFormButtonListener(ActionListener tenantListener){
+        tenantClearFormButton.addActionListener(tenantListener);
+    }
+
+    public void tenantDeleteButtonListener(ActionListener tenantListener){
+        tenantClearFormButton.addActionListener(tenantListener);
+    }
+
+    public void tenantUpdateButtonListener(ActionListener tenantListener){
+        tenantUpdateButton.addActionListener(tenantListener);
     }
 
     /**
@@ -128,30 +196,13 @@ public class LandlordView extends javax.swing.JFrame {
         tenantAddButton = new javax.swing.JButton();
         tenantUpdateButton = new javax.swing.JButton();
         tenantDeleteButton = new javax.swing.JButton();
+        tenantHouseIdDisplayLabel = new javax.swing.JLabel();
+        tenantHouseIdValueLabel = new javax.swing.JLabel();
         tenantListPanel = new javax.swing.JPanel();
         tenantSearchTextField = new javax.swing.JTextField();
         tenantListScrollPane = new javax.swing.JScrollPane();
         tenantListTable = new javax.swing.JTable();
         houseSearchButton1 = new javax.swing.JButton();
-        maintenancePanel = new javax.swing.JPanel();
-        maintenanceRequestPanel = new javax.swing.JPanel();
-        maintenanceRequestSearchTextField = new javax.swing.JTextField();
-        maintenanceRequestSearchButton = new javax.swing.JButton();
-        maintenanceRequestListScrollPane = new javax.swing.JScrollPane();
-        maintenanceRequestListTable = new javax.swing.JTable();
-        maintenanceDetailsPanel = new javax.swing.JPanel();
-        maintenanceDescriptionLabel = new javax.swing.JLabel();
-        maintenanceRequestieDisplayLabel = new javax.swing.JLabel();
-        maintenanceHouseDisplayLabel = new javax.swing.JLabel();
-        maintenanceRequestScrollPane = new javax.swing.JScrollPane();
-        maintenanceDescriptionTextArea = new javax.swing.JTextArea();
-        maintenanceRequestieTextField = new javax.swing.JTextField();
-        maintenanceHouseTextField = new javax.swing.JTextField();
-        maintenanceStatusComboBox = new javax.swing.JComboBox<>();
-        maintenanceStatusDisplayLabel = new javax.swing.JLabel();
-        maintenanceRequestieDetailsButton = new javax.swing.JButton();
-        maintenanceHouseDetailsButton = new javax.swing.JButton();
-        maintenanceStatusUpdateButton = new javax.swing.JButton();
         paymentsPanel = new javax.swing.JPanel();
         paymentUpcomingPanel = new javax.swing.JPanel();
         paymentUpcomingDisplayLabel = new javax.swing.JLabel();
@@ -186,7 +237,6 @@ public class LandlordView extends javax.swing.JFrame {
         paymentTenantDueDateDisplayLabel = new javax.swing.JLabel();
         paymentTenantHouseDisplayLabel = new javax.swing.JLabel();
         paymentTenantNameDisplayLabel = new javax.swing.JLabel();
-        paymentTenantStatusDisplayLabel = new javax.swing.JLabel();
         paymentTenantDescriptionDisplayLabel = new javax.swing.JLabel();
         paymentTenantIdTextField = new javax.swing.JTextField();
         paymentTenantAmountTextField = new javax.swing.JTextField();
@@ -194,11 +244,39 @@ public class LandlordView extends javax.swing.JFrame {
         paymentTenantHouseTextField = new javax.swing.JTextField();
         paymentTenantDescriptionScrollPane = new javax.swing.JScrollPane();
         paymentTenantDescriptionTextArea = new javax.swing.JTextArea();
-        paymentTenantStatusComboBox = new javax.swing.JComboBox<>();
         paymentTenantTeantDetailsButton = new javax.swing.JButton();
-        paymentTenantUpdateDetailsButton = new javax.swing.JButton();
         paymentTenantHouseDetailsButton = new javax.swing.JButton();
         paymentTenantDueDateChooser = new com.toedter.calendar.JDateChooser();
+        errorPanel = new javax.swing.JPanel();
+        errorNewDisplayLabel = new javax.swing.JLabel();
+        errorDetailsPanel = new javax.swing.JPanel();
+        errorDetailsDisplayLabel = new javax.swing.JLabel();
+        errorDetailsLogidDisplayLabel = new javax.swing.JLabel();
+        errorDetialsDateDisplayLabel = new javax.swing.JLabel();
+        errorDescriptionDisplayLabel = new javax.swing.JLabel();
+        errorDetailsLogidTextField = new javax.swing.JTextField();
+        errorDetialsDateTextField = new javax.swing.JTextField();
+        errorDescriptionScrollPane = new javax.swing.JScrollPane();
+        errorDescriptionTextArea = new javax.swing.JTextArea();
+        errorTenantDisplayLabel = new javax.swing.JLabel();
+        errorTenantTextField = new javax.swing.JTextField();
+        errorTenantInfoButton = new javax.swing.JButton();
+        errorUpdateStatusButton = new javax.swing.JButton();
+        errorDetialsStatusDisplayLabel = new javax.swing.JLabel();
+        errorDetailsStatusComboBox = new javax.swing.JComboBox<>();
+        errorDetailsHouseDiplayLabel = new javax.swing.JLabel();
+        errorDetailsHouseidTextField = new javax.swing.JTextField();
+        errorDetailsHouseInfoButton = new javax.swing.JButton();
+        errorReviewListScrollPane = new javax.swing.JScrollPane();
+        errorReviewListTable = new javax.swing.JTable();
+        errorReviewDisplayLabel = new javax.swing.JLabel();
+        errorNewListScrollPane = new javax.swing.JScrollPane();
+        errorNewListTable = new javax.swing.JTable();
+        previousErrorListScrollPane = new javax.swing.JScrollPane();
+        previousErrorListTable = new javax.swing.JTable();
+        previousErrorDisplayLabel = new javax.swing.JLabel();
+        previousErrorSearchTextField = new javax.swing.JTextField();
+        previousErrorSearchButton = new javax.swing.JButton();
         othersLayeredPane = new javax.swing.JLayeredPane();
         othersHomePanel = new javax.swing.JPanel();
         othersGreetingPanel = new javax.swing.JPanel();
@@ -211,48 +289,34 @@ public class LandlordView extends javax.swing.JFrame {
         othersLogTenantPanel = new javax.swing.JPanel();
         othersLogTenantDisplayLabel = new javax.swing.JLabel();
         othersLogTenantViewButton = new javax.swing.JButton();
-        othersLogToAdminPanel = new javax.swing.JPanel();
-        othersLogToAdminDisplayLabel = new javax.swing.JLabel();
-        othersLogToAdminNewButton = new javax.swing.JButton();
+        othersLogTenantPanel1 = new javax.swing.JPanel();
+        othersLogTenantDisplayLabel1 = new javax.swing.JLabel();
+        othersScheduleInspectionButton = new javax.swing.JButton();
+        othersLogTenantPanel2 = new javax.swing.JPanel();
+        othersLogTenantDisplayLabel2 = new javax.swing.JLabel();
+        othersTenantResetPasswordButton = new javax.swing.JButton();
         othersViewContractPanel = new javax.swing.JPanel();
         othersIssueContractPanel = new javax.swing.JPanel();
-        otherViewTenantLogPanel = new javax.swing.JPanel();
-        othersViewTenantListScrollPane = new javax.swing.JScrollPane();
-        othersViewTenantListTable = new javax.swing.JTable();
-        otherViewTenantLogDisplayLabel = new javax.swing.JLabel();
-        othersViewTenantLogDetailsPanel = new javax.swing.JPanel();
-        othersViewTenantLogDetailsDisplayLabel = new javax.swing.JLabel();
-        othersViewTenantLogIdDisplayLabel = new javax.swing.JLabel();
-        othersViewTenantLogDateDisplayLabel = new javax.swing.JLabel();
-        othersViewTenantLogHouseDisplayLabel = new javax.swing.JLabel();
-        othersViewTenantLogDescriptionDisplayLabel = new javax.swing.JLabel();
-        othersViewTenantLogIdTextField = new javax.swing.JTextField();
-        othersViewTenantLogDateTextField = new javax.swing.JTextField();
-        othersViewTenantLogHouseTextField = new javax.swing.JTextField();
-        othersViewTenantLogDescriptionScrollPane = new javax.swing.JScrollPane();
-        othersViewTenantLogDescriptionTextArea = new javax.swing.JTextArea();
-        othersViewTenantLogNameDisplayLabel = new javax.swing.JLabel();
-        othersViewTenantLogNameTextField = new javax.swing.JTextField();
-        othersViewTenantLogHouseInfoButton = new javax.swing.JButton();
-        othersViewTenantLogTenantInfoButton = new javax.swing.JButton();
-        othersViewTenantLogUpdateStatusButton = new javax.swing.JButton();
-        othersViewTenantLogForwardButton = new javax.swing.JButton();
-        othersIssueLandlordLogPanel = new javax.swing.JPanel();
-        othersIssueLandlordLogDisplayLabel = new javax.swing.JLabel();
-        othersIssueLandlordListScrollPane = new javax.swing.JScrollPane();
-        othersIssueLandlordListTable = new javax.swing.JTable();
-        othersIssueLandlordLogDetailsPanel = new javax.swing.JPanel();
-        othersIssueLandlordLogDetailsDisplayLabel = new javax.swing.JLabel();
-        othersIssueLandlordLogIdDisplayLabel = new javax.swing.JLabel();
-        othersIssueLandlordLogDateDisplayLabel = new javax.swing.JLabel();
-        othersViewTenantLogDescriptionDisplayLabel1 = new javax.swing.JLabel();
-        othersIssueLandlordLogIdTextField = new javax.swing.JTextField();
-        othersIssueLandlordLogDescriptionScrollPane = new javax.swing.JScrollPane();
-        othersIssueLandlordLogDescriptionTextArea = new javax.swing.JTextArea();
-        othersIssueLandlordLogStatusDisplayLabel = new javax.swing.JLabel();
-        othersIssueLandlordLogSubmitButton = new javax.swing.JButton();
-        othersIssueLandlordLogDateChooser = new com.toedter.calendar.JDateChooser();
-        othersIssueLandlordLogStatusComboBox = new javax.swing.JComboBox<>();
+        othersMaintenancePanel = new javax.swing.JPanel();
+        otherMaintenanceRequestPanel = new javax.swing.JPanel();
+        maintenanceRequestSearchTextField = new javax.swing.JTextField();
+        maintenanceRequestSearchButton = new javax.swing.JButton();
+        maintenanceRequestListScrollPane = new javax.swing.JScrollPane();
+        previousErrorListScrollPane1 = new javax.swing.JScrollPane();
+        previousErrorListTable1 = new javax.swing.JTable();
+        otherMaintenanceDetailsPanel = new javax.swing.JPanel();
+        maintenanceDescriptionLabel = new javax.swing.JLabel();
+        maintenanceRequestieDisplayLabel = new javax.swing.JLabel();
+        maintenanceHouseDisplayLabel = new javax.swing.JLabel();
+        maintenanceRequestScrollPane = new javax.swing.JScrollPane();
+        maintenanceDescriptionTextArea = new javax.swing.JTextArea();
+        maintenanceRequestieTextField = new javax.swing.JTextField();
+        maintenanceHouseTextField = new javax.swing.JTextField();
+        maintenanceStatusComboBox = new javax.swing.JComboBox<>();
+        maintenanceStatusDisplayLabel = new javax.swing.JLabel();
+        maintenanceRequestieDetailsButton = new javax.swing.JButton();
+        maintenanceHouseDetailsButton = new javax.swing.JButton();
+        maintenanceStatusUpdateButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -376,6 +440,11 @@ public class LandlordView extends javax.swing.JFrame {
         signoutButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         signoutButton.setFocusPainted(false);
         signoutButton.setPreferredSize(new java.awt.Dimension(200, 50));
+        signoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signoutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menubarPanelLayout = new javax.swing.GroupLayout(menubarPanel);
         menubarPanel.setLayout(menubarPanelLayout);
@@ -408,7 +477,7 @@ public class LandlordView extends javax.swing.JFrame {
                 .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(otherButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
                 .addComponent(signoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
         );
@@ -422,6 +491,7 @@ public class LandlordView extends javax.swing.JFrame {
         homeScrollPanel.setFocusable(false);
 
         home.setBackground(new java.awt.Color(255, 255, 255));
+        home.setPreferredSize(new java.awt.Dimension(1345, 810));
 
         greetingPanel.setBackground(new java.awt.Color(255, 204, 204));
         greetingPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(255, 153, 153)));
@@ -933,7 +1003,7 @@ public class LandlordView extends javax.swing.JFrame {
             homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(greetingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1345, Short.MAX_VALUE)
             .addGroup(homeLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(53, Short.MAX_VALUE)
                 .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(homeHousePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(homePaymentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -943,7 +1013,7 @@ public class LandlordView extends javax.swing.JFrame {
                     .addComponent(homeCashPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addComponent(homeMaintenancePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         homeLayout.setVerticalGroup(
             homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -958,7 +1028,7 @@ public class LandlordView extends javax.swing.JFrame {
                 .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(homePaymentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addComponent(homeCashPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
-                .addContainerGap(2288, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
 
         homeScrollPanel.setViewportView(home);
@@ -1062,13 +1132,13 @@ public class LandlordView extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(houseButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, houseButtonPanelLayout.createSequentialGroup()
-                        .addComponent(houseAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(houseAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(houseClearFormButton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(houseButtonPanelLayout.createSequentialGroup()
-                        .addComponent(houseUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                        .addComponent(houseUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(houseDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)))
+                        .addComponent(houseDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(16, 16, 16))
         );
         houseButtonPanelLayout.setVerticalGroup(
@@ -1105,7 +1175,7 @@ public class LandlordView extends javax.swing.JFrame {
                     .addGroup(houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(houseButtonPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(houseRentTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         houseFormPanelLayout.setVerticalGroup(
             houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1137,13 +1207,10 @@ public class LandlordView extends javax.swing.JFrame {
 
         houseListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"999", "Detached", "sample", "NN1 1NN", "9999"},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "House Id", "Type", "Description", "Address", "Rent Price"
+                "House Id", "Type", "Address", "Rent Price"
             }
         ));
         houseListScrollPane.setViewportView(houseListTable);
@@ -1169,7 +1236,7 @@ public class LandlordView extends javax.swing.JFrame {
         houseListPanel.setLayout(houseListPanelLayout);
         houseListPanelLayout.setHorizontalGroup(
             houseListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(houseListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE)
+            .addComponent(houseListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
             .addGroup(houseListPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(houseSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1185,8 +1252,7 @@ public class LandlordView extends javax.swing.JFrame {
                     .addComponent(houseSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(houseSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addComponent(houseListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addComponent(houseListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout housesPanelLayout = new javax.swing.GroupLayout(housesPanel);
@@ -1194,7 +1260,6 @@ public class LandlordView extends javax.swing.JFrame {
         housesPanelLayout.setHorizontalGroup(
             housesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(housesPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addComponent(houseFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(houseListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1327,10 +1392,10 @@ public class LandlordView extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tenantAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tenantUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+                    .addComponent(tenantUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tenantDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(tenantDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tenantClearFormButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
@@ -1348,6 +1413,12 @@ public class LandlordView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        tenantHouseIdDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        tenantHouseIdDisplayLabel.setText("House ID");
+
+        tenantHouseIdValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        tenantHouseIdValueLabel.setText("9090");
+
         javax.swing.GroupLayout tenantFormPanelLayout = new javax.swing.GroupLayout(tenantFormPanel);
         tenantFormPanel.setLayout(tenantFormPanelLayout);
         tenantFormPanelLayout.setHorizontalGroup(
@@ -1360,19 +1431,26 @@ public class LandlordView extends javax.swing.JFrame {
                     .addComponent(lastnameDisplayLabel)
                     .addComponent(lastnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tenantFormPanelLayout.createSequentialGroup()
-                            .addComponent(dobDisplayLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(firstnameTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(genderComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 414, Short.MAX_VALUE)
+                        .addComponent(genderComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(genderDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(tenantidDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(tenantidTextField, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(phoneNumberDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(emailDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(phoneNumberTextField)
-                        .addComponent(tenantButtonPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(tenantButtonPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(tenantFormPanelLayout.createSequentialGroup()
+                            .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(tenantFormPanelLayout.createSequentialGroup()
+                                    .addComponent(dobDisplayLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tenantFormPanelLayout.createSequentialGroup()
+                                    .addComponent(tenantHouseIdDisplayLabel)
+                                    .addGap(135, 135, 135)))
+                            .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tenantHouseIdValueLabel)
+                                .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         tenantFormPanelLayout.setVerticalGroup(
@@ -1406,9 +1484,16 @@ public class LandlordView extends javax.swing.JFrame {
                 .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dobDisplayLabel)
                     .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tenantButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGap(18, 18, 18)
+                .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tenantFormPanelLayout.createSequentialGroup()
+                        .addComponent(tenantHouseIdDisplayLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(tenantButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))
+                    .addGroup(tenantFormPanelLayout.createSequentialGroup()
+                        .addComponent(tenantHouseIdValueLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         tenantSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -1420,10 +1505,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         tenantListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Tenant ID", "Gender", "First Name", "Last Name", "Email", "Phone Number", "Date of Birth"
@@ -1456,7 +1538,7 @@ public class LandlordView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(tenantListPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tenantListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
+                .addComponent(tenantListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE)
                 .addContainerGap())
         );
         tenantListPanelLayout.setVerticalGroup(
@@ -1495,169 +1577,6 @@ public class LandlordView extends javax.swing.JFrame {
         );
 
         landlordDashboard.add(tenantsPanel, "card4");
-
-        maintenanceRequestSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        maintenanceRequestSearchTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maintenanceRequestSearchTextFieldActionPerformed(evt);
-            }
-        });
-
-        maintenanceRequestSearchButton.setBackground(new java.awt.Color(248, 255, 255));
-        maintenanceRequestSearchButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        maintenanceRequestSearchButton.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\magnifying-glass.png")); // NOI18N
-        maintenanceRequestSearchButton.setBorder(null);
-
-        maintenanceRequestListTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        maintenanceRequestListScrollPane.setViewportView(maintenanceRequestListTable);
-
-        javax.swing.GroupLayout maintenanceRequestPanelLayout = new javax.swing.GroupLayout(maintenanceRequestPanel);
-        maintenanceRequestPanel.setLayout(maintenanceRequestPanelLayout);
-        maintenanceRequestPanelLayout.setHorizontalGroup(
-            maintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(maintenanceRequestPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(maintenanceRequestSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(maintenanceRequestPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1329, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        maintenanceRequestPanelLayout.setVerticalGroup(
-            maintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, maintenanceRequestPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(maintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(maintenanceRequestSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        maintenanceDescriptionLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        maintenanceDescriptionLabel.setText("Description");
-
-        maintenanceRequestieDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        maintenanceRequestieDisplayLabel.setText("Requested By");
-
-        maintenanceHouseDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        maintenanceHouseDisplayLabel.setText("House");
-
-        maintenanceDescriptionTextArea.setColumns(20);
-        maintenanceDescriptionTextArea.setRows(5);
-        maintenanceRequestScrollPane.setViewportView(maintenanceDescriptionTextArea);
-
-        maintenanceStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        maintenanceStatusDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        maintenanceStatusDisplayLabel.setText("Status");
-
-        maintenanceRequestieDetailsButton.setBackground(new java.awt.Color(248, 255, 255));
-        maintenanceRequestieDetailsButton.setText("More Details");
-        maintenanceRequestieDetailsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maintenanceRequestieDetailsButtonActionPerformed(evt);
-            }
-        });
-
-        maintenanceHouseDetailsButton.setBackground(new java.awt.Color(248, 255, 255));
-        maintenanceHouseDetailsButton.setText("More Details");
-
-        maintenanceStatusUpdateButton.setBackground(new java.awt.Color(248, 255, 255));
-        maintenanceStatusUpdateButton.setText("Update Status");
-
-        javax.swing.GroupLayout maintenanceDetailsPanelLayout = new javax.swing.GroupLayout(maintenanceDetailsPanel);
-        maintenanceDetailsPanel.setLayout(maintenanceDetailsPanelLayout);
-        maintenanceDetailsPanelLayout.setHorizontalGroup(
-            maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(maintenanceDetailsPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(maintenanceRequestScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(maintenanceDetailsPanelLayout.createSequentialGroup()
-                        .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, maintenanceDetailsPanelLayout.createSequentialGroup()
-                                .addComponent(maintenanceStatusDisplayLabel)
-                                .addGap(96, 96, 96))
-                            .addGroup(maintenanceDetailsPanelLayout.createSequentialGroup()
-                                .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(maintenanceRequestieDisplayLabel)
-                                    .addComponent(maintenanceHouseDisplayLabel))
-                                .addGap(29, 29, 29)))
-                        .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(maintenanceRequestieTextField)
-                            .addComponent(maintenanceHouseTextField)
-                            .addComponent(maintenanceStatusComboBox, 0, 304, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(maintenanceRequestieDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(maintenanceHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(maintenanceStatusUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(maintenanceDescriptionLabel))
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
-        maintenanceDetailsPanelLayout.setVerticalGroup(
-            maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(maintenanceDetailsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(maintenanceDescriptionLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(maintenanceRequestScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(maintenanceRequestieDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maintenanceRequestieTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maintenanceRequestieDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(maintenanceHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maintenanceHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maintenanceHouseDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(maintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(maintenanceStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(maintenanceStatusDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(maintenanceStatusUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout maintenancePanelLayout = new javax.swing.GroupLayout(maintenancePanel);
-        maintenancePanel.setLayout(maintenancePanelLayout);
-        maintenancePanelLayout.setHorizontalGroup(
-            maintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(maintenancePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(maintenanceRequestPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(maintenancePanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(maintenanceDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        maintenancePanelLayout.setVerticalGroup(
-            maintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(maintenancePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(maintenanceRequestPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(maintenanceDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        landlordDashboard.add(maintenancePanel, "card5");
 
         paymentUpcomingPanel.setPreferredSize(new java.awt.Dimension(834, 400));
 
@@ -1878,17 +1797,14 @@ public class LandlordView extends javax.swing.JFrame {
 
         paymentTenantListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Payment ID", "Tenant Name", "Amount", "House ID", "Date of Payment"
+                "Payment ID", "Tenant Name", "Amount", "House ID", "Date of Payment", "Type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1912,9 +1828,6 @@ public class LandlordView extends javax.swing.JFrame {
         paymentTenantNameDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
         paymentTenantNameDisplayLabel.setText("Tenant Name");
 
-        paymentTenantStatusDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
-        paymentTenantStatusDisplayLabel.setText("Status");
-
         paymentTenantDescriptionDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
         paymentTenantDescriptionDisplayLabel.setText("Description");
 
@@ -1936,9 +1849,6 @@ public class LandlordView extends javax.swing.JFrame {
         paymentTenantDescriptionTextArea.setPreferredSize(new java.awt.Dimension(250, 50));
         paymentTenantDescriptionScrollPane.setViewportView(paymentTenantDescriptionTextArea);
 
-        paymentTenantStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UnPaid", "OverDue", "Paid" }));
-        paymentTenantStatusComboBox.setPreferredSize(new java.awt.Dimension(250, 30));
-
         paymentTenantTeantDetailsButton.setBackground(new java.awt.Color(248, 255, 255));
         paymentTenantTeantDetailsButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         paymentTenantTeantDetailsButton.setText("More Details");
@@ -1946,16 +1856,6 @@ public class LandlordView extends javax.swing.JFrame {
         paymentTenantTeantDetailsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 paymentTenantTeantDetailsButtonActionPerformed(evt);
-            }
-        });
-
-        paymentTenantUpdateDetailsButton.setBackground(new java.awt.Color(248, 255, 255));
-        paymentTenantUpdateDetailsButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        paymentTenantUpdateDetailsButton.setText("Update");
-        paymentTenantUpdateDetailsButton.setPreferredSize(new java.awt.Dimension(150, 30));
-        paymentTenantUpdateDetailsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paymentTenantUpdateDetailsButtonActionPerformed(evt);
             }
         });
 
@@ -1983,7 +1883,6 @@ public class LandlordView extends javax.swing.JFrame {
                     .addComponent(paymentTenantAmountDisplayLabel)
                     .addComponent(paymentTenantDueDateDisplayLabel)
                     .addComponent(paymentTenantNameDisplayLabel)
-                    .addComponent(paymentTenantStatusDisplayLabel)
                     .addComponent(paymentTenantHouseDisplayLabel))
                 .addGap(18, 18, 18)
                 .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1998,12 +1897,8 @@ public class LandlordView extends javax.swing.JFrame {
                         .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(paymentTenantTeantDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(paymentTenantHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
-                        .addComponent(paymentTenantStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(paymentTenantUpdateDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(paymentTenantDueDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         paymentUpcomingDetailsPanel1Layout.setVerticalGroup(
             paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2030,12 +1925,7 @@ public class LandlordView extends javax.swing.JFrame {
                     .addComponent(paymentTenantHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(paymentTenantHouseDisplayLabel)
                     .addComponent(paymentTenantHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(paymentTenantStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paymentTenantUpdateDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paymentTenantStatusDisplayLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
                         .addComponent(paymentTenantDescriptionDisplayLabel)
@@ -2092,6 +1982,306 @@ public class LandlordView extends javax.swing.JFrame {
         );
 
         landlordDashboard.add(paymentsPanel, "card6");
+
+        errorNewDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        errorNewDisplayLabel.setText("New");
+
+        errorDetailsDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        errorDetailsDisplayLabel.setText("Details");
+
+        errorDetailsLogidDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        errorDetailsLogidDisplayLabel.setText("Log ID");
+
+        errorDetialsDateDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        errorDetialsDateDisplayLabel.setText("Date Issued");
+
+        errorDescriptionDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        errorDescriptionDisplayLabel.setText("Description");
+
+        errorDetailsLogidTextField.setPreferredSize(new java.awt.Dimension(200, 30));
+        errorDetailsLogidTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorDetailsLogidTextFieldActionPerformed(evt);
+            }
+        });
+
+        errorDetialsDateTextField.setPreferredSize(new java.awt.Dimension(200, 30));
+        errorDetialsDateTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorDetialsDateTextFieldActionPerformed(evt);
+            }
+        });
+
+        errorDescriptionScrollPane.setPreferredSize(new java.awt.Dimension(200, 90));
+
+        errorDescriptionTextArea.setColumns(20);
+        errorDescriptionTextArea.setRows(5);
+        errorDescriptionScrollPane.setViewportView(errorDescriptionTextArea);
+
+        errorTenantDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        errorTenantDisplayLabel.setText("Tenant");
+
+        errorTenantTextField.setPreferredSize(new java.awt.Dimension(200, 30));
+        errorTenantTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorTenantTextFieldActionPerformed(evt);
+            }
+        });
+
+        errorTenantInfoButton.setBackground(new java.awt.Color(239, 255, 255));
+        errorTenantInfoButton.setText("More Info");
+        errorTenantInfoButton.setPreferredSize(new java.awt.Dimension(150, 30));
+        errorTenantInfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorTenantInfoButtonActionPerformed(evt);
+            }
+        });
+
+        errorUpdateStatusButton.setBackground(new java.awt.Color(239, 255, 255));
+        errorUpdateStatusButton.setText("Update Status");
+        errorUpdateStatusButton.setPreferredSize(new java.awt.Dimension(150, 30));
+        errorUpdateStatusButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorUpdateStatusButtonActionPerformed(evt);
+            }
+        });
+
+        errorDetialsStatusDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        errorDetialsStatusDisplayLabel.setText("Status");
+
+        errorDetailsStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Send", "Received", "In Review", "Rectified" }));
+        errorDetailsStatusComboBox.setPreferredSize(new java.awt.Dimension(200, 30));
+
+        errorDetailsHouseDiplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        errorDetailsHouseDiplayLabel.setText("House ID");
+
+        errorDetailsHouseidTextField.setPreferredSize(new java.awt.Dimension(200, 30));
+        errorDetailsHouseidTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorDetailsHouseidTextFieldActionPerformed(evt);
+            }
+        });
+
+        errorDetailsHouseInfoButton.setBackground(new java.awt.Color(239, 255, 255));
+        errorDetailsHouseInfoButton.setText("More Info");
+        errorDetailsHouseInfoButton.setPreferredSize(new java.awt.Dimension(150, 30));
+        errorDetailsHouseInfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorDetailsHouseInfoButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout errorDetailsPanelLayout = new javax.swing.GroupLayout(errorDetailsPanel);
+        errorDetailsPanel.setLayout(errorDetailsPanelLayout);
+        errorDetailsPanelLayout.setHorizontalGroup(
+            errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(errorDetialsDateDisplayLabel)
+                            .addComponent(errorDetailsLogidDisplayLabel)
+                            .addComponent(errorTenantDisplayLabel)
+                            .addComponent(errorDetialsStatusDisplayLabel)
+                            .addComponent(errorDetailsHouseDiplayLabel)
+                            .addComponent(errorDescriptionDisplayLabel))
+                        .addGap(36, 36, 36))
+                    .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(errorDetailsDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                        .addComponent(errorDetailsStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(errorUpdateStatusButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(errorDetailsLogidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDetialsDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                        .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(errorDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorTenantTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorDetailsHouseidTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(errorDetailsHouseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorTenantInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(126, 126, Short.MAX_VALUE))
+        );
+        errorDetailsPanelLayout.setVerticalGroup(
+            errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(errorDetailsDisplayLabel)
+                .addGap(18, 18, 18)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorDetailsLogidDisplayLabel)
+                    .addComponent(errorDetailsLogidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorDetialsDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDetialsDateDisplayLabel))
+                .addGap(17, 17, 17)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorDetialsStatusDisplayLabel)
+                    .addComponent(errorUpdateStatusButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDetailsStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorTenantTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorTenantDisplayLabel)
+                    .addComponent(errorTenantInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorDetailsHouseidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDetailsHouseDiplayLabel)
+                    .addComponent(errorDetailsHouseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDescriptionDisplayLabel)))
+        );
+
+        errorReviewListTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Log ID", "Tenant Name", "Date Issued", "House ID"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        errorReviewListScrollPane.setViewportView(errorReviewListTable);
+
+        errorReviewDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        errorReviewDisplayLabel.setText("In Review");
+
+        errorNewListTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Log ID", "Tenant Name", "Date Issued", "House ID"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        errorNewListScrollPane.setViewportView(errorNewListTable);
+
+        previousErrorListTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Tenant Name", "Date Issued", "House ID"
+            }
+        ));
+        previousErrorListScrollPane.setViewportView(previousErrorListTable);
+
+        previousErrorDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        previousErrorDisplayLabel.setText("Previous");
+
+        previousErrorSearchTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        previousErrorSearchTextField.setText("Search");
+        previousErrorSearchTextField.setPreferredSize(new java.awt.Dimension(200, 40));
+
+        previousErrorSearchButton.setBackground(new java.awt.Color(248, 255, 255));
+        previousErrorSearchButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        previousErrorSearchButton.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\magnifying-glass.png")); // NOI18N
+        previousErrorSearchButton.setBorder(null);
+
+        javax.swing.GroupLayout errorPanelLayout = new javax.swing.GroupLayout(errorPanel);
+        errorPanel.setLayout(errorPanelLayout);
+        errorPanelLayout.setHorizontalGroup(
+            errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorPanelLayout.createSequentialGroup()
+                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(errorNewListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(errorPanelLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(previousErrorDisplayLabel)
+                                    .addGroup(errorPanelLayout.createSequentialGroup()
+                                        .addComponent(previousErrorSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(previousErrorSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(errorPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(previousErrorListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))))
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(errorNewDisplayLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(errorPanelLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(errorReviewListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(errorPanelLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(errorReviewDisplayLabel)))
+                        .addGap(18, 18, 18)
+                        .addComponent(errorDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(42, 42, 42))
+        );
+        errorPanelLayout.setVerticalGroup(
+            errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorNewDisplayLabel)
+                    .addComponent(previousErrorDisplayLabel))
+                .addGap(18, 18, 18)
+                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(previousErrorSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(previousErrorSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(previousErrorListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(errorNewListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(errorReviewDisplayLabel)
+                        .addGap(8, 8, 8)
+                        .addComponent(errorReviewListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(errorDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        landlordDashboard.add(errorPanel, "card3");
 
         othersLayeredPane.setLayout(new java.awt.CardLayout());
 
@@ -2180,7 +2370,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         othersLogTenantDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         othersLogTenantDisplayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        othersLogTenantDisplayLabel.setText("Logs from Tenants");
+        othersLogTenantDisplayLabel.setText("Tenant Request");
 
         othersLogTenantViewButton.setBackground(new java.awt.Color(239, 255, 255));
         othersLogTenantViewButton.setText("View All");
@@ -2215,44 +2405,85 @@ public class LandlordView extends javax.swing.JFrame {
                 .addGap(10, 10, 10))
         );
 
-        othersLogToAdminPanel.setBackground(new java.awt.Color(204, 204, 204));
-        othersLogToAdminPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        othersLogToAdminPanel.setPreferredSize(new java.awt.Dimension(250, 150));
+        othersLogTenantPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        othersLogTenantPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        othersLogTenantPanel1.setPreferredSize(new java.awt.Dimension(250, 150));
 
-        othersLogToAdminDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        othersLogToAdminDisplayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        othersLogToAdminDisplayLabel.setText("Raise errors to Admins");
+        othersLogTenantDisplayLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        othersLogTenantDisplayLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        othersLogTenantDisplayLabel1.setText("Inspection");
 
-        othersLogToAdminNewButton.setBackground(new java.awt.Color(239, 255, 255));
-        othersLogToAdminNewButton.setText("Raise Error");
-        othersLogToAdminNewButton.setBorder(null);
-        othersLogToAdminNewButton.setPreferredSize(new java.awt.Dimension(200, 40));
-        othersLogToAdminNewButton.addActionListener(new java.awt.event.ActionListener() {
+        othersScheduleInspectionButton.setBackground(new java.awt.Color(239, 255, 255));
+        othersScheduleInspectionButton.setText("Schedule");
+        othersScheduleInspectionButton.setBorder(null);
+        othersScheduleInspectionButton.setPreferredSize(new java.awt.Dimension(200, 40));
+        othersScheduleInspectionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersLogToAdminNewButtonActionPerformed(evt);
+                othersScheduleInspectionButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout othersLogToAdminPanelLayout = new javax.swing.GroupLayout(othersLogToAdminPanel);
-        othersLogToAdminPanel.setLayout(othersLogToAdminPanelLayout);
-        othersLogToAdminPanelLayout.setHorizontalGroup(
-            othersLogToAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersLogToAdminPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout othersLogTenantPanel1Layout = new javax.swing.GroupLayout(othersLogTenantPanel1);
+        othersLogTenantPanel1.setLayout(othersLogTenantPanel1Layout);
+        othersLogTenantPanel1Layout.setHorizontalGroup(
+            othersLogTenantPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersLogTenantPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(othersLogToAdminDisplayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(othersLogTenantDisplayLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(othersLogToAdminPanelLayout.createSequentialGroup()
+            .addGroup(othersLogTenantPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(othersLogToAdminNewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(othersScheduleInspectionButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
-        othersLogToAdminPanelLayout.setVerticalGroup(
-            othersLogToAdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(othersLogToAdminPanelLayout.createSequentialGroup()
+        othersLogTenantPanel1Layout.setVerticalGroup(
+            othersLogTenantPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersLogTenantPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(othersLogToAdminDisplayLabel)
+                .addComponent(othersLogTenantDisplayLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(othersLogToAdminNewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(othersScheduleInspectionButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
+
+        othersLogTenantPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        othersLogTenantPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        othersLogTenantPanel2.setPreferredSize(new java.awt.Dimension(250, 150));
+
+        othersLogTenantDisplayLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        othersLogTenantDisplayLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        othersLogTenantDisplayLabel2.setText("Reset Tenant Password");
+
+        othersTenantResetPasswordButton.setBackground(new java.awt.Color(239, 255, 255));
+        othersTenantResetPasswordButton.setText("Reset");
+        othersTenantResetPasswordButton.setBorder(null);
+        othersTenantResetPasswordButton.setPreferredSize(new java.awt.Dimension(200, 40));
+        othersTenantResetPasswordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                othersTenantResetPasswordButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout othersLogTenantPanel2Layout = new javax.swing.GroupLayout(othersLogTenantPanel2);
+        othersLogTenantPanel2.setLayout(othersLogTenantPanel2Layout);
+        othersLogTenantPanel2Layout.setHorizontalGroup(
+            othersLogTenantPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersLogTenantPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(othersLogTenantDisplayLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(othersLogTenantPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(othersTenantResetPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+        othersLogTenantPanel2Layout.setVerticalGroup(
+            othersLogTenantPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersLogTenantPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(othersLogTenantDisplayLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(othersTenantResetPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
         );
 
@@ -2261,23 +2492,26 @@ public class LandlordView extends javax.swing.JFrame {
         othersDashboardPanelLayout.setHorizontalGroup(
             othersDashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(othersDashboardPanelLayout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addComponent(othersContractPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(othersLogTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(othersLogToAdminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(475, Short.MAX_VALUE))
+                .addComponent(othersLogTenantPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(othersLogTenantPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(191, Short.MAX_VALUE))
         );
         othersDashboardPanelLayout.setVerticalGroup(
             othersDashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(othersDashboardPanelLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(othersDashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(othersLogToAdminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(othersLogTenantPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(othersLogTenantPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(othersLogTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(othersContractPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(408, Short.MAX_VALUE))
+                .addContainerGap(524, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout othersHomePanelLayout = new javax.swing.GroupLayout(othersHomePanel);
@@ -2302,11 +2536,11 @@ public class LandlordView extends javax.swing.JFrame {
         othersViewContractPanel.setLayout(othersViewContractPanelLayout);
         othersViewContractPanelLayout.setHorizontalGroup(
             othersViewContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1345, Short.MAX_VALUE)
+            .addGap(0, 1387, Short.MAX_VALUE)
         );
         othersViewContractPanelLayout.setVerticalGroup(
             othersViewContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 716, Short.MAX_VALUE)
+            .addGap(0, 832, Short.MAX_VALUE)
         );
 
         othersLayeredPane.add(othersViewContractPanel, "card3");
@@ -2315,16 +2549,28 @@ public class LandlordView extends javax.swing.JFrame {
         othersIssueContractPanel.setLayout(othersIssueContractPanelLayout);
         othersIssueContractPanelLayout.setHorizontalGroup(
             othersIssueContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1345, Short.MAX_VALUE)
+            .addGap(0, 1387, Short.MAX_VALUE)
         );
         othersIssueContractPanelLayout.setVerticalGroup(
             othersIssueContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 716, Short.MAX_VALUE)
+            .addGap(0, 832, Short.MAX_VALUE)
         );
 
         othersLayeredPane.add(othersIssueContractPanel, "card3");
 
-        othersViewTenantListTable.setModel(new javax.swing.table.DefaultTableModel(
+        maintenanceRequestSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        maintenanceRequestSearchTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maintenanceRequestSearchTextFieldActionPerformed(evt);
+            }
+        });
+
+        maintenanceRequestSearchButton.setBackground(new java.awt.Color(248, 255, 255));
+        maintenanceRequestSearchButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        maintenanceRequestSearchButton.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\magnifying-glass.png")); // NOI18N
+        maintenanceRequestSearchButton.setBorder(null);
+
+        previousErrorListTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -2332,354 +2578,151 @@ public class LandlordView extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Log ID", "Tenant Name", "House ID", "Date Issued"
+                "ID", "Tenant Name", "Date Issued", "House ID"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
-            };
+        ));
+        previousErrorListScrollPane1.setViewportView(previousErrorListTable1);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        othersViewTenantListScrollPane.setViewportView(othersViewTenantListTable);
-        if (othersViewTenantListTable.getColumnModel().getColumnCount() > 0) {
-            othersViewTenantListTable.getColumnModel().getColumn(1).setHeaderValue("Tenant Name");
-            othersViewTenantListTable.getColumnModel().getColumn(2).setHeaderValue("House ID");
-        }
+        maintenanceRequestListScrollPane.setViewportView(previousErrorListScrollPane1);
 
-        otherViewTenantLogDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        otherViewTenantLogDisplayLabel.setText("Error logs from Tenants");
-
-        othersViewTenantLogDetailsDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        othersViewTenantLogDetailsDisplayLabel.setText("Details");
-
-        othersViewTenantLogIdDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        othersViewTenantLogIdDisplayLabel.setText("Log ID");
-
-        othersViewTenantLogDateDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        othersViewTenantLogDateDisplayLabel.setText("Date Issued");
-
-        othersViewTenantLogHouseDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        othersViewTenantLogHouseDisplayLabel.setText("House ID");
-
-        othersViewTenantLogDescriptionDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        othersViewTenantLogDescriptionDisplayLabel.setText("Description");
-
-        othersViewTenantLogIdTextField.setPreferredSize(new java.awt.Dimension(200, 30));
-        othersViewTenantLogIdTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersViewTenantLogIdTextFieldActionPerformed(evt);
-            }
-        });
-
-        othersViewTenantLogDateTextField.setPreferredSize(new java.awt.Dimension(200, 30));
-        othersViewTenantLogDateTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersViewTenantLogDateTextFieldActionPerformed(evt);
-            }
-        });
-
-        othersViewTenantLogHouseTextField.setPreferredSize(new java.awt.Dimension(200, 30));
-        othersViewTenantLogHouseTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersViewTenantLogHouseTextFieldActionPerformed(evt);
-            }
-        });
-
-        othersViewTenantLogDescriptionScrollPane.setPreferredSize(new java.awt.Dimension(200, 90));
-
-        othersViewTenantLogDescriptionTextArea.setColumns(20);
-        othersViewTenantLogDescriptionTextArea.setRows(5);
-        othersViewTenantLogDescriptionScrollPane.setViewportView(othersViewTenantLogDescriptionTextArea);
-
-        othersViewTenantLogNameDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        othersViewTenantLogNameDisplayLabel.setText("Tenant");
-
-        othersViewTenantLogNameTextField.setPreferredSize(new java.awt.Dimension(200, 30));
-        othersViewTenantLogNameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersViewTenantLogNameTextFieldActionPerformed(evt);
-            }
-        });
-
-        othersViewTenantLogHouseInfoButton.setBackground(new java.awt.Color(239, 255, 255));
-        othersViewTenantLogHouseInfoButton.setText("More Info");
-        othersViewTenantLogHouseInfoButton.setPreferredSize(new java.awt.Dimension(150, 30));
-        othersViewTenantLogHouseInfoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersViewTenantLogHouseInfoButtonActionPerformed(evt);
-            }
-        });
-
-        othersViewTenantLogTenantInfoButton.setBackground(new java.awt.Color(239, 255, 255));
-        othersViewTenantLogTenantInfoButton.setText("More Info");
-        othersViewTenantLogTenantInfoButton.setPreferredSize(new java.awt.Dimension(150, 30));
-        othersViewTenantLogTenantInfoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersViewTenantLogTenantInfoButtonActionPerformed(evt);
-            }
-        });
-
-        othersViewTenantLogUpdateStatusButton.setBackground(new java.awt.Color(239, 255, 255));
-        othersViewTenantLogUpdateStatusButton.setText("Update Status");
-        othersViewTenantLogUpdateStatusButton.setPreferredSize(new java.awt.Dimension(150, 30));
-        othersViewTenantLogUpdateStatusButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersViewTenantLogUpdateStatusButtonActionPerformed(evt);
-            }
-        });
-
-        othersViewTenantLogForwardButton.setBackground(new java.awt.Color(239, 255, 255));
-        othersViewTenantLogForwardButton.setText("Forward");
-        othersViewTenantLogForwardButton.setPreferredSize(new java.awt.Dimension(150, 30));
-        othersViewTenantLogForwardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersViewTenantLogForwardButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout othersViewTenantLogDetailsPanelLayout = new javax.swing.GroupLayout(othersViewTenantLogDetailsPanel);
-        othersViewTenantLogDetailsPanel.setLayout(othersViewTenantLogDetailsPanelLayout);
-        othersViewTenantLogDetailsPanelLayout.setHorizontalGroup(
-            othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(othersViewTenantLogDetailsPanelLayout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
-                .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(othersViewTenantLogDescriptionDisplayLabel)
-                    .addComponent(othersViewTenantLogHouseDisplayLabel)
-                    .addComponent(othersViewTenantLogDateDisplayLabel)
-                    .addComponent(othersViewTenantLogIdDisplayLabel)
-                    .addComponent(othersViewTenantLogNameDisplayLabel)
-                    .addComponent(othersViewTenantLogDetailsDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(36, 36, 36)
-                .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(othersViewTenantLogIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(othersViewTenantLogDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(othersViewTenantLogDetailsPanelLayout.createSequentialGroup()
-                            .addComponent(othersViewTenantLogDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(40, 40, 40)
-                            .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(othersViewTenantLogUpdateStatusButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(othersViewTenantLogForwardButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(othersViewTenantLogDetailsPanelLayout.createSequentialGroup()
-                            .addComponent(othersViewTenantLogNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(40, 40, 40)
-                            .addComponent(othersViewTenantLogTenantInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(othersViewTenantLogDetailsPanelLayout.createSequentialGroup()
-                            .addComponent(othersViewTenantLogHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(40, 40, 40)
-                            .addComponent(othersViewTenantLogHouseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(84, Short.MAX_VALUE))
-        );
-        othersViewTenantLogDetailsPanelLayout.setVerticalGroup(
-            othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(othersViewTenantLogDetailsPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(othersViewTenantLogDetailsDisplayLabel)
-                .addGap(18, 18, 18)
-                .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(othersViewTenantLogIdDisplayLabel)
-                    .addComponent(othersViewTenantLogIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(othersViewTenantLogDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(othersViewTenantLogDateDisplayLabel))
-                .addGap(18, 18, 18)
-                .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(othersViewTenantLogHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(othersViewTenantLogHouseDisplayLabel)
-                    .addComponent(othersViewTenantLogHouseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(othersViewTenantLogNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(othersViewTenantLogNameDisplayLabel)
-                    .addComponent(othersViewTenantLogTenantInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(othersViewTenantLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(othersViewTenantLogDescriptionDisplayLabel)
-                    .addComponent(othersViewTenantLogDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(othersViewTenantLogDetailsPanelLayout.createSequentialGroup()
-                        .addComponent(othersViewTenantLogUpdateStatusButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(othersViewTenantLogForwardButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout otherViewTenantLogPanelLayout = new javax.swing.GroupLayout(otherViewTenantLogPanel);
-        otherViewTenantLogPanel.setLayout(otherViewTenantLogPanelLayout);
-        otherViewTenantLogPanelLayout.setHorizontalGroup(
-            otherViewTenantLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(otherViewTenantLogPanelLayout.createSequentialGroup()
-                .addGroup(otherViewTenantLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(otherViewTenantLogPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(othersViewTenantListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(othersViewTenantLogDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(otherViewTenantLogPanelLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(otherViewTenantLogDisplayLabel)))
-                .addContainerGap())
-        );
-        otherViewTenantLogPanelLayout.setVerticalGroup(
-            otherViewTenantLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, otherViewTenantLogPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(otherViewTenantLogDisplayLabel)
-                .addGap(18, 18, 18)
-                .addGroup(otherViewTenantLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(othersViewTenantLogDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(othersViewTenantListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        othersLayeredPane.add(otherViewTenantLogPanel, "card3");
-
-        othersIssueLandlordLogDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        othersIssueLandlordLogDisplayLabel.setText("Error Log");
-
-        othersIssueLandlordListTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Log ID", "Date Issued", "Type", "Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        othersIssueLandlordListScrollPane.setViewportView(othersIssueLandlordListTable);
-
-        othersIssueLandlordLogDetailsDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        othersIssueLandlordLogDetailsDisplayLabel.setText("Details");
-
-        othersIssueLandlordLogIdDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        othersIssueLandlordLogIdDisplayLabel.setText("Log ID");
-
-        othersIssueLandlordLogDateDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        othersIssueLandlordLogDateDisplayLabel.setText("Date Issued");
-
-        othersViewTenantLogDescriptionDisplayLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        othersViewTenantLogDescriptionDisplayLabel1.setText("Description");
-
-        othersIssueLandlordLogIdTextField.setPreferredSize(new java.awt.Dimension(200, 30));
-        othersIssueLandlordLogIdTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersIssueLandlordLogIdTextFieldActionPerformed(evt);
-            }
-        });
-
-        othersIssueLandlordLogDescriptionScrollPane.setPreferredSize(new java.awt.Dimension(200, 90));
-
-        othersIssueLandlordLogDescriptionTextArea.setColumns(20);
-        othersIssueLandlordLogDescriptionTextArea.setRows(5);
-        othersIssueLandlordLogDescriptionScrollPane.setViewportView(othersIssueLandlordLogDescriptionTextArea);
-
-        othersIssueLandlordLogStatusDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        othersIssueLandlordLogStatusDisplayLabel.setText("Status");
-
-        othersIssueLandlordLogSubmitButton.setBackground(new java.awt.Color(239, 255, 255));
-        othersIssueLandlordLogSubmitButton.setText("Submit");
-        othersIssueLandlordLogSubmitButton.setPreferredSize(new java.awt.Dimension(150, 30));
-        othersIssueLandlordLogSubmitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                othersIssueLandlordLogSubmitButtonActionPerformed(evt);
-            }
-        });
-
-        othersIssueLandlordLogDateChooser.setPreferredSize(new java.awt.Dimension(200, 30));
-
-        othersIssueLandlordLogStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        othersIssueLandlordLogStatusComboBox.setPreferredSize(new java.awt.Dimension(200, 30));
-
-        javax.swing.GroupLayout othersIssueLandlordLogDetailsPanelLayout = new javax.swing.GroupLayout(othersIssueLandlordLogDetailsPanel);
-        othersIssueLandlordLogDetailsPanel.setLayout(othersIssueLandlordLogDetailsPanelLayout);
-        othersIssueLandlordLogDetailsPanelLayout.setHorizontalGroup(
-            othersIssueLandlordLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(othersIssueLandlordLogDetailsPanelLayout.createSequentialGroup()
-                .addContainerGap(161, Short.MAX_VALUE)
-                .addGroup(othersIssueLandlordLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(othersViewTenantLogDescriptionDisplayLabel1)
-                    .addComponent(othersIssueLandlordLogDateDisplayLabel)
-                    .addComponent(othersIssueLandlordLogIdDisplayLabel)
-                    .addComponent(othersIssueLandlordLogDetailsDisplayLabel)
-                    .addComponent(othersIssueLandlordLogStatusDisplayLabel))
-                .addGap(40, 40, 40)
-                .addGroup(othersIssueLandlordLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(othersIssueLandlordLogDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(othersIssueLandlordLogSubmitButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(othersIssueLandlordLogIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(othersIssueLandlordLogDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(othersIssueLandlordLogStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(162, Short.MAX_VALUE))
-        );
-        othersIssueLandlordLogDetailsPanelLayout.setVerticalGroup(
-            othersIssueLandlordLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(othersIssueLandlordLogDetailsPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(othersIssueLandlordLogDetailsDisplayLabel)
-                .addGap(17, 17, 17)
-                .addGroup(othersIssueLandlordLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(othersIssueLandlordLogDetailsPanelLayout.createSequentialGroup()
-                        .addGroup(othersIssueLandlordLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(othersIssueLandlordLogIdDisplayLabel)
-                            .addComponent(othersIssueLandlordLogIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addComponent(othersIssueLandlordLogDateDisplayLabel))
-                    .addComponent(othersIssueLandlordLogDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(othersIssueLandlordLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(othersIssueLandlordLogStatusDisplayLabel)
-                    .addComponent(othersIssueLandlordLogStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(othersIssueLandlordLogDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(othersViewTenantLogDescriptionDisplayLabel1)
-                    .addComponent(othersIssueLandlordLogDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addComponent(othersIssueLandlordLogSubmitButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout othersIssueLandlordLogPanelLayout = new javax.swing.GroupLayout(othersIssueLandlordLogPanel);
-        othersIssueLandlordLogPanel.setLayout(othersIssueLandlordLogPanelLayout);
-        othersIssueLandlordLogPanelLayout.setHorizontalGroup(
-            othersIssueLandlordLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(othersIssueLandlordLogPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout otherMaintenanceRequestPanelLayout = new javax.swing.GroupLayout(otherMaintenanceRequestPanel);
+        otherMaintenanceRequestPanel.setLayout(otherMaintenanceRequestPanelLayout);
+        otherMaintenanceRequestPanelLayout.setHorizontalGroup(
+            otherMaintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherMaintenanceRequestPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(othersIssueLandlordLogDisplayLabel)
+                .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(maintenanceRequestSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(othersIssueLandlordLogPanelLayout.createSequentialGroup()
+            .addGroup(otherMaintenanceRequestPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(othersIssueLandlordListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(othersIssueLandlordLogDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1329, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        othersIssueLandlordLogPanelLayout.setVerticalGroup(
-            othersIssueLandlordLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(othersIssueLandlordLogPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(othersIssueLandlordLogDisplayLabel)
+        otherMaintenanceRequestPanelLayout.setVerticalGroup(
+            otherMaintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, otherMaintenanceRequestPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(otherMaintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(maintenanceRequestSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(othersIssueLandlordLogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(othersIssueLandlordListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
-                    .addComponent(othersIssueLandlordLogDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        othersLayeredPane.add(othersIssueLandlordLogPanel, "card3");
+        maintenanceDescriptionLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        maintenanceDescriptionLabel.setText("Description");
+
+        maintenanceRequestieDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        maintenanceRequestieDisplayLabel.setText("Requested By");
+
+        maintenanceHouseDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        maintenanceHouseDisplayLabel.setText("House");
+
+        maintenanceDescriptionTextArea.setColumns(20);
+        maintenanceDescriptionTextArea.setRows(5);
+        maintenanceRequestScrollPane.setViewportView(maintenanceDescriptionTextArea);
+
+        maintenanceStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        maintenanceStatusDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        maintenanceStatusDisplayLabel.setText("Status");
+
+        maintenanceRequestieDetailsButton.setBackground(new java.awt.Color(248, 255, 255));
+        maintenanceRequestieDetailsButton.setText("More Details");
+        maintenanceRequestieDetailsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maintenanceRequestieDetailsButtonActionPerformed(evt);
+            }
+        });
+
+        maintenanceHouseDetailsButton.setBackground(new java.awt.Color(248, 255, 255));
+        maintenanceHouseDetailsButton.setText("More Details");
+
+        maintenanceStatusUpdateButton.setBackground(new java.awt.Color(248, 255, 255));
+        maintenanceStatusUpdateButton.setText("Update Status");
+
+        javax.swing.GroupLayout otherMaintenanceDetailsPanelLayout = new javax.swing.GroupLayout(otherMaintenanceDetailsPanel);
+        otherMaintenanceDetailsPanel.setLayout(otherMaintenanceDetailsPanelLayout);
+        otherMaintenanceDetailsPanelLayout.setHorizontalGroup(
+            otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(maintenanceRequestScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                        .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                                .addComponent(maintenanceStatusDisplayLabel)
+                                .addGap(96, 96, 96))
+                            .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(maintenanceRequestieDisplayLabel)
+                                    .addComponent(maintenanceHouseDisplayLabel))
+                                .addGap(29, 29, 29)))
+                        .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(maintenanceRequestieTextField)
+                            .addComponent(maintenanceHouseTextField)
+                            .addComponent(maintenanceStatusComboBox, 0, 304, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(maintenanceRequestieDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maintenanceHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maintenanceStatusUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(maintenanceDescriptionLabel))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        otherMaintenanceDetailsPanelLayout.setVerticalGroup(
+            otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(maintenanceDescriptionLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(maintenanceRequestScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(maintenanceRequestieDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(maintenanceRequestieDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(maintenanceRequestieTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(maintenanceHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maintenanceHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maintenanceHouseDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(maintenanceStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(maintenanceStatusDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(maintenanceStatusUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout othersMaintenancePanelLayout = new javax.swing.GroupLayout(othersMaintenancePanel);
+        othersMaintenancePanel.setLayout(othersMaintenancePanelLayout);
+        othersMaintenancePanelLayout.setHorizontalGroup(
+            othersMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(otherMaintenanceRequestPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(otherMaintenanceDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        othersMaintenancePanelLayout.setVerticalGroup(
+            othersMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(otherMaintenanceRequestPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(otherMaintenanceDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        othersLayeredPane.add(othersMaintenancePanel, "card5");
 
         landlordDashboard.add(othersLayeredPane, "card7");
 
@@ -2704,7 +2747,7 @@ public class LandlordView extends javax.swing.JFrame {
                 .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(landlordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menubarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+                    .addComponent(menubarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
                     .addComponent(landlordDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -2723,7 +2766,7 @@ public class LandlordView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void dashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardButtonActionPerformed
+    public void dashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardButtonActionPerformed
         // TODO add your handling code here:
         //landlordDashboard.setSelectedIndex(0);
         landlordDashboard.removeAll();
@@ -2733,7 +2776,7 @@ public class LandlordView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_dashboardButtonActionPerformed
 
-    private void housesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_housesButtonActionPerformed
+    public void housesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_housesButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(housesPanel);
@@ -2741,7 +2784,7 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }//GEN-LAST:event_housesButtonActionPerformed
 
-    private void tenantsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantsButtonActionPerformed
+    public void tenantsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantsButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(tenantsPanel);
@@ -2749,15 +2792,15 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }//GEN-LAST:event_tenantsButtonActionPerformed
 
-    private void maintenanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceButtonActionPerformed
+    public void maintenanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
-        landlordDashboard.add(maintenancePanel);
+        landlordDashboard.add(errorPanel);
         landlordDashboard.repaint();
         landlordDashboard.revalidate();
     }//GEN-LAST:event_maintenanceButtonActionPerformed
 
-    private void homePaymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homePaymentButtonActionPerformed
+    public void homePaymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homePaymentButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(housesPanel);
@@ -2766,7 +2809,7 @@ public class LandlordView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_homePaymentButtonActionPerformed
 
-    private void homeTenantDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeTenantDetailsButtonActionPerformed
+    public void homeTenantDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeTenantDetailsButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(tenantsPanel);
@@ -2774,15 +2817,15 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }//GEN-LAST:event_homeTenantDetailsButtonActionPerformed
 
-    private void seeNewRequestsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeNewRequestsButtonActionPerformed
+    public void seeNewRequestsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeNewRequestsButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
-        landlordDashboard.add(maintenancePanel);
+        landlordDashboard.add(errorPanel);
         landlordDashboard.repaint();
         landlordDashboard.revalidate();
     }//GEN-LAST:event_seeNewRequestsButtonActionPerformed
 
-    private void homeUpcomingPaymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeUpcomingPaymentButtonActionPerformed
+    public void homeUpcomingPaymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeUpcomingPaymentButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(paymentsPanel);
@@ -2790,12 +2833,12 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }//GEN-LAST:event_homeUpcomingPaymentButtonActionPerformed
 
-    private void homeTotalCashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeTotalCashButtonActionPerformed
+    public void homeTotalCashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeTotalCashButtonActionPerformed
         // TODO add your handling code here:
         //take to analytics page
     }//GEN-LAST:event_homeTotalCashButtonActionPerformed
 
-    private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
+    public void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(paymentsPanel);
@@ -2803,7 +2846,7 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }//GEN-LAST:event_paymentButtonActionPerformed
 
-    private void otherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otherButtonActionPerformed
+    public void otherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otherButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(othersHomePanel);
@@ -2811,135 +2854,153 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }//GEN-LAST:event_otherButtonActionPerformed
 
-    private void houseidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseidTextFieldActionPerformed
+    public void houseidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseidTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_houseidTextFieldActionPerformed
 
-    private void houseTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseTypeComboBoxActionPerformed
+    public void houseTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseTypeComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_houseTypeComboBoxActionPerformed
 
-    private void houseAddressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseAddressTextFieldActionPerformed
+    public void houseAddressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseAddressTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_houseAddressTextFieldActionPerformed
 
-    private void houseSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseSearchTextFieldActionPerformed
+    public void houseSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseSearchTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_houseSearchTextFieldActionPerformed
 
-    private void tenantidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantidTextFieldActionPerformed
+    public void tenantidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantidTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tenantidTextFieldActionPerformed
 
-    private void genderComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genderComboBoxActionPerformed
+    public void genderComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genderComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_genderComboBoxActionPerformed
 
-    private void firstnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameTextFieldActionPerformed
+    public void firstnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_firstnameTextFieldActionPerformed
 
-    private void lastnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameTextFieldActionPerformed
+    public void lastnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lastnameTextFieldActionPerformed
 
-    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
+    public void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTextFieldActionPerformed
 
-    private void phoneNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberTextFieldActionPerformed
+    public void phoneNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_phoneNumberTextFieldActionPerformed
 
-    private void tenantSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantSearchTextFieldActionPerformed
+    public void tenantSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantSearchTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tenantSearchTextFieldActionPerformed
 
-    private void houseClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseClearFormButtonActionPerformed
-        // TODO add your handling code here:
+    public void houseClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseClearFormButtonActionPerformed
+        clearHouseForm();
     }//GEN-LAST:event_houseClearFormButtonActionPerformed
 
-    private void houseAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseAddButtonActionPerformed
-        // TODO add your handling code here:
+    public House houseAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseAddButtonActionPerformed
+        House houseObj = new House(this.getHouseTypeComboBox(),
+                                this.getHouseAddressTextField(),
+                                this.getHouseDescriptionTextArea(),
+                                Integer.valueOf(this.getHouseRentPriceTextField()) );
+        
+        houseObj.toString();
+        clearHouseForm();
+        
+        return houseObj;
+        
+
     }//GEN-LAST:event_houseAddButtonActionPerformed
 
-    private void houseUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseUpdateButtonActionPerformed
+    public void houseUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseUpdateButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_houseUpdateButtonActionPerformed
 
-    private void houseDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseDeleteButtonActionPerformed
+    public void houseDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseDeleteButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_houseDeleteButtonActionPerformed
 
-    private void houseRentTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseRentTextFieldActionPerformed
+    public void houseRentTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseRentTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_houseRentTextFieldActionPerformed
 
-    private void houseSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseSearchButtonActionPerformed
+    public void houseSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseSearchButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_houseSearchButtonActionPerformed
 
-    private void tenantClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantClearFormButtonActionPerformed
-        // TODO add your handling code here:
+    public void tenantClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantClearFormButtonActionPerformed
+        clearTenantForm();
     }//GEN-LAST:event_tenantClearFormButtonActionPerformed
 
-    private void tenantAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantAddButtonActionPerformed
-        // TODO add your handling code here:
+    public Tenant tenantAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantAddButtonActionPerformed
+        String firstName = this.getFirstNameTextField();
+        String lastName = this.getLastNameTextField();
+        String eMail = this.getemailTextField();
+        String phn = this.getPhoneNumberTextField();
+        String gender = this.getGenderComboBox();
+        LocalDate dob = this.getDobDateChooser();
+        Tenant tenantModelObj = new Tenant(firstName, lastName,gender, eMail, dob, phn);
+        tenantModelObj.toString();//add the current object to an array and set the variable to null.
+        clearTenantForm();
+    
+        return tenantModelObj;
+
+        
     }//GEN-LAST:event_tenantAddButtonActionPerformed
 
-    private void tenantUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantUpdateButtonActionPerformed
+    public void tenantUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantUpdateButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tenantUpdateButtonActionPerformed
 
-    private void tenantDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantDeleteButtonActionPerformed
+    public void tenantDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantDeleteButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tenantDeleteButtonActionPerformed
 
-    private void maintenanceRequestSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceRequestSearchTextFieldActionPerformed
+    public void maintenanceRequestSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceRequestSearchTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_maintenanceRequestSearchTextFieldActionPerformed
 
-    private void maintenanceRequestieDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceRequestieDetailsButtonActionPerformed
+    public void maintenanceRequestieDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceRequestieDetailsButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_maintenanceRequestieDetailsButtonActionPerformed
 
-    private void paymentUpcomingHouseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingHouseDetailsButtonActionPerformed
+    public void paymentUpcomingHouseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingHouseDetailsButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentUpcomingHouseDetailsButtonActionPerformed
 
-    private void paymentUpcomingUpdateDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingUpdateDetailsButtonActionPerformed
+    public void paymentUpcomingUpdateDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingUpdateDetailsButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentUpcomingUpdateDetailsButtonActionPerformed
 
-    private void paymentTenantNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentTenantNameTextFieldActionPerformed
+    public void paymentTenantNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentTenantNameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentTenantNameTextFieldActionPerformed
 
-    private void paymentTenantTeantDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentTenantTeantDetailsButtonActionPerformed
+    public void paymentTenantTeantDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentTenantTeantDetailsButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentTenantTeantDetailsButtonActionPerformed
 
-    private void paymentTenantUpdateDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentTenantUpdateDetailsButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_paymentTenantUpdateDetailsButtonActionPerformed
-
-    private void paymentTenantHouseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentTenantHouseDetailsButtonActionPerformed
+    public void paymentTenantHouseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentTenantHouseDetailsButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentTenantHouseDetailsButtonActionPerformed
 
-    private void paymentUpcomingIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingIdTextFieldActionPerformed
+    public void paymentUpcomingIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingIdTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentUpcomingIdTextFieldActionPerformed
 
-    private void paymentUpcomingTypeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingTypeTextFieldActionPerformed
+    public void paymentUpcomingTypeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingTypeTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentUpcomingTypeTextFieldActionPerformed
 
-    private void paymentUpcomingHouseAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingHouseAddButtonActionPerformed
+    public void paymentUpcomingHouseAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentUpcomingHouseAddButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentUpcomingHouseAddButtonActionPerformed
 
-    private void othersContractViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersContractViewButtonActionPerformed
+    public void othersContractViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersContractViewButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(othersViewContractPanel);
@@ -2947,7 +3008,7 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }//GEN-LAST:event_othersContractViewButtonActionPerformed
 
-    private void othersContractNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersContractNewButtonActionPerformed
+    public void othersContractNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersContractNewButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(othersIssueContractPanel);
@@ -2955,71 +3016,61 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }//GEN-LAST:event_othersContractNewButtonActionPerformed
 
-    private void othersLogTenantViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersLogTenantViewButtonActionPerformed
+    public void othersLogTenantViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersLogTenantViewButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
-        landlordDashboard.add(otherViewTenantLogPanel);
+        landlordDashboard.add(othersMaintenancePanel);
         landlordDashboard.repaint();
         landlordDashboard.revalidate();
     }//GEN-LAST:event_othersLogTenantViewButtonActionPerformed
 
-    private void othersLogToAdminNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersLogToAdminNewButtonActionPerformed
+    public void errorDetailsLogidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorDetailsLogidTextFieldActionPerformed
         // TODO add your handling code here:
-        landlordDashboard.removeAll();
-        landlordDashboard.add(othersIssueLandlordLogPanel);
-        landlordDashboard.repaint();
-        landlordDashboard.revalidate();
-    }//GEN-LAST:event_othersLogToAdminNewButtonActionPerformed
+    }//GEN-LAST:event_errorDetailsLogidTextFieldActionPerformed
 
-    private void othersViewTenantLogIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersViewTenantLogIdTextFieldActionPerformed
+    public void errorDetialsDateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorDetialsDateTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_othersViewTenantLogIdTextFieldActionPerformed
+    }//GEN-LAST:event_errorDetialsDateTextFieldActionPerformed
 
-    private void othersViewTenantLogDateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersViewTenantLogDateTextFieldActionPerformed
+    public void errorTenantTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorTenantTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_othersViewTenantLogDateTextFieldActionPerformed
+    }//GEN-LAST:event_errorTenantTextFieldActionPerformed
 
-    private void othersViewTenantLogHouseTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersViewTenantLogHouseTextFieldActionPerformed
+    public void errorTenantInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorTenantInfoButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_othersViewTenantLogHouseTextFieldActionPerformed
+    }//GEN-LAST:event_errorTenantInfoButtonActionPerformed
 
-    private void othersViewTenantLogNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersViewTenantLogNameTextFieldActionPerformed
+    public void errorUpdateStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorUpdateStatusButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_othersViewTenantLogNameTextFieldActionPerformed
+    }//GEN-LAST:event_errorUpdateStatusButtonActionPerformed
 
-    private void othersViewTenantLogHouseInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersViewTenantLogHouseInfoButtonActionPerformed
+    public void errorDetailsHouseidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorDetailsHouseidTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_othersViewTenantLogHouseInfoButtonActionPerformed
+    }//GEN-LAST:event_errorDetailsHouseidTextFieldActionPerformed
 
-    private void othersViewTenantLogTenantInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersViewTenantLogTenantInfoButtonActionPerformed
+    public void errorDetailsHouseInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorDetailsHouseInfoButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_othersViewTenantLogTenantInfoButtonActionPerformed
+    }//GEN-LAST:event_errorDetailsHouseInfoButtonActionPerformed
 
-    private void othersViewTenantLogUpdateStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersViewTenantLogUpdateStatusButtonActionPerformed
+    public void othersScheduleInspectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersScheduleInspectionButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_othersViewTenantLogUpdateStatusButtonActionPerformed
+    }//GEN-LAST:event_othersScheduleInspectionButtonActionPerformed
 
-    private void othersViewTenantLogForwardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersViewTenantLogForwardButtonActionPerformed
+    public void othersTenantResetPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersTenantResetPasswordButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_othersViewTenantLogForwardButtonActionPerformed
+    }//GEN-LAST:event_othersTenantResetPasswordButtonActionPerformed
 
-    private void othersIssueLandlordLogIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersIssueLandlordLogIdTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_othersIssueLandlordLogIdTextFieldActionPerformed
+    public void signoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutButtonActionPerformed
+        System.out.println("sign OUt");
+    }//GEN-LAST:event_signoutButtonActionPerformed
 
-    private void othersIssueLandlordLogSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersIssueLandlordLogSubmitButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_othersIssueLandlordLogSubmitButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    
+    /* public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -3038,11 +3089,11 @@ public class LandlordView extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form 
         java.awt.EventQueue.invokeLater(() -> {
             new LandlordView().setVisible(true);
         });
-    }
+    } */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountLabel;
@@ -3055,6 +3106,31 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JLabel dobDisplayLabel;
     private javax.swing.JLabel emailDisplayLabel;
     private javax.swing.JTextField emailTextField;
+    private javax.swing.JLabel errorDescriptionDisplayLabel;
+    private javax.swing.JScrollPane errorDescriptionScrollPane;
+    private javax.swing.JTextArea errorDescriptionTextArea;
+    private javax.swing.JLabel errorDetailsDisplayLabel;
+    private javax.swing.JLabel errorDetailsHouseDiplayLabel;
+    private javax.swing.JButton errorDetailsHouseInfoButton;
+    private javax.swing.JTextField errorDetailsHouseidTextField;
+    private javax.swing.JLabel errorDetailsLogidDisplayLabel;
+    private javax.swing.JTextField errorDetailsLogidTextField;
+    private javax.swing.JPanel errorDetailsPanel;
+    private javax.swing.JComboBox<String> errorDetailsStatusComboBox;
+    private javax.swing.JLabel errorDetialsDateDisplayLabel;
+    private javax.swing.JTextField errorDetialsDateTextField;
+    private javax.swing.JLabel errorDetialsStatusDisplayLabel;
+    private javax.swing.JLabel errorNewDisplayLabel;
+    private javax.swing.JScrollPane errorNewListScrollPane;
+    private javax.swing.JTable errorNewListTable;
+    private javax.swing.JPanel errorPanel;
+    private javax.swing.JLabel errorReviewDisplayLabel;
+    private javax.swing.JScrollPane errorReviewListScrollPane;
+    private javax.swing.JTable errorReviewListTable;
+    private javax.swing.JLabel errorTenantDisplayLabel;
+    private javax.swing.JButton errorTenantInfoButton;
+    private javax.swing.JTextField errorTenantTextField;
+    private javax.swing.JButton errorUpdateStatusButton;
     private javax.swing.JLabel firstnameDisplayLabel;
     private javax.swing.JTextField firstnameTextField;
     private javax.swing.JComboBox<String> genderComboBox;
@@ -3118,16 +3194,12 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JButton maintenanceButton;
     private javax.swing.JLabel maintenanceDescriptionLabel;
     private javax.swing.JTextArea maintenanceDescriptionTextArea;
-    private javax.swing.JPanel maintenanceDetailsPanel;
     private javax.swing.JButton maintenanceHouseDetailsButton;
     private javax.swing.JLabel maintenanceHouseDisplayLabel;
     private javax.swing.JTextField maintenanceHouseTextField;
     private javax.swing.JLabel maintenanceIconLabel;
     private javax.swing.JLabel maintenanceIconLabel1;
-    private javax.swing.JPanel maintenancePanel;
     private javax.swing.JScrollPane maintenanceRequestListScrollPane;
-    private javax.swing.JTable maintenanceRequestListTable;
-    private javax.swing.JPanel maintenanceRequestPanel;
     private javax.swing.JScrollPane maintenanceRequestScrollPane;
     private javax.swing.JButton maintenanceRequestSearchButton;
     private javax.swing.JTextField maintenanceRequestSearchTextField;
@@ -3142,8 +3214,8 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JLabel newMaintenanceRequestCount;
     private javax.swing.JLabel newMaintenanceRequestCount1;
     private javax.swing.JButton otherButton;
-    private javax.swing.JLabel otherViewTenantLogDisplayLabel;
-    private javax.swing.JPanel otherViewTenantLogPanel;
+    private javax.swing.JPanel otherMaintenanceDetailsPanel;
+    private javax.swing.JPanel otherMaintenanceRequestPanel;
     private javax.swing.JLabel othersContractDisplayLabel;
     private javax.swing.JButton othersContractNewButton;
     private javax.swing.JPanel othersContractPanel;
@@ -3153,49 +3225,18 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JLabel othersHomeGreetingDisplaylabel;
     private javax.swing.JPanel othersHomePanel;
     private javax.swing.JPanel othersIssueContractPanel;
-    private javax.swing.JScrollPane othersIssueLandlordListScrollPane;
-    private javax.swing.JTable othersIssueLandlordListTable;
-    private com.toedter.calendar.JDateChooser othersIssueLandlordLogDateChooser;
-    private javax.swing.JLabel othersIssueLandlordLogDateDisplayLabel;
-    private javax.swing.JScrollPane othersIssueLandlordLogDescriptionScrollPane;
-    private javax.swing.JTextArea othersIssueLandlordLogDescriptionTextArea;
-    private javax.swing.JLabel othersIssueLandlordLogDetailsDisplayLabel;
-    private javax.swing.JPanel othersIssueLandlordLogDetailsPanel;
-    private javax.swing.JLabel othersIssueLandlordLogDisplayLabel;
-    private javax.swing.JLabel othersIssueLandlordLogIdDisplayLabel;
-    private javax.swing.JTextField othersIssueLandlordLogIdTextField;
-    private javax.swing.JPanel othersIssueLandlordLogPanel;
-    private javax.swing.JComboBox<String> othersIssueLandlordLogStatusComboBox;
-    private javax.swing.JLabel othersIssueLandlordLogStatusDisplayLabel;
-    private javax.swing.JButton othersIssueLandlordLogSubmitButton;
     private javax.swing.JLayeredPane othersLayeredPane;
     private javax.swing.JLabel othersLogTenantDisplayLabel;
+    private javax.swing.JLabel othersLogTenantDisplayLabel1;
+    private javax.swing.JLabel othersLogTenantDisplayLabel2;
     private javax.swing.JPanel othersLogTenantPanel;
+    private javax.swing.JPanel othersLogTenantPanel1;
+    private javax.swing.JPanel othersLogTenantPanel2;
     private javax.swing.JButton othersLogTenantViewButton;
-    private javax.swing.JLabel othersLogToAdminDisplayLabel;
-    private javax.swing.JButton othersLogToAdminNewButton;
-    private javax.swing.JPanel othersLogToAdminPanel;
+    private javax.swing.JPanel othersMaintenancePanel;
+    private javax.swing.JButton othersScheduleInspectionButton;
+    private javax.swing.JButton othersTenantResetPasswordButton;
     private javax.swing.JPanel othersViewContractPanel;
-    private javax.swing.JScrollPane othersViewTenantListScrollPane;
-    private javax.swing.JTable othersViewTenantListTable;
-    private javax.swing.JLabel othersViewTenantLogDateDisplayLabel;
-    private javax.swing.JTextField othersViewTenantLogDateTextField;
-    private javax.swing.JLabel othersViewTenantLogDescriptionDisplayLabel;
-    private javax.swing.JLabel othersViewTenantLogDescriptionDisplayLabel1;
-    private javax.swing.JScrollPane othersViewTenantLogDescriptionScrollPane;
-    private javax.swing.JTextArea othersViewTenantLogDescriptionTextArea;
-    private javax.swing.JLabel othersViewTenantLogDetailsDisplayLabel;
-    private javax.swing.JPanel othersViewTenantLogDetailsPanel;
-    private javax.swing.JButton othersViewTenantLogForwardButton;
-    private javax.swing.JLabel othersViewTenantLogHouseDisplayLabel;
-    private javax.swing.JButton othersViewTenantLogHouseInfoButton;
-    private javax.swing.JTextField othersViewTenantLogHouseTextField;
-    private javax.swing.JLabel othersViewTenantLogIdDisplayLabel;
-    private javax.swing.JTextField othersViewTenantLogIdTextField;
-    private javax.swing.JLabel othersViewTenantLogNameDisplayLabel;
-    private javax.swing.JTextField othersViewTenantLogNameTextField;
-    private javax.swing.JButton othersViewTenantLogTenantInfoButton;
-    private javax.swing.JButton othersViewTenantLogUpdateStatusButton;
     private javax.swing.JButton paymentButton;
     private javax.swing.JLabel paymentTenantAmountDisplayLabel;
     private javax.swing.JTextField paymentTenantAmountTextField;
@@ -3215,10 +3256,7 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JTextField paymentTenantNameTextField;
     private javax.swing.JPanel paymentTenantPanel;
     private javax.swing.JScrollPane paymentTenantScrollPane;
-    private javax.swing.JComboBox<String> paymentTenantStatusComboBox;
-    private javax.swing.JLabel paymentTenantStatusDisplayLabel;
     private javax.swing.JButton paymentTenantTeantDetailsButton;
-    private javax.swing.JButton paymentTenantUpdateDetailsButton;
     private javax.swing.JLabel paymentUpcomingAmountDisplayLabel;
     private javax.swing.JTextField paymentUpcomingAmountTextField;
     private javax.swing.JLabel paymentUpcomingDescriptionLabel;
@@ -3246,6 +3284,13 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JLabel peopleIconLabel;
     private javax.swing.JLabel phoneNumberDisplayLabel;
     private javax.swing.JTextField phoneNumberTextField;
+    private javax.swing.JLabel previousErrorDisplayLabel;
+    private javax.swing.JScrollPane previousErrorListScrollPane;
+    private javax.swing.JScrollPane previousErrorListScrollPane1;
+    private javax.swing.JTable previousErrorListTable;
+    private javax.swing.JTable previousErrorListTable1;
+    private javax.swing.JButton previousErrorSearchButton;
+    private javax.swing.JTextField previousErrorSearchTextField;
     private javax.swing.JLabel requestDisplayLabel;
     private javax.swing.JLabel requestDisplayLabel1;
     private javax.swing.JButton seeNewRequestsButton;
@@ -3257,6 +3302,8 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JButton tenantDeleteButton;
     private javax.swing.JLabel tenantDisplayLabel;
     private javax.swing.JPanel tenantFormPanel;
+    private javax.swing.JLabel tenantHouseIdDisplayLabel;
+    private javax.swing.JLabel tenantHouseIdValueLabel;
     private javax.swing.JPanel tenantListPanel;
     private javax.swing.JScrollPane tenantListScrollPane;
     private javax.swing.JTable tenantListTable;
@@ -3269,4 +3316,204 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel titlePanel;
     // End of variables declaration//GEN-END:variables
+   
+    /**
+     * getter and setter
+     * @param value
+     */
+    
+    public void setTenantidTextField(String value){
+        this.tenantidTextField.setText(value);
+    }
+    
+    public String getTenantidTextField(){
+        return this.tenantidTextField.getText();
+    }
+
+    public void setFirstnameTextField(String value){
+        this.firstnameTextField.setText(value);
+    }
+
+    public String getFirstNameTextField(){
+        if (!   this.firstnameTextField.getText().isEmpty()){
+            return this.firstnameTextField.getText();
+        }
+        else {
+            System.out.println("error");
+            JOptionPane.showMessageDialog(this, "Please enter first name!", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+            
+        }
+    }
+
+    public void setLastnameTextField(String value){
+        this.lastnameTextField.setText(value);
+    }
+
+    public String getLastNameTextField(){
+        if (!this.lastnameTextField.getText().isEmpty()){
+            return this.lastnameTextField.getText();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Please enter last name!", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+    }
+
+    public void setEmailTextField(String value){
+        this.emailTextField.setText(value);
+    }
+
+    public String getemailTextField(){//needs further validation
+        if (!this.emailTextField.getText().isEmpty()){
+            return this.emailTextField.getText();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Please enter email!", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+    }
+
+    public void setDobDateChooser(Date date){
+        if(date!=null){
+            this.dobDateChooser.setDate(date);
+        } else{
+            this.dobDateChooser.setCalendar(null);
+        }
+        
+    }
+
+    public LocalDate getDobDateChooser(){
+        if (this.dobDateChooser.getDate() != null){
+            
+            // reference https://stackoverflow.com/questions/6262310/display-java-util-date-in-a-specific-format
+
+            LocalDate date = this.dobDateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            return date;
+        }
+        JOptionPane.showMessageDialog(this, "Please select date!", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+        
+    }
+
+    public void setPhoneNumberTextField(String value){
+        this.phoneNumberTextField.setText(value);
+
+    }
+    
+    public String getPhoneNumberTextField(){
+        if (!this.phoneNumberTextField.getText().isEmpty()){
+            return this.phoneNumberTextField.getText();
+        }
+        JOptionPane.showMessageDialog(this, "Please enter phone Number!", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+    }
+
+    public void setGenderComboBox(String value){
+        if (value == "Male"){
+            genderComboBox.setSelectedIndex(0);
+        } else if (value == "Female"){
+            genderComboBox.setSelectedIndex(1);
+        }
+    }
+
+    public String getGenderComboBox(){
+        if ( (String)this.genderComboBox.getSelectedItem() == "Male"){
+            return "Male";
+
+        }else if ((String)this.genderComboBox.getSelectedItem() != "Female" ){
+            return "Female";
+
+        }else {
+            JOptionPane.showMessageDialog(this, "Please select a value within the option!", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+    }
+
+    public void clearTenantForm(){
+        setFirstnameTextField("");
+        setLastnameTextField("");
+        setEmailTextField("");
+        setPhoneNumberTextField("");
+        setDobDateChooser(null);
+        setGenderComboBox("Male");
+        setTenantidTextField("");
+    }
+
+    public void setHouseidTextField(String value){
+        this.houseidTextField.setText( value);
+    }
+
+    public String getHouseidTextField(){
+        return houseidTextField.getText();
+    }
+
+    public void setHouseTypeComboBox(String value){
+        this.houseTypeComboBox.setSelectedItem(value);
+    }
+
+    public String getHouseTypeComboBox(){
+        return (String) houseTypeComboBox.getSelectedItem();
+    }
+
+    public void setHouseDescriptionTextArea(String value){
+        this.houseDescriptionTextArea.setText(value);
+    }
+
+    public String getHouseDescriptionTextArea(){
+        if (!houseDescriptionTextArea.getText().isEmpty() )   {
+            return houseDescriptionTextArea.getText();
+        } else {
+            JOptionPane.showMessageDialog(this, "Please enter Description!", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+    }
+
+    public void setHouseAddressTextField(String value){
+        this.houseAddressTextField.setText(value);
+    }
+
+    public String getHouseAddressTextField(){
+        if(!houseAddressTextField.getText().isEmpty()){
+            return houseAddressTextField.getText();
+        } else {
+            JOptionPane.showMessageDialog(this, "Please enter an Address", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+    }
+
+    public void setHouseRentPriceTextField(String value){
+        this.houseRentTextField.setText(value);
+    }
+
+    public String getHouseRentPriceTextField(){
+        if(!houseRentTextField.getText().isEmpty()){
+            return houseRentTextField.getText();
+        } else {
+            JOptionPane.showMessageDialog(this, "Please a Rent price!", "Warning",JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+    }
+
+    public void clearHouseForm(){
+        setHouseidTextField("");
+        setHouseTypeComboBox("");
+        setHouseAddressTextField("");
+        setHouseRentPriceTextField("");
+        setHouseDescriptionTextArea("");
+    }
+    
+    //table functions
+    public JTable getHouseListTable(){
+        return houseListTable;
+    }
+
+    public void insertValueTable(JTable table, String[] data){
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        tableModel.addRow(data);
+    }
+
+    public JTable getTenantListTable() {
+        return tenantListTable;
+    }
 }

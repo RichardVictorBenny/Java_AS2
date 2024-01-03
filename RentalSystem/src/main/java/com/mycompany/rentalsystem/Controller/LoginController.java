@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
  * @author Richard
  */
 public class LoginController {
+
     LoginView loginView;
     LoginModel loginModel;
 
@@ -29,10 +30,11 @@ public class LoginController {
 
         loginView.addLoginButtonListener(new LoginListener());
         loginView.addforgotPasswordListener(new ForgotPasswordListener());
-        
+
     }
 
     class LoginListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent event) {
             String username, password, usermode;
@@ -49,17 +51,31 @@ public class LoginController {
                 }
 
                 // does validation and moves to dashboard
-
                 if (loginModel.validate(username, password, usermode)) {
                     loginView.dispose();
-                    TenantView view = new TenantView();
-                    TenantModel model = new TenantModel();
-                    TenantController controller = new TenantController(view, model);
+                    switch (usermode) {
+                        case "Tenant" -> {
+                            /* TenantView view = new TenantView();
+                            TenantModel model = new TenantModel();
+                            TenantController controller = new TenantController(view, model);
 
-                    java.awt.EventQueue.invokeLater(() -> {
-                        view.setVisible(true);
-                    });
-                    // call for dashboard
+                            java.awt.EventQueue.invokeLater(() -> {
+                                view.setVisible(true);
+                            }); */
+                        }
+
+                        case "Landlord" -> {
+                            LandlordView view = new LandlordView();
+                            Landlord model = new Landlord();
+                            LandlordController controller = new LandlordController(view, model);
+
+                            java.awt.EventQueue.invokeLater(() -> {
+                                view.setVisible(true);
+                            });
+                        }
+
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(loginView, "Wrong credentials", "Error", JOptionPane.ERROR_MESSAGE);
                 }

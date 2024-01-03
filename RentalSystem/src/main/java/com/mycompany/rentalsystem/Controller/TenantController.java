@@ -18,41 +18,59 @@ import javax.swing.JButton;
  * @author Richard
  *
  */
-public class TenantController {
+public class TenantController implements ActionListener{
     private TenantView tenantView;
-    private TenantModel tenantModel;
+    private Tenant tenantModel;
 
-    public TenantController(TenantView tenantView, TenantModel tenantModel){
+    public TenantController(TenantView tenantView, Tenant tenantModel){
         this.tenantView = tenantView;
         this.tenantModel = tenantModel;
         
         
-        /*tenantView.addDashboardHomeButtonListener(new TenantListener());
-        tenantView.addPaymentButtonListener(new TenantListener());
-        tenantView.addMaintenanceButtonListener(new TenantListener());
-        tenantView.addContractButtonListener(new TenantListener());
-        tenantView.addOthersButtonListener(new TenantListener());
-        tenantView.addSignoutButtonListener(new TenantListener());
+        tenantView.addDashboardButtonListener(new MenubarListener());
+        tenantView.addPaymentButtonListener(new MenubarListener());
+        tenantView.addMaintenanceButtonListener(new MenubarListener());
+        tenantView.addOtherButtonListener(new MenubarListener());
+        tenantView.addSignoutButtonListener(new MenubarListener());
+    }
+
+    class MenubarListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() instanceof JButton){
+                JButton menuButtonPressed = (JButton) e.getSource();
+                String menuButtonName = menuButtonPressed.getText();
+                switch (menuButtonName) {
+                    case "Dashboard":
+                        tenantView.dashboardButtonActionPerformed(e);
+                        break;
+                    case "Payment":
+                        tenantView.paymentButtonActionPerformed(e);
+                        break;
+                    case "Maintenance":
+                        tenantView.maintenanceButtonActionPerformed(e);
+                        break;
+                    case "Others":
+                        tenantView.otherButtonActionPerformed(e);
+                        break;
+                    case "Sign Out":
+                        tenantView.signoutButtonActionPerformed(e);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     
 
-    class TenantListener implements ActionListener{
 
-        @Override
-        public void actionPerformed(ActionEvent e){
-            // TODO Auto-generated method stub
-            JButton button = (JButton) e.getSource();
-            String buttonPressed = button.getText();
-            
-            tenantView.setPage(buttonPressed);
-            
-            
-            
 
-            
-        }*/
-        
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
     
 }

@@ -28,28 +28,17 @@ public class LoginModel {
         ArrayList<String> credentials = new ArrayList<>();
 
         // determining the file needed for validations as per the user type.
-        switch (userMode) {
-            case "Tenant":
-                filename = "src/main/java/com/mycompany/rentalsystem/files/TenatLogin.bin";
-                break;
-
-            case "Landlord":
-                filename = "src/main/java/com/mycompany/rentalsystem/files/LandlordLogin.bin";
-                break;
-
-            case "Admin":
-                filename = "src/main/java/com/mycompany/rentalsystem/files/AdminLogin.bin";
-                break;
-            default:
-                filename = "";
-                break;
-        }
+        filename = switch (userMode) {
+            case "Tenant" -> "src/main/java/com/mycompany/rentalsystem/files/TenantLogin.bin";
+            case "Landlord" -> "src/main/java/com/mycompany/rentalsystem/files/LandlordLogin.bin";
+            case "Admin" -> "src/main/java/com/mycompany/rentalsystem/files/AdminLogin.bin";
+            default -> "";
+        };
 
         // hashing the password provided by the user for validation
         try {
             hashPassword = Hashing.doHashing(password, username);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
             hashPassword = "";
         }
 
@@ -57,7 +46,8 @@ public class LoginModel {
         try {
             FileInputStream fileIn;
             fileIn = new FileInputStream(filename);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
+            ObjectInputStream in;
+            in = new ObjectInputStream(fileIn);
 
             while (true) {
                 try {
