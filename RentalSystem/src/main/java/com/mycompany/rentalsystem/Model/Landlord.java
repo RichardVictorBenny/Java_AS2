@@ -4,8 +4,6 @@
  */
 package com.mycompany.rentalsystem.Model;
 
-import java.time.LocalDate;
-import java.util.Date;
 
 /**
  *

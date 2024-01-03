@@ -5,7 +5,6 @@
 package com.mycompany.rentalsystem.Model;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -43,7 +42,7 @@ public class Tenant extends Person implements Serializable{
 
     public Tenant(String firstName, String surName,String gender, String eMail, LocalDate dob, String phoneNumber) {
         super(firstName, surName,  eMail, phoneNumber);
-        this.tenantID++;
+        Tenant.tenantID++;
         this.gender= gender;
         this.dateOfBirth = dob;
     }

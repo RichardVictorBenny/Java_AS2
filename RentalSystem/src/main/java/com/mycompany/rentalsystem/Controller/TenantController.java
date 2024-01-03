@@ -18,7 +18,7 @@ import javax.swing.JButton;
  * @author Richard
  *
  */
-public class TenantController implements ActionListener{
+public class TenantController{
     private TenantView tenantView;
     private Tenant tenantModel;
 
@@ -61,16 +61,6 @@ public class TenantController implements ActionListener{
                 }
             }
         }
-    }
-
-    
-
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
     
 }

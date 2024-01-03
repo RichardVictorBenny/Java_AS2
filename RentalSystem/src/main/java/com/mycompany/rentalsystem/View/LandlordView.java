@@ -11,6 +11,7 @@ import com.mycompany.rentalsystem.Model.Landlord;
 import com.mycompany.rentalsystem.Model.Tenant;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -87,6 +88,11 @@ public class LandlordView extends javax.swing.JFrame {
 
     public void tenantUpdateButtonListener(ActionListener tenantListener){
         tenantUpdateButton.addActionListener(tenantListener);
+    }
+
+    //Mouse Listeners
+    public void houseListTableListener(MouseListener ClickListener){
+        houseListTable.addMouseListener( ClickListener);
     }
 
     /**
@@ -362,11 +368,6 @@ public class LandlordView extends javax.swing.JFrame {
         dashboardButton.setFocusPainted(false);
         dashboardButton.setFocusable(false);
         dashboardButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        dashboardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dashboardButtonActionPerformed(evt);
-            }
-        });
 
         housesButton.setBackground(new java.awt.Color(242, 242, 242));
         housesButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -375,11 +376,6 @@ public class LandlordView extends javax.swing.JFrame {
         housesButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         housesButton.setFocusPainted(false);
         housesButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        housesButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                housesButtonActionPerformed(evt);
-            }
-        });
 
         tenantsButton.setBackground(new java.awt.Color(242, 242, 242));
         tenantsButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -388,11 +384,6 @@ public class LandlordView extends javax.swing.JFrame {
         tenantsButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         tenantsButton.setFocusPainted(false);
         tenantsButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        tenantsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantsButtonActionPerformed(evt);
-            }
-        });
 
         maintenanceButton.setBackground(new java.awt.Color(242, 242, 242));
         maintenanceButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -401,11 +392,6 @@ public class LandlordView extends javax.swing.JFrame {
         maintenanceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         maintenanceButton.setFocusPainted(false);
         maintenanceButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        maintenanceButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maintenanceButtonActionPerformed(evt);
-            }
-        });
 
         paymentButton.setBackground(new java.awt.Color(242, 242, 242));
         paymentButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -414,11 +400,6 @@ public class LandlordView extends javax.swing.JFrame {
         paymentButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         paymentButton.setFocusPainted(false);
         paymentButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        paymentButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paymentButtonActionPerformed(evt);
-            }
-        });
 
         otherButton.setBackground(new java.awt.Color(242, 242, 242));
         otherButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -427,11 +408,6 @@ public class LandlordView extends javax.swing.JFrame {
         otherButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         otherButton.setFocusPainted(false);
         otherButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        otherButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                otherButtonActionPerformed(evt);
-            }
-        });
 
         signoutButton.setBackground(new java.awt.Color(242, 242, 242));
         signoutButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -440,11 +416,6 @@ public class LandlordView extends javax.swing.JFrame {
         signoutButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         signoutButton.setFocusPainted(false);
         signoutButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        signoutButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signoutButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout menubarPanelLayout = new javax.swing.GroupLayout(menubarPanel);
         menubarPanel.setLayout(menubarPanelLayout);
@@ -1088,41 +1059,25 @@ public class LandlordView extends javax.swing.JFrame {
         houseClearFormButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseClearFormButton.setText("CLEAR");
         houseClearFormButton.setBorder(null);
-        houseClearFormButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseClearFormButtonActionPerformed(evt);
-            }
-        });
+        
 
         houseAddButton.setBackground(new java.awt.Color(255, 255, 204));
         houseAddButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseAddButton.setText("ADD");
         houseAddButton.setBorder(null);
-        houseAddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseAddButtonActionPerformed(evt);
-            }
-        });
+        
 
         houseUpdateButton.setBackground(new java.awt.Color(255, 255, 204));
         houseUpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseUpdateButton.setText("UPDATE");
         houseUpdateButton.setBorder(null);
-        houseUpdateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseUpdateButtonActionPerformed(evt);
-            }
-        });
+        
 
         houseDeleteButton.setBackground(new java.awt.Color(255, 255, 204));
         houseDeleteButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseDeleteButton.setText("DELETE");
         houseDeleteButton.setBorder(null);
-        houseDeleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseDeleteButtonActionPerformed(evt);
-            }
-        });
+        
 
         javax.swing.GroupLayout houseButtonPanelLayout = new javax.swing.GroupLayout(houseButtonPanel);
         houseButtonPanel.setLayout(houseButtonPanelLayout);
@@ -1212,7 +1167,16 @@ public class LandlordView extends javax.swing.JFrame {
             new String [] {
                 "House Id", "Type", "Address", "Rent Price"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        houseListTable.setName("HOUSE TABLE");
         houseListScrollPane.setViewportView(houseListTable);
 
         houseSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -1348,41 +1312,25 @@ public class LandlordView extends javax.swing.JFrame {
         tenantClearFormButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantClearFormButton.setText("CLEAR");
         tenantClearFormButton.setBorder(null);
-        tenantClearFormButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantClearFormButtonActionPerformed(evt);
-            }
-        });
+        
 
         tenantAddButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantAddButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantAddButton.setText("ADD");
         tenantAddButton.setBorder(null);
-        tenantAddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantAddButtonActionPerformed(evt);
-            }
-        });
+        
 
         tenantUpdateButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantUpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantUpdateButton.setText("UPDATE");
         tenantUpdateButton.setBorder(null);
-        tenantUpdateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantUpdateButtonActionPerformed(evt);
-            }
-        });
+        
 
         tenantDeleteButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantDeleteButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantDeleteButton.setText("DELETE");
         tenantDeleteButton.setBorder(null);
-        tenantDeleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantDeleteButtonActionPerformed(evt);
-            }
-        });
+        
 
         javax.swing.GroupLayout tenantButtonPanelLayout = new javax.swing.GroupLayout(tenantButtonPanel);
         tenantButtonPanel.setLayout(tenantButtonPanelLayout);
@@ -2908,7 +2856,7 @@ public class LandlordView extends javax.swing.JFrame {
                                 this.getHouseDescriptionTextArea(),
                                 Integer.valueOf(this.getHouseRentPriceTextField()) );
         
-        houseObj.toString();
+        houseObj.toString(); // remove
         clearHouseForm();
         
         return houseObj;
@@ -2916,8 +2864,16 @@ public class LandlordView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_houseAddButtonActionPerformed
 
-    public void houseUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseUpdateButtonActionPerformed
-        // TODO add your handling code here:
+    public House houseUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseUpdateButtonActionPerformed
+        House houseObj = new House(this.getHouseidTextField(),
+                                 this.getHouseTypeComboBox(),
+                                this.getHouseAddressTextField(),
+                                this.getHouseDescriptionTextArea(),
+                                Integer.valueOf(this.getHouseRentPriceTextField()) );
+        clearHouseForm();
+        return houseObj;
+
+        
     }//GEN-LAST:event_houseUpdateButtonActionPerformed
 
     public void houseDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseDeleteButtonActionPerformed
@@ -2953,7 +2909,7 @@ public class LandlordView extends javax.swing.JFrame {
     }//GEN-LAST:event_tenantAddButtonActionPerformed
 
     public void tenantUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantUpdateButtonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tenantUpdateButtonActionPerformed
 
     public void tenantDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantDeleteButtonActionPerformed
@@ -3502,6 +3458,13 @@ public class LandlordView extends javax.swing.JFrame {
         setHouseRentPriceTextField("");
         setHouseDescriptionTextArea("");
     }
+    public void populateHouseForm(House house){
+        setHouseidTextField(String.valueOf(house.getHouseId()));
+        setHouseTypeComboBox(house.getHouseType());
+        setHouseAddressTextField(house.getHouseAddress());
+        setHouseRentPriceTextField(String.valueOf(house.getHouseRentPrice()));
+        setHouseDescriptionTextArea(house.getHouseDescription());
+    }
     
     //table functions
     public JTable getHouseListTable(){
@@ -3516,4 +3479,5 @@ public class LandlordView extends javax.swing.JFrame {
     public JTable getTenantListTable() {
         return tenantListTable;
     }
+
 }

@@ -13,7 +13,8 @@ import java.io.Serializable;
 public class House implements Serializable {
     private static Integer houseId = 2000;
     private static Integer totalHouseCount;
-    private String extHouseId, houseType, houseAddress, houseDescription;
+    private Integer extHouseId;
+    private String houseType, houseAddress, houseDescription;
     private Integer houseRentPrice;
     
     public House(){}
@@ -30,7 +31,8 @@ public class House implements Serializable {
                 String houseAddress,
                 String houseDescription,
                 Integer houseRentPrice){
-                    this.houseId++;
+                    House.houseId++;
+                    this.extHouseId = House.houseId;
                     this.houseType = houseType;
                     this.houseAddress = houseAddress;
                     this.houseDescription = houseDescription;
@@ -52,7 +54,7 @@ public class House implements Serializable {
                 String houseAddress,
                 String houseDescription,
                 Integer houseRentPrice){
-                    this.extHouseId=houseId;
+                    this.extHouseId = Integer.valueOf(houseId);
                     this.houseType = houseType;
                     this.houseAddress = houseAddress;
                     this.houseDescription = houseDescription;
@@ -100,24 +102,24 @@ public class House implements Serializable {
         this.houseRentPrice = houseRentPrice;
     }
 
-    public static Integer getHouseId() {
-        return houseId;
+    public static void setHouseId(Integer id){
+        houseId = id;
     }
 
-    public static void setHouseId(Integer houseId) {
-        House.houseId = houseId;
+    public void setExtHouseId(Integer houseId) {
+        this.extHouseId = houseId;
     }
 
-    public String getExtHouseId() {
+    public Integer getHouseId() {
         return extHouseId;
     }
 
     public void setExtHouseId(String extHouseId) {
-        this.extHouseId = extHouseId;
+        this.extHouseId = Integer.valueOf(extHouseId);
     }
 
     public  String toString(){
-        String value = ""+this.houseId+" "+this.houseType+" "+
+        String value = ""+this.extHouseId+" "+this.houseType+" "+
         this.houseAddress+" "+this.houseDescription+" "+this.houseRentPrice;
         System.out.println(value);
         return value;
