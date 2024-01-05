@@ -2132,8 +2132,6 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="tenantSearchTextField" min="-2" pref="298" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="houseSearchButton1" min="-2" pref="41" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -2147,10 +2145,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tenantSearchTextField" pref="44" max="32767" attributes="0"/>
-                                  <Component id="houseSearchButton1" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="tenantSearchTextField" min="-2" pref="44" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="tenantListScrollPane" min="-2" pref="633" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
@@ -2232,22 +2227,6 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="houseSearchButton1">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="f8" type="rgb"/>
-                        </Property>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Segoe UI" size="24" style="1"/>
-                        </Property>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="2" name="D:\OneDrive\Documents\UoN-notes\YEAR 2\CSY2094 - JAVA\1 AS2\RentalSystem\src\main\java\com\mycompany\rentalsystem\images\magnifying-glass.png"/>
-                        </Property>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="null"/>
-                        </Property>
-                      </Properties>
-                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -3034,13 +3013,9 @@
                                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="previousErrorDisplayLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="previousErrorSearchTextField" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="previousErrorSearchButton" min="-2" pref="41" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="previousErrorSearchTextField" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="436" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -3083,10 +3058,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="previousErrorSearchTextField" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="previousErrorSearchButton" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="previousErrorSearchTextField" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="previousErrorListScrollPane" min="-2" pref="279" max="-2" attributes="0"/>
                               </Group>
@@ -3554,22 +3526,6 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="previousErrorSearchButton">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="f8" type="rgb"/>
-                    </Property>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
-                    </Property>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="D:\OneDrive\Documents\UoN-notes\YEAR 2\CSY2094 - JAVA\1 AS2\RentalSystem\src\main\java\com\mycompany\rentalsystem\images\magnifying-glass.png"/>
-                    </Property>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
-                    </Property>
-                  </Properties>
-                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JLayeredPane" name="othersLayeredPane">
@@ -3591,7 +3547,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="othersGreetingPanel" pref="1345" max="32767" attributes="0"/>
+                          <Component id="othersGreetingPanel" pref="1387" max="32767" attributes="0"/>
                           <Component id="othersDashboardPanel" alignment="0" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
@@ -4080,8 +4036,6 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="maintenanceRequestSearchTextField" min="-2" pref="298" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="maintenanceRequestSearchButton" min="-2" pref="41" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -4095,10 +4049,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="maintenanceRequestSearchTextField" pref="40" max="32767" attributes="0"/>
-                                      <Component id="maintenanceRequestSearchButton" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="maintenanceRequestSearchTextField" min="-2" pref="40" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="maintenanceRequestListScrollPane" pref="281" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -4116,22 +4067,6 @@
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="maintenanceRequestSearchTextFieldActionPerformed"/>
                           </Events>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="maintenanceRequestSearchButton">
-                          <Properties>
-                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="ff" green="ff" red="f8" type="rgb"/>
-                            </Property>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Segoe UI" size="24" style="1"/>
-                            </Property>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="2" name="D:\OneDrive\Documents\UoN-notes\YEAR 2\CSY2094 - JAVA\1 AS2\RentalSystem\src\main\java\com\mycompany\rentalsystem\images\magnifying-glass.png"/>
-                            </Property>
-                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                              <Border info="null"/>
-                            </Property>
-                          </Properties>
                         </Component>
                         <Container class="javax.swing.JScrollPane" name="maintenanceRequestListScrollPane">
 

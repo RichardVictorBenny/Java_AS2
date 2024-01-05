@@ -8,8 +8,11 @@ import com.mycompany.rentalsystem.Controller.LandlordController;
 import com.mycompany.rentalsystem.Model.House;
 import com.mycompany.rentalsystem.Model.Landlord;
 import com.mycompany.rentalsystem.Model.Tenant;
+import com.mycompany.rentalsystem.funcitons.Sorting;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.time.LocalDate;
@@ -17,6 +20,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -121,7 +126,7 @@ public class LandlordView extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
@@ -227,7 +232,6 @@ public class LandlordView extends javax.swing.JFrame {
         tenantSearchTextField = new javax.swing.JTextField();
         tenantListScrollPane = new javax.swing.JScrollPane();
         tenantListTable = new javax.swing.JTable();
-        houseSearchButton1 = new javax.swing.JButton();
         paymentsPanel = new javax.swing.JPanel();
         paymentUpcomingPanel = new javax.swing.JPanel();
         paymentUpcomingDisplayLabel = new javax.swing.JLabel();
@@ -301,7 +305,6 @@ public class LandlordView extends javax.swing.JFrame {
         previousErrorListTable = new javax.swing.JTable();
         previousErrorDisplayLabel = new javax.swing.JLabel();
         previousErrorSearchTextField = new javax.swing.JTextField();
-        previousErrorSearchButton = new javax.swing.JButton();
         othersLayeredPane = new javax.swing.JLayeredPane();
         othersHomePanel = new javax.swing.JPanel();
         othersGreetingPanel = new javax.swing.JPanel();
@@ -325,7 +328,6 @@ public class LandlordView extends javax.swing.JFrame {
         othersMaintenancePanel = new javax.swing.JPanel();
         otherMaintenanceRequestPanel = new javax.swing.JPanel();
         maintenanceRequestSearchTextField = new javax.swing.JTextField();
-        maintenanceRequestSearchButton = new javax.swing.JButton();
         maintenanceRequestListScrollPane = new javax.swing.JScrollPane();
         previousErrorListScrollPane1 = new javax.swing.JScrollPane();
         previousErrorListTable1 = new javax.swing.JTable();
@@ -353,29 +355,28 @@ public class LandlordView extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 48)); // NOI18N
         titleLabel.setText("Company Name");
 
-        accountLabel.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\account.png")); // NOI18N
+        accountLabel.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\account.png")); // NOI18N
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
         titlePanel.setLayout(titlePanelLayout);
         titlePanelLayout.setHorizontalGroup(
-                titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(titlePanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(titleLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1188,
-                                        Short.MAX_VALUE)
-                                .addComponent(accountLabel)
-                                .addGap(30, 30, 30)));
+            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(titlePanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(titleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1188, Short.MAX_VALUE)
+                .addComponent(accountLabel)
+                .addGap(30, 30, 30))
+        );
         titlePanelLayout.setVerticalGroup(
-                titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(titlePanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(
-                                        titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(titleLabel)
-                                                .addComponent(accountLabel))
-                                .addGap(30, 30, 30)));
+            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(titlePanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(titleLabel)
+                    .addComponent(accountLabel))
+                .addGap(30, 30, 30))
+        );
 
         menubarPanel.setBackground(new java.awt.Color(255, 204, 204));
         menubarPanel.setPreferredSize(new java.awt.Dimension(320, 100));
@@ -384,12 +385,15 @@ public class LandlordView extends javax.swing.JFrame {
         dashboardButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboardButton.setForeground(new java.awt.Color(51, 51, 51));
         dashboardButton.setText("Dashboard");
-        dashboardButton
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
+        dashboardButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         dashboardButton.setFocusPainted(false);
         dashboardButton.setFocusable(false);
         dashboardButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+        dashboardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dashboardButtonActionPerformed(evt);
+            }
+        });
 
         housesButton.setBackground(new java.awt.Color(242, 242, 242));
         housesButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -398,37 +402,50 @@ public class LandlordView extends javax.swing.JFrame {
         housesButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         housesButton.setFocusPainted(false);
         housesButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+        housesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                housesButtonActionPerformed(evt);
+            }
+        });
 
         tenantsButton.setBackground(new java.awt.Color(242, 242, 242));
         tenantsButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tenantsButton.setForeground(new java.awt.Color(51, 51, 51));
         tenantsButton.setText("Tenants");
-        tenantsButton
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
+        tenantsButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         tenantsButton.setFocusPainted(false);
         tenantsButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+        tenantsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tenantsButtonActionPerformed(evt);
+            }
+        });
 
         maintenanceButton.setBackground(new java.awt.Color(242, 242, 242));
         maintenanceButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         maintenanceButton.setForeground(new java.awt.Color(51, 51, 51));
         maintenanceButton.setText("Maintenance");
-        maintenanceButton
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
+        maintenanceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         maintenanceButton.setFocusPainted(false);
         maintenanceButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+        maintenanceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maintenanceButtonActionPerformed(evt);
+            }
+        });
 
         paymentButton.setBackground(new java.awt.Color(242, 242, 242));
         paymentButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         paymentButton.setForeground(new java.awt.Color(51, 51, 51));
         paymentButton.setText("Payments");
-        paymentButton
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
+        paymentButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         paymentButton.setFocusPainted(false);
         paymentButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+        paymentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentButtonActionPerformed(evt);
+            }
+        });
 
         otherButton.setBackground(new java.awt.Color(242, 242, 242));
         otherButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -437,74 +454,60 @@ public class LandlordView extends javax.swing.JFrame {
         otherButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         otherButton.setFocusPainted(false);
         otherButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+        otherButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                otherButtonActionPerformed(evt);
+            }
+        });
 
         signoutButton.setBackground(new java.awt.Color(242, 242, 242));
         signoutButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         signoutButton.setForeground(new java.awt.Color(51, 51, 51));
         signoutButton.setText("Sign Out");
-        signoutButton
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
+        signoutButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         signoutButton.setFocusPainted(false);
         signoutButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+        signoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signoutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menubarPanelLayout = new javax.swing.GroupLayout(menubarPanel);
         menubarPanel.setLayout(menubarPanelLayout);
         menubarPanelLayout.setHorizontalGroup(
-                menubarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(menubarPanelLayout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addGroup(menubarPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(dashboardButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(housesButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tenantsButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(maintenanceButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(signoutButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(otherButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(60, Short.MAX_VALUE)));
+            menubarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menubarPanelLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addGroup(menubarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dashboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(housesButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tenantsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maintenanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(otherButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
         menubarPanelLayout.setVerticalGroup(
-                menubarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(menubarPanelLayout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(dashboardButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(housesButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(tenantsButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(maintenanceButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(otherButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190,
-                                        Short.MAX_VALUE)
-                                .addComponent(signoutButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60)));
+            menubarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menubarPanelLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(dashboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(housesButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(tenantsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(maintenanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(otherButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+                .addComponent(signoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
+        );
 
         landlordDashboard.setBackground(new java.awt.Color(204, 255, 255));
         landlordDashboard.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -518,8 +521,7 @@ public class LandlordView extends javax.swing.JFrame {
         home.setPreferredSize(new java.awt.Dimension(1345, 810));
 
         greetingPanel.setBackground(new java.awt.Color(255, 204, 204));
-        greetingPanel
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(255, 153, 153)));
+        greetingPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(255, 153, 153)));
         greetingPanel.setPreferredSize(new java.awt.Dimension(286, 120));
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 52)); // NOI18N
@@ -531,23 +533,23 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout greetingPanelLayout = new javax.swing.GroupLayout(greetingPanel);
         greetingPanel.setLayout(greetingPanelLayout);
         greetingPanelLayout.setHorizontalGroup(
-                greetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(greetingPanelLayout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(landlordName)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            greetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(greetingPanelLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(landlordName)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
         greetingPanelLayout.setVerticalGroup(
-                greetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                greetingPanelLayout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addGroup(greetingPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(jLabel1)
-                                                .addComponent(landlordName))
-                                        .addGap(30, 30, 30)));
+            greetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, greetingPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(greetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(landlordName))
+                .addGap(30, 30, 30))
+        );
 
         homeHousePanel.setBackground(new java.awt.Color(153, 153, 255));
         homeHousePanel.setPreferredSize(new java.awt.Dimension(400, 275));
@@ -556,8 +558,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
 
-        houseIconLabel.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\home-icon-silhouette (2).png")); // NOI18N
+        houseIconLabel.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\home-icon-silhouette (2).png")); // NOI18N
 
         houseCountLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         houseCountLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -571,29 +572,30 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(houseIconLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93,
-                                        Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(houseCountLabel)
-                                        .addComponent(houseDisplayLabel))
-                                .addGap(32, 32, 32)));
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(houseIconLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(houseCountLabel)
+                    .addComponent(houseDisplayLabel))
+                .addGap(32, 32, 32))
+        );
         jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGap(20, 20, 20)
-                                                .addComponent(houseIconLabel))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGap(38, 38, 38)
-                                                .addComponent(houseCountLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(houseDisplayLabel)))
-                                .addGap(30, 30, 30)));
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(houseIconLabel))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(houseCountLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(houseDisplayLabel)))
+                .addGap(30, 30, 30))
+        );
 
         homePaymentButton.setBackground(new java.awt.Color(204, 204, 255));
         homePaymentButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -609,43 +611,40 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(homePaymentButton, javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap()));
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(homePaymentButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
         jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(homePaymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(homePaymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout homeHousePanelLayout = new javax.swing.GroupLayout(homeHousePanel);
         homeHousePanel.setLayout(homeHousePanelLayout);
         homeHousePanelLayout.setHorizontalGroup(
-                homeHousePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeHousePanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap()));
+            homeHousePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeHousePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         homeHousePanelLayout.setVerticalGroup(
-                homeHousePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeHousePanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            homeHousePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeHousePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         homeTenantPanel.setBackground(new java.awt.Color(0, 204, 204));
         homeTenantPanel.setPreferredSize(new java.awt.Dimension(400, 275));
@@ -654,8 +653,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(206, 247, 247));
 
-        peopleIconLabel.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\multiple-users-silhouette.png")); // NOI18N
+        peopleIconLabel.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\multiple-users-silhouette.png")); // NOI18N
 
         tenantCountLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         tenantCountLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -669,29 +667,30 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
-                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(peopleIconLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86,
-                                        Short.MAX_VALUE)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tenantCountLabel)
-                                        .addComponent(tenantDisplayLabel))
-                                .addGap(32, 32, 32)));
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(peopleIconLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tenantCountLabel)
+                    .addComponent(tenantDisplayLabel))
+                .addGap(32, 32, 32))
+        );
         jPanel4Layout.setVerticalGroup(
-                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                                .addGap(20, 20, 20)
-                                                .addComponent(peopleIconLabel))
-                                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                                .addGap(38, 38, 38)
-                                                .addComponent(tenantCountLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(tenantDisplayLabel)))
-                                .addGap(30, 30, 30)));
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(peopleIconLabel))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(tenantCountLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tenantDisplayLabel)))
+                .addGap(30, 30, 30))
+        );
 
         homeTenantDetailsButton.setBackground(new java.awt.Color(206, 247, 247));
         homeTenantDetailsButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -707,44 +706,40 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(homeTenantDetailsButton,
-                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap()));
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(homeTenantDetailsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
         jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(homeTenantDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(homeTenantDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout homeTenantPanelLayout = new javax.swing.GroupLayout(homeTenantPanel);
         homeTenantPanel.setLayout(homeTenantPanelLayout);
         homeTenantPanelLayout.setHorizontalGroup(
-                homeTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeTenantPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap()));
+            homeTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeTenantPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         homeTenantPanelLayout.setVerticalGroup(
-                homeTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeTenantPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            homeTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeTenantPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         homeMaintenancePanel.setBackground(new java.awt.Color(255, 204, 204));
         homeMaintenancePanel.setPreferredSize(new java.awt.Dimension(400, 275));
@@ -753,8 +748,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(255, 102, 102));
 
-        maintenanceIconLabel.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\settings.png")); // NOI18N
+        maintenanceIconLabel.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\settings.png")); // NOI18N
 
         newMaintenanceRequestCount.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         newMaintenanceRequestCount.setForeground(new java.awt.Color(255, 255, 255));
@@ -768,29 +762,30 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
-                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(maintenanceIconLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56,
-                                        Short.MAX_VALUE)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(requestDisplayLabel)
-                                        .addComponent(newMaintenanceRequestCount))
-                                .addGap(32, 32, 32)));
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(maintenanceIconLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(requestDisplayLabel)
+                    .addComponent(newMaintenanceRequestCount))
+                .addGap(32, 32, 32))
+        );
         jPanel6Layout.setVerticalGroup(
-                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                                .addGap(20, 20, 20)
-                                                .addComponent(maintenanceIconLabel))
-                                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                                .addGap(32, 32, 32)
-                                                .addComponent(newMaintenanceRequestCount)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(requestDisplayLabel)))
-                                .addGap(30, 30, 30)));
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(maintenanceIconLabel))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(newMaintenanceRequestCount)
+                        .addGap(18, 18, 18)
+                        .addComponent(requestDisplayLabel)))
+                .addGap(30, 30, 30))
+        );
 
         seeNewRequestsButton.setBackground(new java.awt.Color(255, 102, 102));
         seeNewRequestsButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -806,43 +801,40 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
-                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(seeNewRequestsButton, javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap()));
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(seeNewRequestsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
         jPanel5Layout.setVerticalGroup(
-                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(seeNewRequestsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(seeNewRequestsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout homeMaintenancePanelLayout = new javax.swing.GroupLayout(homeMaintenancePanel);
         homeMaintenancePanel.setLayout(homeMaintenancePanelLayout);
         homeMaintenancePanelLayout.setHorizontalGroup(
-                homeMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeMaintenancePanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap()));
+            homeMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeMaintenancePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         homeMaintenancePanelLayout.setVerticalGroup(
-                homeMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeMaintenancePanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            homeMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeMaintenancePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         homePaymentPanel.setBackground(new java.awt.Color(255, 204, 204));
         homePaymentPanel.setPreferredSize(new java.awt.Dimension(400, 275));
@@ -851,8 +843,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 102, 102));
 
-        maintenanceIconLabel1.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\income.png")); // NOI18N
+        maintenanceIconLabel1.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\income.png")); // NOI18N
 
         newMaintenanceRequestCount1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         newMaintenanceRequestCount1.setForeground(new java.awt.Color(255, 255, 255));
@@ -866,29 +857,28 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
-                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(maintenanceIconLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36,
-                                        Short.MAX_VALUE)
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(requestDisplayLabel1)
-                                        .addComponent(newMaintenanceRequestCount1))
-                                .addGap(32, 32, 32)));
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(maintenanceIconLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(requestDisplayLabel1)
+                    .addComponent(newMaintenanceRequestCount1))
+                .addGap(32, 32, 32))
+        );
         jPanel8Layout.setVerticalGroup(
-                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(maintenanceIconLabel1)
-                                        .addGroup(jPanel8Layout.createSequentialGroup()
-                                                .addComponent(newMaintenanceRequestCount1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(requestDisplayLabel1,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 46,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(30, 30, 30)));
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(maintenanceIconLabel1)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(newMaintenanceRequestCount1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(requestDisplayLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30))
+        );
 
         homeUpcomingPaymentButton.setBackground(new java.awt.Color(255, 102, 102));
         homeUpcomingPaymentButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -904,44 +894,40 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
-                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(homeUpcomingPaymentButton,
-                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap()));
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(homeUpcomingPaymentButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
         jPanel7Layout.setVerticalGroup(
-                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(homeUpcomingPaymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(homeUpcomingPaymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout homePaymentPanelLayout = new javax.swing.GroupLayout(homePaymentPanel);
         homePaymentPanel.setLayout(homePaymentPanelLayout);
         homePaymentPanelLayout.setHorizontalGroup(
-                homePaymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homePaymentPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(8, Short.MAX_VALUE)));
+            homePaymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePaymentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
         homePaymentPanelLayout.setVerticalGroup(
-                homePaymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homePaymentPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            homePaymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePaymentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         homeCashPanel.setBackground(new java.awt.Color(153, 153, 0));
         homeCashPanel.setPreferredSize(new java.awt.Dimension(400, 275));
@@ -950,8 +936,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(200, 248, 200));
 
-        moneyIconLabel.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\money-bag.png")); // NOI18N
+        moneyIconLabel.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\money-bag.png")); // NOI18N
 
         cashReceivedLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         cashReceivedLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -965,29 +950,30 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
-                jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(moneyIconLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58,
-                                        Short.MAX_VALUE)
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cashReceivedLabel)
-                                        .addComponent(cashDisplayLabel))
-                                .addGap(32, 32, 32)));
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(moneyIconLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cashReceivedLabel)
+                    .addComponent(cashDisplayLabel))
+                .addGap(32, 32, 32))
+        );
         jPanel10Layout.setVerticalGroup(
-                jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel10Layout.createSequentialGroup()
-                                                .addGap(20, 20, 20)
-                                                .addComponent(moneyIconLabel))
-                                        .addGroup(jPanel10Layout.createSequentialGroup()
-                                                .addGap(38, 38, 38)
-                                                .addComponent(cashReceivedLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(cashDisplayLabel)))
-                                .addGap(30, 30, 30)));
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(moneyIconLabel))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(cashReceivedLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cashDisplayLabel)))
+                .addGap(30, 30, 30))
+        );
 
         homeTotalCashButton.setBackground(new java.awt.Color(200, 248, 200));
         homeTotalCashButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1003,93 +989,74 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
-                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(homeTotalCashButton, javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap()));
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(homeTotalCashButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
         jPanel9Layout.setVerticalGroup(
-                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(homeTotalCashButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(homeTotalCashButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout homeCashPanelLayout = new javax.swing.GroupLayout(homeCashPanel);
         homeCashPanel.setLayout(homeCashPanelLayout);
         homeCashPanelLayout.setHorizontalGroup(
-                homeCashPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeCashPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap()));
+            homeCashPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeCashPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         homeCashPanelLayout.setVerticalGroup(
-                homeCashPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeCashPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            homeCashPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeCashPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout homeLayout = new javax.swing.GroupLayout(home);
         home.setLayout(homeLayout);
         homeLayout.setHorizontalGroup(
-                homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(greetingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1345, Short.MAX_VALUE)
-                        .addGroup(homeLayout.createSequentialGroup()
-                                .addContainerGap(53, Short.MAX_VALUE)
-                                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(homeHousePanel, javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(homePaymentPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(40, 40, 40)
-                                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(homeTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(homeCashPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(40, 40, 40)
-                                .addComponent(homeMaintenancePanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(54, Short.MAX_VALUE)));
+            homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(greetingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1345, Short.MAX_VALUE)
+            .addGroup(homeLayout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(homeHousePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(homePaymentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(homeTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(homeCashPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addComponent(homeMaintenancePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
         homeLayout.setVerticalGroup(
-                homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homeLayout.createSequentialGroup()
-                                .addComponent(greetingPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addGroup(homeLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(homeHousePanel, javax.swing.GroupLayout.Alignment.LEADING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                                        .addComponent(homeTenantPanel, javax.swing.GroupLayout.Alignment.LEADING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                                        .addComponent(homeMaintenancePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266,
-                                                Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(
-                                        homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(homePaymentPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        266, Short.MAX_VALUE)
-                                                .addComponent(homeCashPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266,
-                                                        Short.MAX_VALUE))
-                                .addContainerGap(132, Short.MAX_VALUE)));
+            homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeLayout.createSequentialGroup()
+                .addComponent(greetingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(homeHousePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addComponent(homeTenantPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addComponent(homeMaintenancePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(homePaymentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addComponent(homeCashPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
+        );
 
         homeScrollPanel.setViewportView(home);
 
@@ -1118,8 +1085,7 @@ public class LandlordView extends javax.swing.JFrame {
         });
 
         houseTypeComboBox.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        houseTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
-                new String[] { "Detached", "Semi-Detached", "Terraced Houses", "End of Terrace" }));
+        houseTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Detached", "Semi-Detached", "Terraced Houses", "End of Terrace" }));
         houseTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 houseTypeComboBoxActionPerformed(evt);
@@ -1149,209 +1115,192 @@ public class LandlordView extends javax.swing.JFrame {
         houseClearFormButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseClearFormButton.setText("CLEAR");
         houseClearFormButton.setBorder(null);
-        
+        houseClearFormButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                houseClearFormButtonActionPerformed(evt);
+            }
+        });
 
         houseAddButton.setBackground(new java.awt.Color(255, 255, 204));
         houseAddButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseAddButton.setText("ADD");
         houseAddButton.setBorder(null);
-        
+        houseAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                houseAddButtonActionPerformed(evt);
+            }
+        });
 
         houseUpdateButton.setBackground(new java.awt.Color(255, 255, 204));
         houseUpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseUpdateButton.setText("UPDATE");
         houseUpdateButton.setBorder(null);
-        
+        houseUpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                houseUpdateButtonActionPerformed(evt);
+            }
+        });
 
         houseDeleteButton.setBackground(new java.awt.Color(255, 255, 204));
         houseDeleteButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseDeleteButton.setText("DELETE");
         houseDeleteButton.setBorder(null);
-       
+        houseDeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                houseDeleteButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout houseButtonPanelLayout = new javax.swing.GroupLayout(houseButtonPanel);
         houseButtonPanel.setLayout(houseButtonPanelLayout);
         houseButtonPanelLayout.setHorizontalGroup(
-                houseButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(houseButtonPanelLayout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addGroup(houseButtonPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, houseButtonPanelLayout
-                                                .createSequentialGroup()
-                                                .addComponent(houseAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, 181,
-                                                        Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(houseClearFormButton,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 181,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(houseButtonPanelLayout.createSequentialGroup()
-                                                .addComponent(houseUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(houseDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(16, 16, 16)));
+            houseButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(houseButtonPanelLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(houseButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, houseButtonPanelLayout.createSequentialGroup()
+                        .addComponent(houseAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(houseClearFormButton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(houseButtonPanelLayout.createSequentialGroup()
+                        .addComponent(houseUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(houseDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(16, 16, 16))
+        );
         houseButtonPanelLayout.setVerticalGroup(
-                houseButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(houseButtonPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(houseButtonPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(houseClearFormButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(houseAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(houseButtonPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(houseUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(houseDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            houseButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(houseButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(houseButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(houseClearFormButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(houseAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(houseButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(houseUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(houseDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout houseFormPanelLayout = new javax.swing.GroupLayout(houseFormPanel);
         houseFormPanel.setLayout(houseFormPanelLayout);
         houseFormPanelLayout.setHorizontalGroup(
-                houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(houseFormPanelLayout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(houseFormPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(houseFormPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(houseAddressTextField,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(houseTypeComboBox,
-                                                        javax.swing.GroupLayout.Alignment.LEADING, 0,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(houseTypeDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(houseidDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(descriptionDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(houseidTextField,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(houseRentDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
-                                                .addComponent(houseAddressDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGroup(houseFormPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(houseButtonPanel,
-                                                        javax.swing.GroupLayout.Alignment.TRAILING,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(houseRentTextField,
-                                                        javax.swing.GroupLayout.Alignment.TRAILING)))
-                                .addContainerGap(53, Short.MAX_VALUE)));
+            houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(houseFormPanelLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(houseAddressTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(houseTypeComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(houseTypeDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(houseidDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(descriptionDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(houseidTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(houseRentDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+                        .addComponent(houseAddressDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addGroup(houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(houseButtonPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(houseRentTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addContainerGap(53, Short.MAX_VALUE))
+        );
         houseFormPanelLayout.setVerticalGroup(
-                houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(houseFormPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(houseidDisplayLabel)
-                                .addGap(8, 8, 8)
-                                .addComponent(houseidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(houseTypeDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(houseTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(descriptionDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(houseAddressDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(houseAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(houseRentDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(houseRentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 43,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30,
-                                        Short.MAX_VALUE)
-                                .addComponent(houseButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(54, 54, 54)));
+            houseFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(houseFormPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(houseidDisplayLabel)
+                .addGap(8, 8, 8)
+                .addComponent(houseidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(houseTypeDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(houseTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(descriptionDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(houseAddressDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(houseAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(houseRentDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(houseRentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(houseButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
+        );
 
         houseListTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
+            new Object [][] {
 
-                },
-                new String[] {
-                        "House Id", "Type", "Address", "Rent Price"
-                }) {
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false
+            },
+            new String [] {
+                "House Id", "Type", "Address", "Rent Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         houseListScrollPane.setViewportView(houseListTable);
 
         houseSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        /*
-         * houseSearchTextField.addActionListener(new java.awt.event.ActionListener() {
-         * public void actionPerformed(java.awt.event.ActionEvent evt) {
-         * houseSearchTextFieldActionPerformed(evt);
-         * }
-         * });
-         */
+        houseSearchTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                houseSearchTextFieldActionPerformed(evt);
+            }
+        });
+        houseSearchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                houseSearchTextFieldKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout houseListPanelLayout = new javax.swing.GroupLayout(houseListPanel);
         houseListPanel.setLayout(houseListPanelLayout);
         houseListPanelLayout.setHorizontalGroup(
-                houseListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(houseListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE)
-                        .addGroup(houseListPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(houseSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            houseListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(houseListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE)
+            .addGroup(houseListPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(houseSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
         houseListPanelLayout.setVerticalGroup(
-                houseListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                houseListPanelLayout.createSequentialGroup()
-                                        .addGap(19, 19, 19)
-                                        .addComponent(houseSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(houseListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 708,
-                                                Short.MAX_VALUE)));
+            houseListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, houseListPanelLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(houseSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(houseListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout housesPanelLayout = new javax.swing.GroupLayout(housesPanel);
         housesPanel.setLayout(housesPanelLayout);
         housesPanelLayout.setHorizontalGroup(
-                housesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(housesPanelLayout.createSequentialGroup()
-                                .addComponent(houseFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(houseListPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(34, 34, 34)));
+            housesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(housesPanelLayout.createSequentialGroup()
+                .addComponent(houseFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(houseListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(34, 34, 34))
+        );
         housesPanelLayout.setVerticalGroup(
-                housesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(housesPanelLayout.createSequentialGroup()
-                                .addComponent(houseFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, housesPanelLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(houseListPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            housesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(housesPanelLayout.createSequentialGroup()
+                .addComponent(houseFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, housesPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(houseListPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         landlordDashboard.add(housesPanel, "card3");
 
@@ -1425,60 +1374,70 @@ public class LandlordView extends javax.swing.JFrame {
         tenantClearFormButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantClearFormButton.setText("CLEAR");
         tenantClearFormButton.setBorder(null);
+        tenantClearFormButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tenantClearFormButtonActionPerformed(evt);
+            }
+        });
 
         tenantAddButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantAddButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantAddButton.setText("ADD");
         tenantAddButton.setBorder(null);
+        tenantAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tenantAddButtonActionPerformed(evt);
+            }
+        });
 
         tenantUpdateButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantUpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantUpdateButton.setText("UPDATE");
         tenantUpdateButton.setBorder(null);
+        tenantUpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tenantUpdateButtonActionPerformed(evt);
+            }
+        });
 
         tenantDeleteButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantDeleteButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantDeleteButton.setText("DELETE");
         tenantDeleteButton.setBorder(null);
+        tenantDeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tenantDeleteButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout tenantButtonPanelLayout = new javax.swing.GroupLayout(tenantButtonPanel);
         tenantButtonPanel.setLayout(tenantButtonPanelLayout);
         tenantButtonPanelLayout.setHorizontalGroup(
-                tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tenantButtonPanelLayout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addGroup(tenantButtonPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tenantAddButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tenantUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(tenantButtonPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tenantDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tenantClearFormButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(16, 16, 16)));
+            tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantButtonPanelLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tenantAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tenantUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tenantDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tenantClearFormButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
+        );
         tenantButtonPanelLayout.setVerticalGroup(
-                tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tenantButtonPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(tenantButtonPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tenantClearFormButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tenantAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(tenantButtonPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tenantUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tenantDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tenantClearFormButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tenantAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tenantButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tenantUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tenantDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         tenantHouseIdDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         tenantHouseIdDisplayLabel.setText("House ID");
@@ -1486,115 +1445,76 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout tenantFormPanelLayout = new javax.swing.GroupLayout(tenantFormPanel);
         tenantFormPanel.setLayout(tenantFormPanelLayout);
         tenantFormPanelLayout.setHorizontalGroup(
-                tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantFormPanelLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(firstnameDisplayLabel)
+                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lastnameDisplayLabel)
+                    .addComponent(lastnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(firstnameTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(genderComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(genderDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tenantidDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tenantidTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(phoneNumberDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(emailDisplayLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(phoneNumberTextField)
+                        .addComponent(tenantButtonPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(tenantFormPanelLayout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(tenantFormPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(firstnameDisplayLabel)
-                                        .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 404,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lastnameDisplayLabel)
-                                        .addComponent(lastnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 404,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(tenantFormPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(firstnameTextField,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(genderComboBox, javax.swing.GroupLayout.Alignment.LEADING,
-                                                        0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(genderDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(tenantidDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(tenantidTextField,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(phoneNumberDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(emailDisplayLabel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(phoneNumberTextField)
-                                                .addComponent(tenantButtonPanel,
-                                                        javax.swing.GroupLayout.Alignment.LEADING,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(tenantFormPanelLayout.createSequentialGroup()
-                                                        .addGroup(tenantFormPanelLayout
-                                                                .createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addGroup(tenantFormPanelLayout.createSequentialGroup()
-                                                                        .addComponent(dobDisplayLabel)
-                                                                        .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE))
-                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                        tenantFormPanelLayout.createSequentialGroup()
-                                                                                .addComponent(tenantHouseIdDisplayLabel)
-                                                                                .addGap(135, 135, 135)))
-                                                        .addGroup(tenantFormPanelLayout
-                                                                .createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING,
-                                                                        false)
-                                                                .addComponent(dobDateChooser,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE, 198,
-                                                                        Short.MAX_VALUE)
-                                                                .addComponent(tenantHouseIdComboBox, 0,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        Short.MAX_VALUE)))))
-                                .addContainerGap(33, Short.MAX_VALUE)));
+                            .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(tenantFormPanelLayout.createSequentialGroup()
+                                    .addComponent(dobDisplayLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tenantFormPanelLayout.createSequentialGroup()
+                                    .addComponent(tenantHouseIdDisplayLabel)
+                                    .addGap(135, 135, 135)))
+                            .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(dobDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                .addComponent(tenantHouseIdComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
         tenantFormPanelLayout.setVerticalGroup(
-                tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tenantFormPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(tenantidDisplayLabel)
-                                .addGap(8, 8, 8)
-                                .addComponent(tenantidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(genderDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(genderComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)
-                                .addComponent(firstnameDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(firstnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lastnameDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lastnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(emailDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(phoneNumberDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(phoneNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 43,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(tenantFormPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(dobDisplayLabel)
-                                        .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(tenantFormPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tenantHouseIdDisplayLabel)
-                                        .addComponent(tenantHouseIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16,
-                                        Short.MAX_VALUE)
-                                .addComponent(tenantButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)));
+            tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantFormPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(tenantidDisplayLabel)
+                .addGap(8, 8, 8)
+                .addComponent(tenantidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(genderDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(genderComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(firstnameDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(firstnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lastnameDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lastnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(emailDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(phoneNumberDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(phoneNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dobDisplayLabel)
+                    .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tenantHouseIdDisplayLabel)
+                    .addComponent(tenantHouseIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(tenantButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+        );
 
         tenantSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         tenantSearchTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -1604,94 +1524,75 @@ public class LandlordView extends javax.swing.JFrame {
         });
 
         tenantListTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
+            new Object [][] {
 
-                },
-                new String[] {
-                        "Tenant ID", "Gender", "First Name", "Last Name", "Email", "Phone Number", "Date of Birth"
-                }) {
-            Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class
+            },
+            new String [] {
+                "Tenant ID", "Gender", "First Name", "Last Name", "Email", "Phone Number", "Date of Birth"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false, false, false, false
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         tenantListScrollPane.setViewportView(tenantListTable);
 
-        houseSearchButton1.setBackground(new java.awt.Color(248, 255, 255));
-        houseSearchButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        houseSearchButton1.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\magnifying-glass.png")); // NOI18N
-        houseSearchButton1.setBorder(null);
-
         javax.swing.GroupLayout tenantListPanelLayout = new javax.swing.GroupLayout(tenantListPanel);
         tenantListPanel.setLayout(tenantListPanelLayout);
         tenantListPanelLayout.setHorizontalGroup(
-                tenantListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tenantListPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(tenantSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(houseSearchButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(tenantListPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(tenantListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 833,
-                                        Short.MAX_VALUE)
-                                .addContainerGap()));
+            tenantListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantListPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(tenantSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(tenantListPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tenantListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         tenantListPanelLayout.setVerticalGroup(
-                tenantListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tenantListPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(tenantListPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tenantSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 44,
-                                                Short.MAX_VALUE)
-                                        .addComponent(houseSearchButton1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(tenantListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 633,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            tenantListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantListPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(tenantSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(tenantListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout tenantsPanelLayout = new javax.swing.GroupLayout(tenantsPanel);
         tenantsPanel.setLayout(tenantsPanelLayout);
         tenantsPanelLayout.setHorizontalGroup(
-                tenantsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tenantsPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(tenantFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tenantListPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap()));
+            tenantsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tenantFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tenantListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         tenantsPanelLayout.setVerticalGroup(
-                tenantsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tenantsPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(tenantsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tenantFormPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(tenantsPanelLayout.createSequentialGroup()
-                                                .addComponent(tenantListPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(60, 60, 60)))
-                                .addContainerGap()));
+            tenantsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tenantsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tenantFormPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(tenantsPanelLayout.createSequentialGroup()
+                        .addComponent(tenantListPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)))
+                .addContainerGap())
+        );
 
         landlordDashboard.add(tenantsPanel, "card4");
 
@@ -1703,29 +1604,29 @@ public class LandlordView extends javax.swing.JFrame {
         paymentUpcomingScrollPane.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         paymentUpcomingListTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null, null, null },
-                        { null, null, null, null, null, null },
-                        { null, null, null, null, null, null },
-                        { null, null, null, null, null, null }
-                },
-                new String[] {
-                        "Payment ID", "Amount", "Type", "House ID", "Due Date", "Status"
-                }) {
-            Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class,
-                    java.lang.String.class, java.lang.String.class
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Payment ID", "Amount", "Type", "House ID", "Due Date", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false, false, false
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         paymentUpcomingScrollPane.setViewportView(paymentUpcomingListTable);
@@ -1774,8 +1675,7 @@ public class LandlordView extends javax.swing.JFrame {
         paymentUpcomingDescriptionTextArea.setPreferredSize(new java.awt.Dimension(250, 50));
         jScrollPane2.setViewportView(paymentUpcomingDescriptionTextArea);
 
-        paymentUpcomingStatusComboBox
-                .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UnPaid", "Paid" }));
+        paymentUpcomingStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UnPaid", "Paid" }));
         paymentUpcomingStatusComboBox.setPreferredSize(new java.awt.Dimension(250, 30));
 
         paymentUpcomingHouseDetailsButton.setBackground(new java.awt.Color(248, 255, 255));
@@ -1810,181 +1710,110 @@ public class LandlordView extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout paymentUpcomingDetailsPanelLayout = new javax.swing.GroupLayout(
-                paymentUpcomingDetailsPanel);
+        javax.swing.GroupLayout paymentUpcomingDetailsPanelLayout = new javax.swing.GroupLayout(paymentUpcomingDetailsPanel);
         paymentUpcomingDetailsPanel.setLayout(paymentUpcomingDetailsPanelLayout);
         paymentUpcomingDetailsPanelLayout.setHorizontalGroup(
-                paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(paymentUpcomingDescriptionLabel)
-                                        .addComponent(paymentUpcomingIdDisplayLabel)
-                                        .addComponent(paymentUpcomingAmountDisplayLabel)
-                                        .addComponent(paymentUpcomingTypeDisplayLabel)
-                                        .addComponent(paymentUpcomingDueDateDisplayLabel)
-                                        .addComponent(paymentUpcomingStatusDisplayLabel)
-                                        .addComponent(paymentUpcomingHouseDisplayLabel))
+            paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paymentUpcomingDescriptionLabel)
+                    .addComponent(paymentUpcomingIdDisplayLabel)
+                    .addComponent(paymentUpcomingAmountDisplayLabel)
+                    .addComponent(paymentUpcomingTypeDisplayLabel)
+                    .addComponent(paymentUpcomingDueDateDisplayLabel)
+                    .addComponent(paymentUpcomingStatusDisplayLabel)
+                    .addComponent(paymentUpcomingHouseDisplayLabel))
+                .addGap(18, 18, 18)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
+                        .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(paymentUpcomingHouseTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(paymentUpcomingTypeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(paymentUpcomingAmountTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(paymentUpcomingIdTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))
+                        .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
-                                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
-                                                                false)
-                                                        .addComponent(paymentUpcomingHouseTextField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(paymentUpcomingTypeTextField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(paymentUpcomingAmountTextField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(paymentUpcomingIdTextField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jScrollPane2))
-                                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(paymentUpcomingDetailsPanelLayout
-                                                                .createSequentialGroup()
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(paymentUpcomingHouseDetailsButton,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(paymentUpcomingDetailsPanelLayout
-                                                                .createSequentialGroup()
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(paymentUpcomingHouseAddButton,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
-                                                .addComponent(paymentUpcomingStatusComboBox,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(paymentUpcomingUpdateDetailsButton,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(paymentUpcomingDueDateChooser,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                .addComponent(paymentUpcomingHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(paymentUpcomingHouseAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
+                        .addComponent(paymentUpcomingStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(paymentUpcomingUpdateDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(paymentUpcomingDueDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
         paymentUpcomingDetailsPanelLayout.setVerticalGroup(
-                paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentUpcomingIdDisplayLabel)
+                    .addComponent(paymentUpcomingIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentUpcomingAmountDisplayLabel)
+                    .addComponent(paymentUpcomingAmountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentUpcomingTypeDisplayLabel)
+                    .addComponent(paymentUpcomingTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(paymentUpcomingDueDateDisplayLabel)
+                    .addComponent(paymentUpcomingDueDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentUpcomingHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentUpcomingHouseDisplayLabel)
+                    .addComponent(paymentUpcomingHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentUpcomingStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentUpcomingUpdateDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentUpcomingStatusDisplayLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentUpcomingDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentUpcomingIdDisplayLabel)
-                                        .addComponent(paymentUpcomingIdTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentUpcomingAmountDisplayLabel)
-                                        .addComponent(paymentUpcomingAmountTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentUpcomingTypeDisplayLabel)
-                                        .addComponent(paymentUpcomingTypeTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(paymentUpcomingDueDateDisplayLabel)
-                                        .addComponent(paymentUpcomingDueDateChooser,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentUpcomingHouseTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentUpcomingHouseDisplayLabel)
-                                        .addComponent(paymentUpcomingHouseDetailsButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentUpcomingStatusComboBox,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentUpcomingUpdateDetailsButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentUpcomingStatusDisplayLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(paymentUpcomingDetailsPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(paymentUpcomingDetailsPanelLayout.createSequentialGroup()
-                                                        .addComponent(paymentUpcomingDescriptionLabel)
-                                                        .addGap(39, 39, 39))
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0,
-                                                        Short.MAX_VALUE))
-                                        .addComponent(paymentUpcomingHouseAddButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(15, 15, 15)));
+                            .addComponent(paymentUpcomingDescriptionLabel)
+                            .addGap(39, 39, 39))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(paymentUpcomingHouseAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
+        );
 
         javax.swing.GroupLayout paymentUpcomingPanelLayout = new javax.swing.GroupLayout(paymentUpcomingPanel);
         paymentUpcomingPanel.setLayout(paymentUpcomingPanelLayout);
         paymentUpcomingPanelLayout.setHorizontalGroup(
-                paymentUpcomingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(paymentUpcomingPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
-                                                .addComponent(paymentUpcomingScrollPane,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 700,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(paymentUpcomingDetailsPanel,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
-                                                .addComponent(paymentUpcomingDisplayLabel)
-                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                .addContainerGap()));
+            paymentUpcomingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(paymentUpcomingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
+                        .addComponent(paymentUpcomingScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(paymentUpcomingDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
+                        .addComponent(paymentUpcomingDisplayLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
         paymentUpcomingPanelLayout.setVerticalGroup(
-                paymentUpcomingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(paymentUpcomingDisplayLabel)
-                                .addGap(12, 12, 12)
-                                .addGroup(paymentUpcomingPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(paymentUpcomingDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(paymentUpcomingScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                0, Short.MAX_VALUE))
-                                .addContainerGap()));
+            paymentUpcomingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(paymentUpcomingDisplayLabel)
+                .addGap(12, 12, 12)
+                .addGroup(paymentUpcomingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paymentUpcomingDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(paymentUpcomingScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         paymentTenantDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         paymentTenantDisplayLabel.setText("Payments from Tenants");
@@ -1992,26 +1821,26 @@ public class LandlordView extends javax.swing.JFrame {
         paymentTenantScrollPane.setBackground(new java.awt.Color(242, 242, 242));
 
         paymentTenantListTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
+            new Object [][] {
 
-                },
-                new String[] {
-                        "Payment ID", "Tenant Name", "Amount", "House ID", "Date of Payment", "Type"
-                }) {
-            Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
-                    java.lang.String.class, java.lang.String.class
+            },
+            new String [] {
+                "Payment ID", "Tenant Name", "Amount", "House ID", "Date of Payment", "Type"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false, true, true
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         paymentTenantScrollPane.setViewportView(paymentTenantListTable);
@@ -2074,173 +1903,115 @@ public class LandlordView extends javax.swing.JFrame {
 
         paymentTenantDueDateChooser.setPreferredSize(new java.awt.Dimension(250, 30));
 
-        javax.swing.GroupLayout paymentUpcomingDetailsPanel1Layout = new javax.swing.GroupLayout(
-                paymentUpcomingDetailsPanel1);
+        javax.swing.GroupLayout paymentUpcomingDetailsPanel1Layout = new javax.swing.GroupLayout(paymentUpcomingDetailsPanel1);
         paymentUpcomingDetailsPanel1.setLayout(paymentUpcomingDetailsPanel1Layout);
         paymentUpcomingDetailsPanel1Layout.setHorizontalGroup(
-                paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(paymentTenantDescriptionDisplayLabel)
-                                        .addComponent(paymentTenantIdDisplayLabel)
-                                        .addComponent(paymentTenantAmountDisplayLabel)
-                                        .addComponent(paymentTenantDueDateDisplayLabel)
-                                        .addComponent(paymentTenantNameDisplayLabel)
-                                        .addComponent(paymentTenantHouseDisplayLabel))
-                                .addGap(18, 18, 18)
-                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
-                                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
-                                                                false)
-                                                        .addComponent(paymentTenantHouseTextField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(paymentTenantNameTextField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(paymentTenantAmountTextField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(paymentTenantIdTextField,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(paymentTenantDescriptionScrollPane))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(paymentTenantTeantDetailsButton,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(paymentTenantHouseDetailsButton,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(paymentTenantDueDateChooser,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(26, Short.MAX_VALUE)));
+            paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paymentTenantDescriptionDisplayLabel)
+                    .addComponent(paymentTenantIdDisplayLabel)
+                    .addComponent(paymentTenantAmountDisplayLabel)
+                    .addComponent(paymentTenantDueDateDisplayLabel)
+                    .addComponent(paymentTenantNameDisplayLabel)
+                    .addComponent(paymentTenantHouseDisplayLabel))
+                .addGap(18, 18, 18)
+                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
+                        .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(paymentTenantHouseTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(paymentTenantNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(paymentTenantAmountTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(paymentTenantIdTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(paymentTenantDescriptionScrollPane))
+                        .addGap(18, 18, 18)
+                        .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(paymentTenantTeantDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(paymentTenantHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(paymentTenantDueDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
         paymentUpcomingDetailsPanel1Layout.setVerticalGroup(
-                paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentTenantIdDisplayLabel)
-                                        .addComponent(paymentTenantIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentTenantAmountDisplayLabel)
-                                        .addComponent(paymentTenantAmountTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(paymentTenantDueDateChooser,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentTenantDueDateDisplayLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentTenantNameTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentTenantNameDisplayLabel)
-                                        .addComponent(paymentTenantTeantDetailsButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paymentTenantHouseTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paymentTenantHouseDisplayLabel)
-                                        .addComponent(paymentTenantHouseDetailsButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(paymentUpcomingDetailsPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
-                                                .addComponent(paymentTenantDescriptionDisplayLabel)
-                                                .addGap(39, 39, 39))
-                                        .addComponent(paymentTenantDescriptionScrollPane,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                .addContainerGap(20, Short.MAX_VALUE)));
+            paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentTenantIdDisplayLabel)
+                    .addComponent(paymentTenantIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentTenantAmountDisplayLabel)
+                    .addComponent(paymentTenantAmountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(paymentTenantDueDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentTenantDueDateDisplayLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentTenantNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentTenantNameDisplayLabel)
+                    .addComponent(paymentTenantTeantDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentTenantHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentTenantHouseDisplayLabel)
+                    .addComponent(paymentTenantHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(paymentUpcomingDetailsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(paymentUpcomingDetailsPanel1Layout.createSequentialGroup()
+                        .addComponent(paymentTenantDescriptionDisplayLabel)
+                        .addGap(39, 39, 39))
+                    .addComponent(paymentTenantDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout paymentTenantPanelLayout = new javax.swing.GroupLayout(paymentTenantPanel);
         paymentTenantPanel.setLayout(paymentTenantPanelLayout);
         paymentTenantPanelLayout.setHorizontalGroup(
-                paymentTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentTenantPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(paymentTenantPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(paymentTenantPanelLayout.createSequentialGroup()
-                                                .addComponent(paymentTenantScrollPane,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 700,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(paymentUpcomingDetailsPanel1,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(paymentTenantDisplayLabel))
-                                .addContainerGap()));
+            paymentTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentTenantPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(paymentTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentTenantPanelLayout.createSequentialGroup()
+                        .addComponent(paymentTenantScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(paymentUpcomingDetailsPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(paymentTenantDisplayLabel))
+                .addContainerGap())
+        );
         paymentTenantPanelLayout.setVerticalGroup(
-                paymentTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentTenantPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(paymentTenantDisplayLabel)
-                                .addGap(12, 12, 12)
-                                .addGroup(paymentTenantPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(paymentUpcomingDetailsPanel1,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(paymentTenantScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                0, Short.MAX_VALUE))
-                                .addContainerGap()));
+            paymentTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentTenantPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(paymentTenantDisplayLabel)
+                .addGap(12, 12, 12)
+                .addGroup(paymentTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paymentUpcomingDetailsPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(paymentTenantScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout paymentsPanelLayout = new javax.swing.GroupLayout(paymentsPanel);
         paymentsPanel.setLayout(paymentsPanelLayout);
         paymentsPanelLayout.setHorizontalGroup(
-                paymentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentsPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(paymentsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(paymentUpcomingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1333,
-                                                Short.MAX_VALUE)
-                                        .addComponent(paymentTenantPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap()));
+            paymentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(paymentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paymentUpcomingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1333, Short.MAX_VALUE)
+                    .addComponent(paymentTenantPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
         paymentsPanelLayout.setVerticalGroup(
-                paymentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paymentsPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(paymentUpcomingPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(paymentTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            paymentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(paymentUpcomingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(paymentTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         landlordDashboard.add(paymentsPanel, "card6");
 
@@ -2310,8 +2081,7 @@ public class LandlordView extends javax.swing.JFrame {
         errorDetialsStatusDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         errorDetialsStatusDisplayLabel.setText("Status");
 
-        errorDetailsStatusComboBox.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "Send", "Received", "In Review", "Rectified" }));
+        errorDetailsStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Send", "Received", "In Review", "Rectified" }));
         errorDetailsStatusComboBox.setPreferredSize(new java.awt.Dimension(200, 30));
 
         errorDetailsHouseDiplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -2336,159 +2106,99 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout errorDetailsPanelLayout = new javax.swing.GroupLayout(errorDetailsPanel);
         errorDetailsPanel.setLayout(errorDetailsPanelLayout);
         errorDetailsPanelLayout.setHorizontalGroup(
-                errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(errorDetailsPanelLayout.createSequentialGroup()
-                                .addGroup(errorDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(errorDetailsPanelLayout.createSequentialGroup()
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(errorDetailsPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(errorDetialsDateDisplayLabel)
-                                                        .addComponent(errorDetailsLogidDisplayLabel)
-                                                        .addComponent(errorTenantDisplayLabel)
-                                                        .addComponent(errorDetialsStatusDisplayLabel)
-                                                        .addComponent(errorDetailsHouseDiplayLabel)
-                                                        .addComponent(errorDescriptionDisplayLabel))
-                                                .addGap(36, 36, 36))
-                                        .addGroup(errorDetailsPanelLayout.createSequentialGroup()
-                                                .addGap(60, 60, 60)
-                                                .addComponent(errorDetailsDisplayLabel,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 118,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(errorDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(errorDetailsPanelLayout.createSequentialGroup()
-                                                .addComponent(errorDetailsStatusComboBox,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(errorUpdateStatusButton,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(errorDetailsLogidTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(errorDetialsDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(errorDetailsPanelLayout.createSequentialGroup()
-                                                .addGroup(errorDetailsPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(errorDescriptionScrollPane,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(errorTenantTextField,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(errorDetailsHouseidTextField,
-                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(errorDetailsPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(errorDetailsHouseInfoButton,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(errorTenantInfoButton,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(126, 126, Short.MAX_VALUE)));
+            errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(errorDetialsDateDisplayLabel)
+                            .addComponent(errorDetailsLogidDisplayLabel)
+                            .addComponent(errorTenantDisplayLabel)
+                            .addComponent(errorDetialsStatusDisplayLabel)
+                            .addComponent(errorDetailsHouseDiplayLabel)
+                            .addComponent(errorDescriptionDisplayLabel))
+                        .addGap(36, 36, 36))
+                    .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(errorDetailsDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                        .addComponent(errorDetailsStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(errorUpdateStatusButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(errorDetailsLogidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDetialsDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                        .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(errorDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorTenantTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorDetailsHouseidTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(errorDetailsHouseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorTenantInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(126, 126, Short.MAX_VALUE))
+        );
         errorDetailsPanelLayout.setVerticalGroup(
-                errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(errorDetailsPanelLayout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(errorDetailsDisplayLabel)
-                                .addGap(18, 18, 18)
-                                .addGroup(errorDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(errorDetailsLogidDisplayLabel)
-                                        .addComponent(errorDetailsLogidTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(17, 17, 17)
-                                .addGroup(errorDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(errorDetialsDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(errorDetialsDateDisplayLabel))
-                                .addGap(17, 17, 17)
-                                .addGroup(errorDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(errorDetialsStatusDisplayLabel)
-                                        .addComponent(errorUpdateStatusButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(errorDetailsStatusComboBox,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(errorDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(errorTenantTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(errorTenantDisplayLabel)
-                                        .addComponent(errorTenantInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(errorDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(errorDetailsHouseidTextField,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(errorDetailsHouseDiplayLabel)
-                                        .addComponent(errorDetailsHouseInfoButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(errorDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(errorDescriptionScrollPane,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 111,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(errorDescriptionDisplayLabel))));
+            errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDetailsPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(errorDetailsDisplayLabel)
+                .addGap(18, 18, 18)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorDetailsLogidDisplayLabel)
+                    .addComponent(errorDetailsLogidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorDetialsDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDetialsDateDisplayLabel))
+                .addGap(17, 17, 17)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorDetialsStatusDisplayLabel)
+                    .addComponent(errorUpdateStatusButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDetailsStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorTenantTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorTenantDisplayLabel)
+                    .addComponent(errorTenantInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorDetailsHouseidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDetailsHouseDiplayLabel)
+                    .addComponent(errorDetailsHouseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(errorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorDescriptionDisplayLabel)))
+        );
 
         errorReviewListTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null }
-                },
-                new String[] {
-                        "Log ID", "Tenant Name", "Date Issued", "House ID"
-                }) {
-            Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Log ID", "Tenant Name", "Date Issued", "House ID"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         errorReviewListScrollPane.setViewportView(errorReviewListTable);
@@ -2497,48 +2207,50 @@ public class LandlordView extends javax.swing.JFrame {
         errorReviewDisplayLabel.setText("In Review");
 
         errorNewListTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null }
-                },
-                new String[] {
-                        "Log ID", "Tenant Name", "Date Issued", "House ID"
-                }) {
-            Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Log ID", "Tenant Name", "Date Issued", "House ID"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean[] {
-                    false, true, false, true
+            boolean[] canEdit = new boolean [] {
+                false, true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         errorNewListScrollPane.setViewportView(errorNewListTable);
 
         previousErrorListTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null }
-                },
-                new String[] {
-                        "ID", "Tenant Name", "Date Issued", "House ID"
-                }) {
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Tenant Name", "Date Issued", "House ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         previousErrorListScrollPane.setViewportView(previousErrorListTable);
@@ -2550,119 +2262,75 @@ public class LandlordView extends javax.swing.JFrame {
         previousErrorSearchTextField.setText("Search");
         previousErrorSearchTextField.setPreferredSize(new java.awt.Dimension(200, 40));
 
-        previousErrorSearchButton.setBackground(new java.awt.Color(248, 255, 255));
-        previousErrorSearchButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        previousErrorSearchButton.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\magnifying-glass.png")); // NOI18N
-        previousErrorSearchButton.setBorder(null);
-
         javax.swing.GroupLayout errorPanelLayout = new javax.swing.GroupLayout(errorPanel);
         errorPanel.setLayout(errorPanelLayout);
         errorPanelLayout.setHorizontalGroup(
-                errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                .addGroup(errorPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                .addGap(15, 15, 15)
-                                                .addComponent(errorNewListScrollPane,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 634,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(errorPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                                .addGap(60, 60, 60)
-                                                                .addGroup(errorPanelLayout.createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(previousErrorDisplayLabel)
-                                                                        .addGroup(errorPanelLayout
-                                                                                .createSequentialGroup()
-                                                                                .addComponent(
-                                                                                        previousErrorSearchTextField,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(18, 18, 18)
-                                                                                .addComponent(previousErrorSearchButton,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        41,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                                .addGap(0, 0, Short.MAX_VALUE))
-                                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(previousErrorListScrollPane,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE, 678,
-                                                                        Short.MAX_VALUE))))
-                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                .addGap(60, 60, 60)
-                                                .addComponent(errorNewDisplayLabel)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                .addGroup(errorPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                                .addGap(15, 15, 15)
-                                                                .addComponent(errorReviewListScrollPane,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 634,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                                .addGap(60, 60, 60)
-                                                                .addComponent(errorReviewDisplayLabel)))
-                                                .addGap(18, 18, 18)
-                                                .addComponent(errorDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(42, 42, 42)));
-        errorPanelLayout.setVerticalGroup(
-                errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(
-                                        errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(errorNewDisplayLabel)
-                                                .addComponent(previousErrorDisplayLabel))
+            errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorPanelLayout.createSequentialGroup()
+                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(errorNewListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(errorPanelLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(previousErrorDisplayLabel)
+                                    .addComponent(previousErrorSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 436, Short.MAX_VALUE))
+                            .addGroup(errorPanelLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(errorPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                .addGroup(errorPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(previousErrorSearchTextField,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(previousErrorSearchButton,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(previousErrorListScrollPane,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 279,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                .addGap(5, 5, 5)
-                                                .addComponent(errorNewListScrollPane,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 325,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(errorPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                .addGap(16, 16, 16)
-                                                .addComponent(errorReviewDisplayLabel)
-                                                .addGap(8, 8, 8)
-                                                .addComponent(errorReviewListScrollPane,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                        .addGroup(errorPanelLayout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(errorDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addContainerGap()));
+                                .addComponent(previousErrorListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))))
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(errorNewDisplayLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(errorPanelLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(errorReviewListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(errorPanelLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(errorReviewDisplayLabel)))
+                        .addGap(18, 18, 18)
+                        .addComponent(errorDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(42, 42, 42))
+        );
+        errorPanelLayout.setVerticalGroup(
+            errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorNewDisplayLabel)
+                    .addComponent(previousErrorDisplayLabel))
+                .addGap(18, 18, 18)
+                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addComponent(previousErrorSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(previousErrorListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(errorNewListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(errorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(errorReviewDisplayLabel)
+                        .addGap(8, 8, 8)
+                        .addComponent(errorReviewListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(errorPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(errorDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
 
         landlordDashboard.add(errorPanel, "card3");
 
         othersLayeredPane.setLayout(new java.awt.CardLayout());
 
         othersGreetingPanel.setBackground(new java.awt.Color(255, 204, 204));
-        othersGreetingPanel
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(255, 153, 153)));
+        othersGreetingPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(255, 153, 153)));
         othersGreetingPanel.setPreferredSize(new java.awt.Dimension(286, 120));
 
         othersHomeGreetingDisplaylabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
@@ -2671,22 +2339,22 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout othersGreetingPanelLayout = new javax.swing.GroupLayout(othersGreetingPanel);
         othersGreetingPanel.setLayout(othersGreetingPanelLayout);
         othersGreetingPanelLayout.setHorizontalGroup(
-                othersGreetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersGreetingPanelLayout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(othersHomeGreetingDisplaylabel)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            othersGreetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersGreetingPanelLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(othersHomeGreetingDisplaylabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
         othersGreetingPanelLayout.setVerticalGroup(
-                othersGreetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                othersGreetingPanelLayout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addComponent(othersHomeGreetingDisplaylabel)
-                                        .addGap(30, 30, 30)));
+            othersGreetingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersGreetingPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(othersHomeGreetingDisplaylabel)
+                .addGap(30, 30, 30))
+        );
 
         othersContractPanel.setBackground(new java.awt.Color(204, 204, 204));
-        othersContractPanel
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        othersContractPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         othersContractPanel.setPreferredSize(new java.awt.Dimension(250, 150));
 
         othersContractDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -2716,41 +2384,32 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout othersContractPanelLayout = new javax.swing.GroupLayout(othersContractPanel);
         othersContractPanel.setLayout(othersContractPanelLayout);
         othersContractPanelLayout.setHorizontalGroup(
-                othersContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersContractPanelLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(othersContractPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(othersContractViewButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(othersContractNewButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                othersContractPanelLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(othersContractDisplayLabel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addContainerGap()));
+            othersContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersContractPanelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(othersContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(othersContractViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(othersContractNewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersContractPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(othersContractDisplayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         othersContractPanelLayout.setVerticalGroup(
-                othersContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersContractPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(othersContractDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15,
-                                        Short.MAX_VALUE)
-                                .addComponent(othersContractViewButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(othersContractNewButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)));
+            othersContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersContractPanelLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(othersContractDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(othersContractViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(othersContractNewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
 
         othersLogTenantPanel.setBackground(new java.awt.Color(204, 204, 204));
-        othersLogTenantPanel
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        othersLogTenantPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         othersLogTenantPanel.setPreferredSize(new java.awt.Dimension(250, 150));
 
         othersLogTenantDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -2770,32 +2429,28 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout othersLogTenantPanelLayout = new javax.swing.GroupLayout(othersLogTenantPanel);
         othersLogTenantPanel.setLayout(othersLogTenantPanelLayout);
         othersLogTenantPanelLayout.setHorizontalGroup(
-                othersLogTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                othersLogTenantPanelLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(othersLogTenantDisplayLabel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addContainerGap())
-                        .addGroup(othersLogTenantPanelLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(othersLogTenantViewButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23)));
+            othersLogTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersLogTenantPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(othersLogTenantDisplayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(othersLogTenantPanelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(othersLogTenantViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
         othersLogTenantPanelLayout.setVerticalGroup(
-                othersLogTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersLogTenantPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(othersLogTenantDisplayLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61,
-                                        Short.MAX_VALUE)
-                                .addComponent(othersLogTenantViewButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)));
+            othersLogTenantPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersLogTenantPanelLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(othersLogTenantDisplayLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(othersLogTenantViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
 
         othersLogTenantPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        othersLogTenantPanel1
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        othersLogTenantPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         othersLogTenantPanel1.setPreferredSize(new java.awt.Dimension(250, 150));
 
         othersLogTenantDisplayLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -2815,32 +2470,28 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout othersLogTenantPanel1Layout = new javax.swing.GroupLayout(othersLogTenantPanel1);
         othersLogTenantPanel1.setLayout(othersLogTenantPanel1Layout);
         othersLogTenantPanel1Layout.setHorizontalGroup(
-                othersLogTenantPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersLogTenantPanel1Layout
-                                .createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(othersLogTenantDisplayLabel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
-                        .addGroup(othersLogTenantPanel1Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(othersScheduleInspectionButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23)));
+            othersLogTenantPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersLogTenantPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(othersLogTenantDisplayLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(othersLogTenantPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(othersScheduleInspectionButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
         othersLogTenantPanel1Layout.setVerticalGroup(
-                othersLogTenantPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersLogTenantPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(othersLogTenantDisplayLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61,
-                                        Short.MAX_VALUE)
-                                .addComponent(othersScheduleInspectionButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)));
+            othersLogTenantPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersLogTenantPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(othersLogTenantDisplayLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(othersScheduleInspectionButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
 
         othersLogTenantPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        othersLogTenantPanel2
-                .setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        othersLogTenantPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         othersLogTenantPanel2.setPreferredSize(new java.awt.Dimension(250, 150));
 
         othersLogTenantDisplayLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -2860,105 +2511,94 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout othersLogTenantPanel2Layout = new javax.swing.GroupLayout(othersLogTenantPanel2);
         othersLogTenantPanel2.setLayout(othersLogTenantPanel2Layout);
         othersLogTenantPanel2Layout.setHorizontalGroup(
-                othersLogTenantPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersLogTenantPanel2Layout
-                                .createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(othersLogTenantDisplayLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
-                        .addGroup(othersLogTenantPanel2Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(othersTenantResetPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23)));
+            othersLogTenantPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, othersLogTenantPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(othersLogTenantDisplayLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(othersLogTenantPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(othersTenantResetPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
         othersLogTenantPanel2Layout.setVerticalGroup(
-                othersLogTenantPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersLogTenantPanel2Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(othersLogTenantDisplayLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61,
-                                        Short.MAX_VALUE)
-                                .addComponent(othersTenantResetPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)));
+            othersLogTenantPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersLogTenantPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(othersLogTenantDisplayLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(othersTenantResetPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
 
         javax.swing.GroupLayout othersDashboardPanelLayout = new javax.swing.GroupLayout(othersDashboardPanel);
         othersDashboardPanel.setLayout(othersDashboardPanelLayout);
         othersDashboardPanelLayout.setHorizontalGroup(
-                othersDashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersDashboardPanelLayout.createSequentialGroup()
-                                .addContainerGap(76, Short.MAX_VALUE)
-                                .addComponent(othersContractPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(othersLogTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(othersLogTenantPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(othersLogTenantPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(191, Short.MAX_VALUE)));
+            othersDashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersDashboardPanelLayout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
+                .addComponent(othersContractPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(othersLogTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(othersLogTenantPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(othersLogTenantPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(191, Short.MAX_VALUE))
+        );
         othersDashboardPanelLayout.setVerticalGroup(
-                othersDashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersDashboardPanelLayout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addGroup(othersDashboardPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(othersLogTenantPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(othersLogTenantPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(othersLogTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(othersContractPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(524, Short.MAX_VALUE)));
+            othersDashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersDashboardPanelLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(othersDashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(othersLogTenantPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(othersLogTenantPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(othersLogTenantPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(othersContractPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(524, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout othersHomePanelLayout = new javax.swing.GroupLayout(othersHomePanel);
         othersHomePanel.setLayout(othersHomePanelLayout);
         othersHomePanelLayout.setHorizontalGroup(
-                othersHomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(othersGreetingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1345, Short.MAX_VALUE)
-                        .addComponent(othersDashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            othersHomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(othersGreetingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1387, Short.MAX_VALUE)
+            .addComponent(othersDashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
         othersHomePanelLayout.setVerticalGroup(
-                othersHomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersHomePanelLayout.createSequentialGroup()
-                                .addComponent(othersGreetingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 106,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(othersDashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap()));
+            othersHomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersHomePanelLayout.createSequentialGroup()
+                .addComponent(othersGreetingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(othersDashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         othersLayeredPane.add(othersHomePanel, "card2");
 
         javax.swing.GroupLayout othersViewContractPanelLayout = new javax.swing.GroupLayout(othersViewContractPanel);
         othersViewContractPanel.setLayout(othersViewContractPanelLayout);
         othersViewContractPanelLayout.setHorizontalGroup(
-                othersViewContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 1387, Short.MAX_VALUE));
+            othersViewContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1387, Short.MAX_VALUE)
+        );
         othersViewContractPanelLayout.setVerticalGroup(
-                othersViewContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 832, Short.MAX_VALUE));
+            othersViewContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 832, Short.MAX_VALUE)
+        );
 
         othersLayeredPane.add(othersViewContractPanel, "card3");
 
         javax.swing.GroupLayout othersIssueContractPanelLayout = new javax.swing.GroupLayout(othersIssueContractPanel);
         othersIssueContractPanel.setLayout(othersIssueContractPanelLayout);
         othersIssueContractPanelLayout.setHorizontalGroup(
-                othersIssueContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 1387, Short.MAX_VALUE));
+            othersIssueContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1387, Short.MAX_VALUE)
+        );
         othersIssueContractPanelLayout.setVerticalGroup(
-                othersIssueContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 832, Short.MAX_VALUE));
+            othersIssueContractPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 832, Short.MAX_VALUE)
+        );
 
         othersLayeredPane.add(othersIssueContractPanel, "card3");
 
@@ -2969,68 +2609,51 @@ public class LandlordView extends javax.swing.JFrame {
             }
         });
 
-        maintenanceRequestSearchButton.setBackground(new java.awt.Color(248, 255, 255));
-        maintenanceRequestSearchButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        maintenanceRequestSearchButton.setIcon(new javax.swing.ImageIcon(
-                "D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\magnifying-glass.png")); // NOI18N
-        maintenanceRequestSearchButton.setBorder(null);
-
         previousErrorListTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null }
-                },
-                new String[] {
-                        "ID", "Tenant Name", "Date Issued", "House ID"
-                }) {
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Tenant Name", "Date Issued", "House ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         previousErrorListScrollPane1.setViewportView(previousErrorListTable1);
 
         maintenanceRequestListScrollPane.setViewportView(previousErrorListScrollPane1);
 
-        javax.swing.GroupLayout otherMaintenanceRequestPanelLayout = new javax.swing.GroupLayout(
-                otherMaintenanceRequestPanel);
+        javax.swing.GroupLayout otherMaintenanceRequestPanelLayout = new javax.swing.GroupLayout(otherMaintenanceRequestPanel);
         otherMaintenanceRequestPanel.setLayout(otherMaintenanceRequestPanelLayout);
         otherMaintenanceRequestPanelLayout.setHorizontalGroup(
-                otherMaintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(otherMaintenanceRequestPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(maintenanceRequestSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(otherMaintenanceRequestPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        1329, Short.MAX_VALUE)
-                                .addContainerGap()));
+            otherMaintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherMaintenanceRequestPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(otherMaintenanceRequestPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1329, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         otherMaintenanceRequestPanelLayout.setVerticalGroup(
-                otherMaintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                otherMaintenanceRequestPanelLayout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addGroup(otherMaintenanceRequestPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(maintenanceRequestSearchTextField,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                                                .addComponent(maintenanceRequestSearchButton,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(maintenanceRequestListScrollPane,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                                        .addContainerGap()));
+            otherMaintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, otherMaintenanceRequestPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         maintenanceDescriptionLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         maintenanceDescriptionLabel.setText("Description");
@@ -3045,8 +2668,7 @@ public class LandlordView extends javax.swing.JFrame {
         maintenanceDescriptionTextArea.setRows(5);
         maintenanceRequestScrollPane.setViewportView(maintenanceDescriptionTextArea);
 
-        maintenanceStatusComboBox.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        maintenanceStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         maintenanceStatusDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         maintenanceStatusDisplayLabel.setText("Status");
@@ -3065,126 +2687,83 @@ public class LandlordView extends javax.swing.JFrame {
         maintenanceStatusUpdateButton.setBackground(new java.awt.Color(248, 255, 255));
         maintenanceStatusUpdateButton.setText("Update Status");
 
-        javax.swing.GroupLayout otherMaintenanceDetailsPanelLayout = new javax.swing.GroupLayout(
-                otherMaintenanceDetailsPanel);
+        javax.swing.GroupLayout otherMaintenanceDetailsPanelLayout = new javax.swing.GroupLayout(otherMaintenanceDetailsPanel);
         otherMaintenanceDetailsPanel.setLayout(otherMaintenanceDetailsPanelLayout);
         otherMaintenanceDetailsPanelLayout.setHorizontalGroup(
-                otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(otherMaintenanceDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(maintenanceRequestScrollPane,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 665,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
-                                                .addGroup(otherMaintenanceDetailsPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                otherMaintenanceDetailsPanelLayout
-                                                                        .createSequentialGroup()
-                                                                        .addComponent(maintenanceStatusDisplayLabel)
-                                                                        .addGap(96, 96, 96))
-                                                        .addGroup(otherMaintenanceDetailsPanelLayout
-                                                                .createSequentialGroup()
-                                                                .addGroup(otherMaintenanceDetailsPanelLayout
-                                                                        .createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(maintenanceRequestieDisplayLabel)
-                                                                        .addComponent(maintenanceHouseDisplayLabel))
-                                                                .addGap(29, 29, 29)))
-                                                .addGroup(otherMaintenanceDetailsPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
-                                                                false)
-                                                        .addComponent(maintenanceRequestieTextField)
-                                                        .addComponent(maintenanceHouseTextField)
-                                                        .addComponent(maintenanceStatusComboBox, 0, 304,
-                                                                Short.MAX_VALUE))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(otherMaintenanceDetailsPanelLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(maintenanceRequestieDetailsButton,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 175,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(maintenanceHouseDetailsButton,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 175,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(maintenanceStatusUpdateButton,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 175,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(maintenanceDescriptionLabel))
-                                .addContainerGap(30, Short.MAX_VALUE)));
+            otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(maintenanceRequestScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                        .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                                .addComponent(maintenanceStatusDisplayLabel)
+                                .addGap(96, 96, 96))
+                            .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(maintenanceRequestieDisplayLabel)
+                                    .addComponent(maintenanceHouseDisplayLabel))
+                                .addGap(29, 29, 29)))
+                        .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(maintenanceRequestieTextField)
+                            .addComponent(maintenanceHouseTextField)
+                            .addComponent(maintenanceStatusComboBox, 0, 304, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(maintenanceRequestieDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maintenanceHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maintenanceStatusUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(maintenanceDescriptionLabel))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
         otherMaintenanceDetailsPanelLayout.setVerticalGroup(
-                otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(maintenanceDescriptionLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(maintenanceRequestScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 163,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)
-                                .addGroup(otherMaintenanceDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(maintenanceRequestieDetailsButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 35,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(otherMaintenanceDetailsPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(maintenanceRequestieDisplayLabel,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 35,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(maintenanceRequestieTextField,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 37,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(otherMaintenanceDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(maintenanceHouseDetailsButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 36,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(maintenanceHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(maintenanceHouseDisplayLabel,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 29,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(otherMaintenanceDetailsPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(otherMaintenanceDetailsPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(maintenanceStatusComboBox,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(maintenanceStatusDisplayLabel,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 30,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(maintenanceStatusUpdateButton,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 38,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(12, Short.MAX_VALUE)));
+            otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherMaintenanceDetailsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(maintenanceDescriptionLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(maintenanceRequestScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(maintenanceRequestieDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(maintenanceRequestieDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(maintenanceRequestieTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(maintenanceHouseDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maintenanceHouseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maintenanceHouseDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(otherMaintenanceDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(maintenanceStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(maintenanceStatusDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(maintenanceStatusUpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout othersMaintenancePanelLayout = new javax.swing.GroupLayout(othersMaintenancePanel);
         othersMaintenancePanel.setLayout(othersMaintenancePanelLayout);
         othersMaintenancePanelLayout.setHorizontalGroup(
-                othersMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(otherMaintenanceRequestPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(otherMaintenanceDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
+            othersMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(otherMaintenanceRequestPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(otherMaintenanceDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
         othersMaintenancePanelLayout.setVerticalGroup(
-                othersMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(otherMaintenanceRequestPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(otherMaintenanceDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap()));
+            othersMaintenancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(othersMaintenancePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(otherMaintenanceRequestPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(otherMaintenanceDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         othersLayeredPane.add(othersMaintenancePanel, "card5");
 
@@ -3193,46 +2772,39 @@ public class LandlordView extends javax.swing.JFrame {
         javax.swing.GroupLayout landlordPanelLayout = new javax.swing.GroupLayout(landlordPanel);
         landlordPanel.setLayout(landlordPanelLayout);
         landlordPanelLayout.setHorizontalGroup(
-                landlordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(landlordPanelLayout.createSequentialGroup()
-                                .addGroup(landlordPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(landlordPanelLayout.createSequentialGroup()
-                                                .addComponent(menubarPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(landlordDashboard, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        0, Short.MAX_VALUE))
-                                        .addGroup(landlordPanelLayout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addContainerGap()));
+            landlordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(landlordPanelLayout.createSequentialGroup()
+                .addGroup(landlordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(landlordPanelLayout.createSequentialGroup()
+                        .addComponent(menubarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(landlordDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(landlordPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
         landlordPanelLayout.setVerticalGroup(
-                landlordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(landlordPanelLayout.createSequentialGroup()
-                                .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(landlordPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(menubarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 810,
-                                                Short.MAX_VALUE)
-                                        .addComponent(landlordDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 0,
-                                                Short.MAX_VALUE))
-                                .addContainerGap()));
+            landlordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(landlordPanelLayout.createSequentialGroup()
+                .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(landlordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menubarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
+                    .addComponent(landlordDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(landlordPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(landlordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(landlordPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(landlordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -3337,50 +2909,49 @@ public class LandlordView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_houseAddressTextFieldActionPerformed
 
-
     public void tenantidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tenantidTextFieldActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_tenantidTextFieldActionPerformed
-
-    
 
     public void genderComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_genderComboBoxActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_genderComboBoxActionPerformed
 
     public void firstnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_firstnameTextFieldActionPerformed
-        // TODO add your handling code here:
+        checkNameInput(this.firstnameTextField.getText(), this.firstnameTextField);
     }// GEN-LAST:event_firstnameTextFieldActionPerformed
 
     public void lastnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_lastnameTextFieldActionPerformed
-        // TODO add your handling code here:
+        checkNameInput(this.lastnameTextField.getText(), this.lastnameTextField);
     }// GEN-LAST:event_lastnameTextFieldActionPerformed
 
     public void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailTextFieldActionPerformed
-        // TODO add your handling code here:
+        checkEmailInput(this.emailTextField.getText(), this.emailTextField);
     }// GEN-LAST:event_emailTextFieldActionPerformed
 
     public void phoneNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_phoneNumberTextFieldActionPerformed
-        // TODO add your handling code here:
+        checkNumberInput(this.phoneNumberTextField.getText(), this.phoneNumberTextField);
     }// GEN-LAST:event_phoneNumberTextFieldActionPerformed
 
     public void tenantSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tenantSearchTextFieldActionPerformed
-        // TODO add your handling code here:
+        Sorting.sortTable(this.tenantListTable, this.getTenantSearchTextField().getText());
     }// GEN-LAST:event_tenantSearchTextFieldActionPerformed
 
     public void houseClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_houseClearFormButtonActionPerformed
         clearHouseForm();
     }// GEN-LAST:event_houseClearFormButtonActionPerformed
 
+    public void houseSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt){
+        Sorting.sortTable(this.houseListTable, this.houseSearchTextField.getText());
+    }
+
     public House houseAddButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_houseAddButtonActionPerformed
-        String houseId = this.getHouseidTextField();
         String houseType = this.getHouseTypeComboBox();
         String houseAddress = this.getHouseAddressTextField();
         String houseDescription = this.getHouseDescriptionTextArea();
         String houseRent = this.getHouseRentPriceTextField();
 
         House houseObj;
-
         if (houseAddress != null && houseDescription != null && houseRent != null) {
             houseObj = new House(houseType, houseAddress, houseDescription, Integer.valueOf(houseRent));
         } else {
@@ -3565,10 +3136,6 @@ public class LandlordView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_othersTenantResetPasswordButtonActionPerformed
 
-    public void signoutButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_signoutButtonActionPerformed
-        System.out.println("sign OUt");
-    }// GEN-LAST:event_signoutButtonActionPerformed
-
     private void houseSearchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_houseSearchTextFieldKeyReleased
 
         // TODO add your handling code here:
@@ -3684,7 +3251,6 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JTable houseListTable;
     private javax.swing.JLabel houseRentDisplayLabel;
     private javax.swing.JTextField houseRentTextField;
-    private javax.swing.JButton houseSearchButton1;
     private javax.swing.JTextField houseSearchTextField;
     private javax.swing.JComboBox<String> houseTypeComboBox;
     private javax.swing.JLabel houseTypeDisplayLabel;
@@ -3721,7 +3287,6 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JLabel maintenanceIconLabel1;
     private javax.swing.JScrollPane maintenanceRequestListScrollPane;
     private javax.swing.JScrollPane maintenanceRequestScrollPane;
-    private javax.swing.JButton maintenanceRequestSearchButton;
     private javax.swing.JTextField maintenanceRequestSearchTextField;
     private javax.swing.JButton maintenanceRequestieDetailsButton;
     private javax.swing.JLabel maintenanceRequestieDisplayLabel;
@@ -3809,7 +3374,6 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JScrollPane previousErrorListScrollPane1;
     private javax.swing.JTable previousErrorListTable;
     private javax.swing.JTable previousErrorListTable1;
-    private javax.swing.JButton previousErrorSearchButton;
     private javax.swing.JTextField previousErrorSearchTextField;
     private javax.swing.JLabel requestDisplayLabel;
     private javax.swing.JLabel requestDisplayLabel1;
@@ -3842,6 +3406,14 @@ public class LandlordView extends javax.swing.JFrame {
      * 
      * @param value
      */
+
+    public javax.swing.JTextField getTenantSearchTextField() {
+        return tenantSearchTextField;
+    }
+
+    public void setTenantSearchTextField(javax.swing.JTextField tenantSearchTextField) {
+        this.tenantSearchTextField = tenantSearchTextField;
+    }
 
     public JComboBox<String> getTenantHouseIdComboBox() {
         return tenantHouseIdComboBox;
@@ -4069,7 +3641,7 @@ public class LandlordView extends javax.swing.JFrame {
     public void setTenantCountLabel(JLabel tenantCountLabel) {
         this.tenantCountLabel = tenantCountLabel;
     }
-    
+
     public javax.swing.JTextField getHouseSearchTextField() {
         return houseSearchTextField;
     }
@@ -4096,8 +3668,57 @@ public class LandlordView extends javax.swing.JFrame {
         this.tenantListTable = tenantListTable;
     }
 
-    
+    // validation functions
 
-    
+    /**
+     * reference: https://www.javatpoint.com/post/java-character-isalphabetic-method
+     * 
+     * @param input     String takes the value entered
+     * @param component JComponent the component where the change is to showed
+     */
+    public void checkNameInput(String input, JTextField component) {
+        char[] codepoint = input.toCharArray();
+        for (char i : codepoint) {
+            if (!Character.isAlphabetic(i)) {
+                component.setBackground(new Color(255, 128, 128));
+            } else{
+                component.setBackground(new Color(255,255,255));
+            }
+        }
+
+    }
+
+    /**
+     * reference
+     * https://stackoverflow.com/questions/624581/what-is-the-best-java-email-address-validation-method
+     * 
+     * @param input     String takes the value entered
+     * @param component JTextField the component where the change is to showed
+     */
+    public void checkEmailInput(String input, JTextField component) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(input);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        if(!result){
+            component.setBackground(new Color(255, 128, 128));
+        } else{
+                component.setBackground(new Color(255,255,255));
+            }
+    }
+
+    public void checkNumberInput(String input, JTextField component){
+        char[] codepoint = input.toCharArray();
+        for (char i : codepoint) {
+            if (!Character.isDigit(i)) {
+                component.setBackground(new Color(255, 128, 128));
+            } else{
+                component.setBackground(new Color(255,255,255));
+            }
+        }
+    }
 
 }
