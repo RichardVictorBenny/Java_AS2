@@ -150,7 +150,6 @@ public class Database {
         try {
             this.statement = this.connnection.prepareStatement(query);
             this.statement.setString(1, username);
-            System.out.println(this.statement);
             return this.statement.executeQuery();
             
         } catch (Exception e) {

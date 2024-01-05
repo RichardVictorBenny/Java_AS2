@@ -6,6 +6,8 @@ package com.mycompany.rentalsystem.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -26,6 +28,7 @@ import com.mycompany.rentalsystem.funcitons.Database;
 import com.mycompany.rentalsystem.funcitons.FileConvertion;
 import com.mycompany.rentalsystem.funcitons.Password;
 import com.mycompany.rentalsystem.funcitons.SentEmail;
+import com.mycompany.rentalsystem.funcitons.Sorting;
 import com.mysql.cj.jdbc.Blob;
 
 /**
@@ -68,6 +71,8 @@ public class LandlordController {
 
         landlordView.houseListTableListener(new LandlordMouseListener());
         landlordView.tenantListTableListener(new LandlordMouseListener());
+
+        landlordView.houseSearchTextFieldListener(new LandlordKeyListener());
     }
 
     class MenubarListener implements ActionListener {
@@ -97,7 +102,8 @@ public class LandlordController {
                         landlordView.otherButtonActionPerformed(e);
                         break;
                     case "Sign Out":
-                        landlordView.signoutButtonActionPerformed(e);
+                        landlordView.dispose();
+                        //exits program
                         break;
                     default:
                         break;
@@ -159,6 +165,7 @@ public class LandlordController {
                         String id = landlordView.houseDeleteButtonActionPerformed(e);
                         try {
                             database.delete("houses", "houseId", id);
+                            
 
                         } catch (Exception exception) {
                             exception.printStackTrace();
@@ -253,6 +260,7 @@ public class LandlordController {
                         String id = landlordView.tenantDeleteButtonActionPerformed(e);
                         try {
                             database.delete("tenants", "tenantId", id);
+                            database.delete("tenantpasswords", "username" , id);
 
                         } catch (Exception exception) {
                             exception.printStackTrace();
@@ -263,7 +271,6 @@ public class LandlordController {
                         refreshTable("Tenants", landlordView.getTenantListTable());
                         break;
                     default:
-                        // add an error log to logger
                         System.out.println("Action Not Recognised");
                         break;
                 }
@@ -321,6 +328,22 @@ public class LandlordController {
         }
     }
 
+    class LandlordKeyListener implements KeyListener{
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            Sorting.sortTable(landlordView.getHouseListTable(), landlordView.getHouseSearchTextField().getText());
+        }
+        
+    }
     private Object getObjectAtPoint(JTable clickedTable, MouseEvent e, String label) {
         int row = clickedTable.rowAtPoint(e.getPoint());
         int rowId = Integer.valueOf((String) clickedTable.getModel().getValueAt(row, 0));

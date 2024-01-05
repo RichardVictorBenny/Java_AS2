@@ -51,8 +51,6 @@ public class LoginModel {
             e.printStackTrace();
         }
 
-        System.out.println(hashPassword);
-
         try {
             if (hashPassword.equals(savedPassword)) {
                 return true;
@@ -61,7 +59,7 @@ public class LoginModel {
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
     }
