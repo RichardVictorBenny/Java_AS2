@@ -48,9 +48,9 @@ public class RentalSystem {
         AdminView view = new AdminView();
         
 */
-       LandlordView view = new LandlordView();
-       Landlord model = new Landlord();
-       LandlordController controller = new LandlordController(view, model);
+       LoginView view = new LoginView();
+        LoginModel model = new LoginModel();
+        LoginController controller = new LoginController(view, model);
         
             
         java.awt.EventQueue.invokeLater(() -> {

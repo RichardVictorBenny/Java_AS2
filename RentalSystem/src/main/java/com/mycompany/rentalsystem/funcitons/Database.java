@@ -50,13 +50,10 @@ public class Database {
         /* String values = columnArray.stream().collect(Collectors.joining(",")); */
 
         String query = "INSERT INTO "+ table + " ("+values+") VALUES(?,?)";
-        record.get(1).toString();
         try {
-            
-            byte[] object = FileConvertion.toByteArray(record.get(1));
             this.statement = connnection.prepareStatement(query);
             this.statement.setObject(1, record.get(0));
-            this.statement.setObject(2, object);
+            this.statement.setObject(2, record.get(1));
             this.statement.execute();
             this.statement.close();
 
@@ -146,6 +143,20 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ResultSet passwordCheck(String tableName, String username){
+        String query = "SELECT * FROM "+tableName+" WHERE username = ?";
+        try {
+            this.statement = this.connnection.prepareStatement(query);
+            this.statement.setString(1, username);
+            System.out.println(this.statement);
+            return this.statement.executeQuery();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

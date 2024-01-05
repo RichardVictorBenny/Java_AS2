@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mycompany.rentalsystem.funcitons.*;
@@ -21,17 +23,16 @@ import com.mycompany.rentalsystem.funcitons.*;
  *         https://www.tutorialspoint.com/java_cryptography/java_cryptography_message_digest.htm
  */
 public class LoginModel {
+    private Database database = new Database();
 
     public boolean validate(String username, String password, String userMode) {
-        String hashPassword, fileUsername, filename;
-        String filePassword = "";
-        ArrayList<String> credentials = new ArrayList<>();
+        String hashPassword, filename;
+        String savedPassword = "";
 
         // determining the file needed for validations as per the user type.
         filename = switch (userMode) {
-            case "Tenant" -> "src/main/java/com/mycompany/rentalsystem/files/TenantLogin.bin";
-            case "Landlord" -> "src/main/java/com/mycompany/rentalsystem/files/LandlordLogin.bin";
-            case "Admin" -> "src/main/java/com/mycompany/rentalsystem/files/AdminLogin.bin";
+            case "Tenant" -> "tenantpasswords";
+            case "Landlord" -> "landlordpasswords";
             default -> "";
         };
 
@@ -41,42 +42,19 @@ public class LoginModel {
         } catch (NoSuchAlgorithmException e) {
             hashPassword = "";
         }
-
-        // retieving all the data inside the relevant file
+        ResultSet result = database.passwordCheck(filename, username);
         try {
-            FileInputStream fileIn;
-            fileIn = new FileInputStream(filename);
-            ObjectInputStream in;
-            in = new ObjectInputStream(fileIn);
-
-            while (true) {
-                try {
-                    credentials.add(in.readUTF());
-                } catch (EOFException eof) {
-                    break;
-                }
+            while(result.next()){
+                savedPassword = result.getString("password");
             }
-            in.close();
-
-            for (int i = 0; i < credentials.size(); i++) {
-                String element = credentials.get(i);
-                String[] divide = element.split("-");
-                fileUsername = divide[0];
-                if (username.equals(fileUsername)) {
-                    filePassword = divide[1];
-                }
-            }
-        } catch (FileNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.out.println(e);
         }
-        
-        //doing validation
+
+        System.out.println(hashPassword);
+
         try {
-            if (hashPassword.equals(filePassword)) {
+            if (hashPassword.equals(savedPassword)) {
                 return true;
             } else {
                 return false;

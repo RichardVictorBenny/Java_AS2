@@ -22,9 +22,9 @@ import javax.swing.table.DefaultTableModel;
 
 import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.LandlordView;
-import com.mycompany.rentalsystem.funcitons.Credentials;
 import com.mycompany.rentalsystem.funcitons.Database;
 import com.mycompany.rentalsystem.funcitons.FileConvertion;
+import com.mycompany.rentalsystem.funcitons.Password;
 import com.mycompany.rentalsystem.funcitons.SentEmail;
 import com.mysql.cj.jdbc.Blob;
 
@@ -40,7 +40,6 @@ public class LandlordController {
     private Database database = new Database();
     private int houseCount = 0;
     private int tenantCount = 0;
-    private Credentials credentials = new Credentials();
 
     public LandlordController(LandlordView landlordView, Landlord landlordModel) {
         this.landlordView = landlordView;
@@ -125,7 +124,7 @@ public class LandlordController {
                         if (houseObj != null) {
                             landlordView.insertValueTable(landlordView.getHouseListTable(), houseObj.getDataArray());
                             record.add(houseObj.getHouseId());
-                            record.add(houseObj);
+                            record.add(FileConvertion.toByteArray(houseObj));
                             try {
                                 database.insert("houses", "houseId, houseObject", record);
                             } catch (Exception exception) {
@@ -193,15 +192,25 @@ public class LandlordController {
                         
                         if (tempTenantObj != null) {
                             record.add(tempTenantObj.getTenantId());
-                            record.add(tempTenantObj);
+                            record.add(FileConvertion.toByteArray(tempTenantObj));
                             try {
                                 database.insert("tenants", "tenantId, tenantObject", record);
+                                Password.savePassword(tempTenantObj.getTenantId(), 
+                                    String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob())), "Tenant" );
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
                             record.clear();
+                            landlordView.clearTenantForm();
 
-                            try {
+                            tenantCount = 0;
+                            refreshTable("Tenants", landlordView.getTenantListTable());
+
+                            //saving temp passord to file
+                            
+                            
+                            // uncomment the code
+                            /* try {
                                 new SentEmail().sentMail(tempTenantObj.geteMail(), "YOUR CREDENTIALS", """
                                         Hi %s,
 
@@ -216,12 +225,9 @@ public class LandlordController {
                                         String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob()))));
                             } catch (GeneralSecurityException | IOException | MessagingException e1) {
                                 e1.printStackTrace();
-                            }
+                            } */
 
-                            landlordView.clearTenantForm();
-
-                            tenantCount = 0;
-                            refreshTable("Tenants", landlordView.getTenantListTable());
+                            
                         }
                         // functions.generateTempCredentials();
                         break;

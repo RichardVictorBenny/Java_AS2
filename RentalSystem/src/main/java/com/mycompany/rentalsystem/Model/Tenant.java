@@ -23,7 +23,7 @@ public class Tenant implements Serializable{
     private String houseId;
     private LocalDate dateOfBirth;
 
-
+    public Tenant(){}
 
 
     public Tenant( String firstName, String surName, String eMail, String phoneNumber, String tenantID, String gender,  LocalDate dateOfBirth,  String houseId) {

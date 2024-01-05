@@ -54,13 +54,14 @@ public class LoginController {
                     loginView.dispose();
                     switch (usermode) {
                         case "Tenant" -> {
-                            /* TenantView view = new TenantView();
-                            TenantModel model = new TenantModel();
+                            TenantView view = new TenantView();
+                            Tenant model = new Tenant();
                             TenantController controller = new TenantController(view, model);
 
                             java.awt.EventQueue.invokeLater(() -> {
                                 view.setVisible(true);
-                            }); */
+                            });
+
                         }
 
                         case "Landlord" -> {
