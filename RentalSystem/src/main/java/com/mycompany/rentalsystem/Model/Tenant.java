@@ -5,7 +5,9 @@
 package com.mycompany.rentalsystem.Model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -13,43 +15,43 @@ import java.time.format.DateTimeFormatter;
  * @author Richard
  *
  */
-public class Tenant extends Person implements Serializable{
+public class Tenant implements Serializable{
     private String extTenantID;
-    private String gender;
+    private String gender, firstName, surName, eMail, phoneNumber;
     private static Integer tenantID = 5000;
+    private static Integer totalTenantCount = 0;
+    private String houseId;
     private LocalDate dateOfBirth;
 
-    /**
-     * default constructor
-     * 
-     * @param tenantID
-     * @param firstName 
-     * @param surName
-     * @param eMail
-     * @param dateOfBirth
-     * @param phoneNumber
-     * 
-     */
 
-    public Tenant(){}
 
-    public Tenant(String tenantID, String firstName, String surName, String gender, String eMail, LocalDate dateOfBirth, String phoneNumber) {
-        super(firstName, surName, eMail, phoneNumber);
+
+    public Tenant( String firstName, String surName, String eMail, String phoneNumber, String tenantID, String gender,  LocalDate dateOfBirth,  String houseId) {
         this.extTenantID = tenantID;
+        this.firstName = firstName;
+        this.surName = surName;
+        this.eMail = eMail;
+        this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+        this.houseId = houseId;
     }
 
-    public Tenant(String firstName, String surName,String gender, String eMail, LocalDate dob, String phoneNumber) {
-        super(firstName, surName,  eMail, phoneNumber);
+    public Tenant(String firstName, String surName, String eMail, String phoneNumber, String gender,  LocalDate dob, String houseId) {
         Tenant.tenantID++;
+        Tenant.totalTenantCount++;
+        this.firstName = firstName;
+        this.surName = surName;
+        this.eMail = eMail;
+        this.phoneNumber = phoneNumber;
+        this.extTenantID = String.valueOf(Tenant.tenantID);
         this.gender= gender;
         this.dateOfBirth = dob;
+        this.houseId = houseId;
     }
 
     public String toString(){
-        String string = (this.firstName+this.surName+this.gender+this.eMail+this.getFormatedDob(this.dateOfBirth)+phoneNumber+this.tenantID);
-        System.out.println(string);
+        String string = (this.firstName+this.surName+this.gender+this.eMail+this.getFormatedDob(this.dateOfBirth)+phoneNumber+this.extTenantID+this.houseId);
         return string;
     }
 
@@ -57,17 +59,78 @@ public class Tenant extends Person implements Serializable{
         return gender;
     }
 
+    public Date getDateOfBirth(LocalDate localDate){
+        // https://java2blog.com/java-localdate-to-date/
+        return (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
     public void setGender(String value){
-        this.gender = gender;
+        this.gender = value;
     }
     public String getFormatedDob(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return formatter.format(date);
     }
+    public LocalDate getDob(){
+        return this.dateOfBirth;
+    }       
 
     public String[] getDataArray(){
-        String[] dataArray = {String.valueOf(tenantID), this.gender, this.firstName, this.surName, this.eMail, this.phoneNumber, this.getFormatedDob(dateOfBirth)};
+        String[] dataArray = {String.valueOf(extTenantID), this.gender, this.firstName, this.surName, this.eMail, this.phoneNumber, this.getFormatedDob(dateOfBirth)};
         return dataArray;
+    }
+
+    public void setExtTenantId(String id){
+        this.extTenantID = id;
+    }
+
+    public String getTenantId(){
+        return this.extTenantID;
+    }
+
+    public static void setTenantId(Integer id){
+        Tenant.tenantID = id;
+    }
+    public static Integer getTotalTenantCount(){
+        return totalTenantCount;
+    }
+
+    public String getHouseId() {
+        return houseId;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setSurName(String surName) {
+        this.surName = surName;
+    }
+
+
+
+    public String geteMail() {
+        return this.eMail;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public String getSurName() {
+        return this.surName;
     }
 
     

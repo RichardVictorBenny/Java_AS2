@@ -8,73 +8,46 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.security.GeneralSecurityException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.LandlordView;
+import com.mycompany.rentalsystem.funcitons.Credentials;
 import com.mycompany.rentalsystem.funcitons.Database;
+import com.mycompany.rentalsystem.funcitons.FileConvertion;
+import com.mycompany.rentalsystem.funcitons.SentEmail;
 import com.mysql.cj.jdbc.Blob;
-
 
 /**
  *
  * @author HP
  */
-public class LandlordController{
+public class LandlordController {
     private LandlordView landlordView;
     private Landlord landlordModel;
     private HashMap<String, Object> houseArray = new HashMap<>();
-    private ArrayList<Tenant> tenantArray = new ArrayList<>();
+    private HashMap<String, Object> tenantArray = new HashMap<>();
     private Database database = new Database();
-    
-    
+    private int houseCount = 0;
+    private int tenantCount = 0;
+    private Credentials credentials = new Credentials();
 
-    public LandlordController(LandlordView landlordView, Landlord landlordModel){
+    public LandlordController(LandlordView landlordView, Landlord landlordModel) {
         this.landlordView = landlordView;
         this.landlordModel = landlordModel;
 
-        ResultSet allHouseRows = database.findAll("Houses");
-
-        try {
-            while(allHouseRows.next()){
-                String[] data = new String[4];
-                data[0] = allHouseRows.getString("houseId");
-
-                //rebuild House object form ByteArray
-                Blob houseBlob = (Blob) allHouseRows.getBlob("houseObject");
-                byte[] houseByte = houseBlob.getBytes(1, (int) houseBlob.length());
-                ByteArrayInputStream byteArrInpStm = new ByteArrayInputStream(houseByte);
-                ObjectInputStream objInpStm = new ObjectInputStream(byteArrInpStm);
-                House tempHouseObj = (House) objInpStm.readObject();
-
-                data[1] = tempHouseObj.getHouseType();
-                data[2] = tempHouseObj.getHouseAddress();
-                data[3] = String.valueOf(tempHouseObj.getHouseRentPrice());
-                
-                landlordView.insertValueTable(landlordView.getHouseListTable(), data);
-                House.setHouseId(tempHouseObj.getHouseId());
-                houseArray.put(data[0], tempHouseObj);
-                
-                
-            }
-            allHouseRows.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-
+        refreshTable("Houses", landlordView.getHouseListTable());
+        refreshTable("Tenants", landlordView.getTenantListTable());
 
         landlordView.addDashboardButtonListener(new MenubarListener());
         landlordView.addHousesButtonListener(new MenubarListener());
@@ -94,14 +67,15 @@ public class LandlordController{
         landlordView.tenantClearFormButtonListener(new TenantListener());
         landlordView.tenantUpdateButtonListener(new TenantListener());
 
-        landlordView.houseListTableListener(new LandlordMouseListener());;
+        landlordView.houseListTableListener(new LandlordMouseListener());
+        landlordView.tenantListTableListener(new LandlordMouseListener());
     }
 
-    class MenubarListener implements ActionListener{
+    class MenubarListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() instanceof JButton){
+            if (e.getSource() instanceof JButton) {
                 JButton menuButtonPressed = (JButton) e.getSource();
                 String menuButtonName = menuButtonPressed.getText();
                 switch (menuButtonName) {
@@ -116,13 +90,13 @@ public class LandlordController{
                         break;
                     case "Maintenance":
                         landlordView.maintenanceButtonActionPerformed(e);
-                    break;
+                        break;
                     case "Payments":
                         landlordView.paymentButtonActionPerformed(e);
-                    break;
+                        break;
                     case "Others":
                         landlordView.otherButtonActionPerformed(e);
-                    break;
+                        break;
                     case "Sign Out":
                         landlordView.signoutButtonActionPerformed(e);
                         break;
@@ -137,50 +111,64 @@ public class LandlordController{
     /**
      * 
      */
-    class HouseListener implements ActionListener{
+    class HouseListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            HashMap<String, Object> record = new HashMap<>();
-            if(e.getSource() instanceof JButton){
+            ArrayList<Object> record = new ArrayList<>();
+            if (e.getSource() instanceof JButton) {
                 JButton buttonPressed = (JButton) e.getSource();
                 String buttonPressedName = buttonPressed.getText();
                 switch (buttonPressedName) {
                     case "ADD":
                         House houseObj = landlordView.houseAddButtonActionPerformed(e);
-                        landlordView.insertValueTable(landlordView.getHouseListTable(), houseObj.getDataArray());
-                        record.put("houseId", String.valueOf(houseObj.getHouseId()));
-                        record.put("houseObject", houseObj);
-                        record.clear();
-                
-                        try{
-                            database.insert("houses", record);
+                        if (houseObj != null) {
+                            landlordView.insertValueTable(landlordView.getHouseListTable(), houseObj.getDataArray());
+                            record.add(houseObj.getHouseId());
+                            record.add(houseObj);
+                            try {
+                                database.insert("houses", "houseId, houseObject", record);
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                                // add to logger
+                            }
+                            record.clear();
+                            landlordView.clearHouseForm();
+                            houseCount = 0;
+                            refreshTable("Houses", landlordView.getHouseListTable());
                         }
-                        catch (Exception exception) {
-                            exception.getMessage();
-                            //add to logger
-                        }
-                        
-                        //refresh the table
                         break;
                     case "CLEAR":
                         landlordView.houseClearFormButtonActionPerformed(e);
                         break;
                     case "UPDATE":
                         House houseObject = landlordView.houseUpdateButtonActionPerformed(e);
-                        record.put("houseId", houseObject.getHouseId());
-                        record.put("houseObject", houseObject);
+                        if (houseObject != null) {
+                            try {
+                                database.updateHouse(String.valueOf(houseObject.getHouseId()), houseObject);
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
+                            record.clear();
+                            landlordView.clearHouseForm();
 
+                            houseCount = 0;
+                            refreshTable("Houses", landlordView.getHouseListTable());
+                        }
+                        break;
+                    case "DELETE":
+                        String id = landlordView.houseDeleteButtonActionPerformed(e);
                         try {
-                            database.update("Houses", record);
+                            database.delete("houses", "houseId", id);
+
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
+                        landlordView.clearHouseForm();
 
-                        record.clear();
-                        break;
-                    case "DELETE":
-                        landlordView.houseDeleteButtonActionPerformed(e);
+                        houseCount = 0;
+                        refreshTable("Houses", landlordView.getHouseListTable());
+
                         break;
                     default:
                         // add an error log to logger
@@ -192,32 +180,81 @@ public class LandlordController{
 
     }
 
-    class TenantListener implements ActionListener{
-
+    class TenantListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() instanceof JButton){
+            ArrayList<Object> record = new ArrayList<>();
+            if (e.getSource() instanceof JButton) {
                 JButton buttonPressed = (JButton) e.getSource();
                 String buttonPressedName = buttonPressed.getText();
                 switch (buttonPressedName) {
                     case "ADD":
                         Tenant tempTenantObj = landlordView.tenantAddButtonActionPerformed(e);
-                        tenantArray.add(tempTenantObj);
-                        landlordView.insertValueTable(landlordView.getTenantListTable(), tempTenantObj.getDataArray());
                         
-                        //append file and save
-                        //refresh the table
+                        if (tempTenantObj != null) {
+                            record.add(tempTenantObj.getTenantId());
+                            record.add(tempTenantObj);
+                            try {
+                                database.insert("tenants", "tenantId, tenantObject", record);
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
+                            record.clear();
+
+                            try {
+                                new SentEmail().sentMail(tempTenantObj.geteMail(), "YOUR CREDENTIALS", """
+                                        Hi %s,
+
+                                        Your login username is %s.
+                                        Your temporary password is %s.
+                                        the format is 'DD-MM-YYYY'.
+
+                                        Kindly 
+                                        Landlord
+                                        """.formatted(tempTenantObj.getSurName(), 
+                                        tempTenantObj.getTenantId(), 
+                                        String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob()))));
+                            } catch (GeneralSecurityException | IOException | MessagingException e1) {
+                                e1.printStackTrace();
+                            }
+
+                            landlordView.clearTenantForm();
+
+                            tenantCount = 0;
+                            refreshTable("Tenants", landlordView.getTenantListTable());
+                        }
+                        // functions.generateTempCredentials();
                         break;
                     case "CLEAR":
                         landlordView.tenantClearFormButtonActionPerformed(e);
-                        
-
                         break;
                     case "UPDATE":
-                        landlordView.tenantUpdateButtonActionPerformed(e);
+                        Tenant tenantObject = landlordView.tenantUpdateButtonActionPerformed(e);
+                        if (tenantObject != null) {
+                            try {
+                                database.updateTenant(String.valueOf(tenantObject.getTenantId()), tenantObject);
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
+                            record.clear();
+                            landlordView.clearTenantForm();
+
+                            tenantCount = 0;
+                            refreshTable("Tenants", landlordView.getTenantListTable());
+                        }
                         break;
                     case "DELETE":
-                        landlordView.tenantDeleteButtonActionPerformed(e);
+                        String id = landlordView.tenantDeleteButtonActionPerformed(e);
+                        try {
+                            database.delete("tenants", "tenantId", id);
+
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+                        landlordView.clearTenantForm();
+
+                        tenantCount = 0;
+                        refreshTable("Tenants", landlordView.getTenantListTable());
                         break;
                     default:
                         // add an error log to logger
@@ -229,48 +266,174 @@ public class LandlordController{
 
     }
 
-    class LandlordMouseListener implements MouseListener{
-
+    class LandlordMouseListener implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {
-            if(e.getSource() instanceof JTable){
+            if (e.getSource() instanceof JTable) {
                 JTable clickedTable = (JTable) e.getSource();
                 String tableName = clickedTable.getName();
                 switch (tableName) {
                     case "HOUSE TABLE":
-                        int row = clickedTable.rowAtPoint(e.getPoint());
-                        int rowId = Integer.valueOf((String) clickedTable.getModel().getValueAt(row, 0));
-                        House houseobject = (House) houseArray.get(String.valueOf(rowId));
-                        landlordView.populateHouseForm(houseobject);
-                        
+                        /*
+                         * int row = clickedTable.rowAtPoint(e.getPoint());
+                         * int rowId = Integer.valueOf((String) clickedTable.getModel().getValueAt(row,
+                         * 0));
+                         * House houseobject = (House) houseArray.get(String.valueOf(rowId));
+                         */
+                        House houseObject = (House) getObjectAtPoint(clickedTable, e, "houseObject");
+                        landlordView.populateHouseForm(houseObject);
                         break;
-                
+                    case "TENANT TABLE":
+                        Tenant tenantObject = (Tenant) getObjectAtPoint(clickedTable, e, "tenantObject");
+                        landlordView.populateTenantForm(tenantObject);
+                        break;
+
                     default:
                         break;
                 }
+
+            } else {
+                System.out.println("not recon");
             }
+
         }
 
         @Override
-        public void mousePressed(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) {
+        }
 
         @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {
+        }
 
         @Override
-        public void mouseEntered(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {
+        }
 
         @Override
         public void mouseExited(MouseEvent e) {
         }
-        
     }
 
-    public ArrayList<Tenant> getTenantArray() {
-        return this.tenantArray;
+    private Object getObjectAtPoint(JTable clickedTable, MouseEvent e, String label) {
+        int row = clickedTable.rowAtPoint(e.getPoint());
+        int rowId = Integer.valueOf((String) clickedTable.getModel().getValueAt(row, 0));
+        String id = (String.valueOf(rowId));
+        ResultSet set = null;
+        switch (label) {
+            case "houseObject":
+                set = database.findHouse(id);
+                break;
+            case "tenantObject":
+                set = database.findTenant(id);
+                break;
+
+        }
+
+        try {
+            while (set.next()) {
+                Blob objectBlob;
+                objectBlob = (Blob) set.getBlob(label);
+                byte[] byteArray = objectBlob.getBytes(1, (int) objectBlob.length());
+
+                Object object = (Object) FileConvertion.toObject(byteArray);
+                set.close();
+                return object;
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return null;
     }
 
-    public void setTenantArray(Tenant tenant) {
-        this.tenantArray.add(tenant);
+    public void refreshTable(String tableName, JTable jTable) {
+        ResultSet allRows = database.findAll(tableName);
+        DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
+
+        try {
+            tableModel.getDataVector().removeAllElements();
+            tableModel.fireTableDataChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        switch (tableName) {
+            case "Houses":
+                refreshHouseListTable(allRows);
+                break;
+            case "Tenants":
+                refreshTenantlistTable(allRows);
+                break;
+            default:
+                break;
+        }
+
     }
+
+    public void refreshHouseListTable(ResultSet allHouseRows) {
+        try {
+            landlordView.getTenantHouseIdComboBox().removeAllItems();
+            while (allHouseRows.next()) {
+                String[] data = new String[4];
+                data[0] = allHouseRows.getString("houseId");
+
+                // adding adding houseId to the tenant panel combobox
+
+                landlordView.getTenantHouseIdComboBox().addItem(data[0]);
+
+                // rebuild House object form ByteArray
+                Blob houseBlob = (Blob) allHouseRows.getBlob("houseObject");
+                byte[] houseByte = houseBlob.getBytes(1, (int) houseBlob.length());
+                /*
+                 * ByteArrayInputStream byteArrInpStm = new ByteArrayInputStream(houseByte);
+                 * ObjectInputStream objInpStm = new ObjectInputStream(byteArrInpStm);
+                 * House tempHouseObj = (House) objInpStm.readObject();
+                 */
+
+                House tempHouseObj = (House) FileConvertion.toObject(houseByte);
+
+                data[1] = tempHouseObj.getHouseType();
+                data[2] = tempHouseObj.getHouseAddress();
+                data[3] = String.valueOf(tempHouseObj.getHouseRentPrice());
+
+                landlordView.insertValueTable(landlordView.getHouseListTable(), data);
+                House.setHouseId(tempHouseObj.getHouseId());
+                houseCount++;
+
+            }
+
+            landlordView.getHouseCountLabel().setText(String.valueOf(this.houseCount));
+            allHouseRows.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void refreshTenantlistTable(ResultSet allTenantRows) {
+        try {
+            while (allTenantRows.next()) {
+                // String data = allTenantRows.getString("tenantId");
+
+                // rebuild House object form ByteArray
+                Blob blob = (Blob) allTenantRows.getBlob("tenantObject");
+                byte[] tenantByte = blob.getBytes(1, (int) blob.length());
+                Tenant tempObj = (Tenant) FileConvertion.toObject(tenantByte);
+                landlordView.insertValueTable(landlordView.getTenantListTable(), tempObj.getDataArray());
+                Tenant.setTenantId(Integer.valueOf(tempObj.getTenantId()));
+                // tenantArray.put(data, tempObj);
+                tenantCount++;
+            }
+            landlordView.getTenantCountLabel().setText(String.valueOf(tenantCount));
+            allTenantRows.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

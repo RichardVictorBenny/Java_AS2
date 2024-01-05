@@ -33,7 +33,11 @@ public class LandlordView extends javax.swing.JFrame {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Dashboard");
+        this.getHouseListTable().setName("HOUSE TABLE");
+        this.getTenantListTable().setName("TENANT TABLE");
+
     }
+    
 
     public void addDashboardButtonListener(ActionListener menubarListener){
         dashboardButton.addActionListener(menubarListener);
@@ -83,7 +87,7 @@ public class LandlordView extends javax.swing.JFrame {
     }
 
     public void tenantDeleteButtonListener(ActionListener tenantListener){
-        tenantClearFormButton.addActionListener(tenantListener);
+        tenantDeleteButton.addActionListener(tenantListener);
     }
 
     public void tenantUpdateButtonListener(ActionListener tenantListener){
@@ -93,6 +97,9 @@ public class LandlordView extends javax.swing.JFrame {
     //Mouse Listeners
     public void houseListTableListener(MouseListener ClickListener){
         houseListTable.addMouseListener( ClickListener);
+    }
+    public void tenantListTableListener(MouseListener ClickListener){
+        tenantListTable.addMouseListener( ClickListener);
     }
 
     /**
@@ -203,7 +210,7 @@ public class LandlordView extends javax.swing.JFrame {
         tenantUpdateButton = new javax.swing.JButton();
         tenantDeleteButton = new javax.swing.JButton();
         tenantHouseIdDisplayLabel = new javax.swing.JLabel();
-        tenantHouseIdValueLabel = new javax.swing.JLabel();
+        tenantHouseIdComboBox = new javax.swing.JComboBox<>();
         tenantListPanel = new javax.swing.JPanel();
         tenantSearchTextField = new javax.swing.JTextField();
         tenantListScrollPane = new javax.swing.JScrollPane();
@@ -368,6 +375,7 @@ public class LandlordView extends javax.swing.JFrame {
         dashboardButton.setFocusPainted(false);
         dashboardButton.setFocusable(false);
         dashboardButton.setPreferredSize(new java.awt.Dimension(200, 50));
+        
 
         housesButton.setBackground(new java.awt.Color(242, 242, 242));
         housesButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -376,6 +384,7 @@ public class LandlordView extends javax.swing.JFrame {
         housesButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         housesButton.setFocusPainted(false);
         housesButton.setPreferredSize(new java.awt.Dimension(200, 50));
+        
 
         tenantsButton.setBackground(new java.awt.Color(242, 242, 242));
         tenantsButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -384,6 +393,7 @@ public class LandlordView extends javax.swing.JFrame {
         tenantsButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         tenantsButton.setFocusPainted(false);
         tenantsButton.setPreferredSize(new java.awt.Dimension(200, 50));
+        
 
         maintenanceButton.setBackground(new java.awt.Color(242, 242, 242));
         maintenanceButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -392,6 +402,7 @@ public class LandlordView extends javax.swing.JFrame {
         maintenanceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         maintenanceButton.setFocusPainted(false);
         maintenanceButton.setPreferredSize(new java.awt.Dimension(200, 50));
+       
 
         paymentButton.setBackground(new java.awt.Color(242, 242, 242));
         paymentButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -400,6 +411,7 @@ public class LandlordView extends javax.swing.JFrame {
         paymentButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         paymentButton.setFocusPainted(false);
         paymentButton.setPreferredSize(new java.awt.Dimension(200, 50));
+       
 
         otherButton.setBackground(new java.awt.Color(242, 242, 242));
         otherButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -408,6 +420,7 @@ public class LandlordView extends javax.swing.JFrame {
         otherButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         otherButton.setFocusPainted(false);
         otherButton.setPreferredSize(new java.awt.Dimension(200, 50));
+        
 
         signoutButton.setBackground(new java.awt.Color(242, 242, 242));
         signoutButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -416,6 +429,7 @@ public class LandlordView extends javax.swing.JFrame {
         signoutButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         signoutButton.setFocusPainted(false);
         signoutButton.setPreferredSize(new java.awt.Dimension(200, 50));
+        
 
         javax.swing.GroupLayout menubarPanelLayout = new javax.swing.GroupLayout(menubarPanel);
         menubarPanel.setLayout(menubarPanelLayout);
@@ -1072,7 +1086,6 @@ public class LandlordView extends javax.swing.JFrame {
         houseUpdateButton.setText("UPDATE");
         houseUpdateButton.setBorder(null);
         
-
         houseDeleteButton.setBackground(new java.awt.Color(255, 255, 204));
         houseDeleteButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseDeleteButton.setText("DELETE");
@@ -1176,7 +1189,6 @@ public class LandlordView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        houseListTable.setName("HOUSE TABLE");
         houseListScrollPane.setViewportView(houseListTable);
 
         houseSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -1364,9 +1376,6 @@ public class LandlordView extends javax.swing.JFrame {
         tenantHouseIdDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         tenantHouseIdDisplayLabel.setText("House ID");
 
-        tenantHouseIdValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tenantHouseIdValueLabel.setText("9090");
-
         javax.swing.GroupLayout tenantFormPanelLayout = new javax.swing.GroupLayout(tenantFormPanel);
         tenantFormPanel.setLayout(tenantFormPanelLayout);
         tenantFormPanelLayout.setHorizontalGroup(
@@ -1396,9 +1405,9 @@ public class LandlordView extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tenantFormPanelLayout.createSequentialGroup()
                                     .addComponent(tenantHouseIdDisplayLabel)
                                     .addGap(135, 135, 135)))
-                            .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tenantHouseIdValueLabel)
-                                .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(dobDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                .addComponent(tenantHouseIdComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         tenantFormPanelLayout.setVerticalGroup(
@@ -1433,15 +1442,12 @@ public class LandlordView extends javax.swing.JFrame {
                     .addComponent(dobDisplayLabel)
                     .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tenantFormPanelLayout.createSequentialGroup()
-                        .addComponent(tenantHouseIdDisplayLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addComponent(tenantButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addGroup(tenantFormPanelLayout.createSequentialGroup()
-                        .addComponent(tenantHouseIdValueLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tenantHouseIdDisplayLabel)
+                    .addComponent(tenantHouseIdComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(tenantButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
 
         tenantSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -1462,9 +1468,16 @@ public class LandlordView extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tenantListScrollPane.setViewportView(tenantListTable);
@@ -1486,7 +1499,7 @@ public class LandlordView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(tenantListPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tenantListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE)
+                .addComponent(tenantListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
                 .addContainerGap())
         );
         tenantListPanelLayout.setVerticalGroup(
@@ -1547,9 +1560,16 @@ public class LandlordView extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         paymentUpcomingScrollPane.setViewportView(paymentUpcomingListTable);
@@ -1754,9 +1774,16 @@ public class LandlordView extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         paymentTenantScrollPane.setViewportView(paymentTenantListTable);
@@ -2105,9 +2132,16 @@ public class LandlordView extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         errorReviewListScrollPane.setViewportView(errorReviewListTable);
@@ -2129,9 +2163,16 @@ public class LandlordView extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, true, false, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         errorNewListScrollPane.setViewportView(errorNewListTable);
@@ -2146,7 +2187,15 @@ public class LandlordView extends javax.swing.JFrame {
             new String [] {
                 "ID", "Tenant Name", "Date Issued", "House ID"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         previousErrorListScrollPane.setViewportView(previousErrorListTable);
 
         previousErrorDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -2528,7 +2577,15 @@ public class LandlordView extends javax.swing.JFrame {
             new String [] {
                 "ID", "Tenant Name", "Date Issued", "House ID"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         previousErrorListScrollPane1.setViewportView(previousErrorListTable1);
 
         maintenanceRequestListScrollPane.setViewportView(previousErrorListScrollPane1);
@@ -2714,6 +2771,11 @@ public class LandlordView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+
+    
+    
+
     public void dashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardButtonActionPerformed
         // TODO add your handling code here:
         //landlordDashboard.setSelectedIndex(0);
@@ -2851,33 +2913,46 @@ public class LandlordView extends javax.swing.JFrame {
     }//GEN-LAST:event_houseClearFormButtonActionPerformed
 
     public House houseAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseAddButtonActionPerformed
-        House houseObj = new House(this.getHouseTypeComboBox(),
-                                this.getHouseAddressTextField(),
-                                this.getHouseDescriptionTextArea(),
-                                Integer.valueOf(this.getHouseRentPriceTextField()) );
-        
-        houseObj.toString(); // remove
-        clearHouseForm();
-        
+        String houseId = this.getHouseidTextField();
+        String houseType = this.getHouseTypeComboBox();
+        String houseAddress = this.getHouseAddressTextField();
+        String houseDescription = this.getHouseDescriptionTextArea();
+        String houseRent = this.getHouseRentPriceTextField();
+
+        House houseObj;
+
+        if(houseAddress!=null&&houseDescription!=null&&houseRent!=null){
+            houseObj = new House( houseType, houseAddress,houseDescription, Integer.valueOf(houseRent));
+        } else{
+            houseObj = null;
+        }
         return houseObj;
         
 
     }//GEN-LAST:event_houseAddButtonActionPerformed
 
     public House houseUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseUpdateButtonActionPerformed
-        House houseObj = new House(this.getHouseidTextField(),
-                                 this.getHouseTypeComboBox(),
-                                this.getHouseAddressTextField(),
-                                this.getHouseDescriptionTextArea(),
-                                Integer.valueOf(this.getHouseRentPriceTextField()) );
-        clearHouseForm();
+        String houseId = this.getHouseidTextField();
+        String houseType = this.getHouseTypeComboBox();
+        String houseAddress = this.getHouseAddressTextField();
+        String houseDescription = this.getHouseDescriptionTextArea();
+        String houseRent = this.getHouseRentPriceTextField();
+
+        House houseObj;
+
+        if(houseAddress!=null&&houseDescription!=null&&houseRent!=null){
+            houseObj = new House(houseId, houseType, houseAddress,houseDescription, Integer.valueOf(houseRent));
+        } else{
+            houseObj = null;
+        }
         return houseObj;
 
         
     }//GEN-LAST:event_houseUpdateButtonActionPerformed
 
-    public void houseDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseDeleteButtonActionPerformed
-        // TODO add your handling code here:
+    public String houseDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseDeleteButtonActionPerformed
+        String houseToDelete = this.getHouseidTextField();
+        return houseToDelete;
     }//GEN-LAST:event_houseDeleteButtonActionPerformed
 
     public void houseRentTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_houseRentTextFieldActionPerformed
@@ -2899,21 +2974,42 @@ public class LandlordView extends javax.swing.JFrame {
         String phn = this.getPhoneNumberTextField();
         String gender = this.getGenderComboBox();
         LocalDate dob = this.getDobDateChooser();
-        Tenant tenantModelObj = new Tenant(firstName, lastName,gender, eMail, dob, phn);
-        tenantModelObj.toString();//add the current object to an array and set the variable to null.
-        clearTenantForm();
-    
+        String houseId = (String) this.getTenantHouseIdComboBox().getSelectedItem();
+
+        Tenant tenantModelObj;
+        if(firstName != null && lastName !=null && eMail != null&&phn!=null&&dob!=null){
+            tenantModelObj = new Tenant(firstName, lastName,eMail,phn,gender,  dob,  houseId);
+        } else{
+            tenantModelObj = null;
+        }
         return tenantModelObj;
 
         
     }//GEN-LAST:event_tenantAddButtonActionPerformed
 
-    public void tenantUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantUpdateButtonActionPerformed
-        
+    public Tenant tenantUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantUpdateButtonActionPerformed
+        String extTenantId = this.getTenantidTextField();
+        String firstName = this.getFirstNameTextField();
+        String lastName = this.getLastNameTextField();
+        String eMail = this.getemailTextField();
+        String phn = this.getPhoneNumberTextField();
+        String gender = this.getGenderComboBox();
+        LocalDate dob = this.getDobDateChooser();
+        String houseId = (String) this.getTenantHouseIdComboBox().getSelectedItem();
+
+        Tenant tenantModelObj;
+        if(firstName != null&& lastName !=null && eMail != null&&phn!=null&&dob!=null){
+            tenantModelObj = new Tenant(firstName, lastName, eMail, phn, extTenantId, gender,  dob,  houseId);
+        } else{
+            tenantModelObj = null;
+        }
+
+        return tenantModelObj;
     }//GEN-LAST:event_tenantUpdateButtonActionPerformed
 
-    public void tenantDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantDeleteButtonActionPerformed
-        // TODO add your handling code here:
+    public String tenantDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenantDeleteButtonActionPerformed
+        String tenantToDelete = this.getTenantidTextField();
+        return tenantToDelete;
     }//GEN-LAST:event_tenantDeleteButtonActionPerformed
 
     public void maintenanceRequestSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceRequestSearchTextFieldActionPerformed
@@ -3258,8 +3354,8 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JButton tenantDeleteButton;
     private javax.swing.JLabel tenantDisplayLabel;
     private javax.swing.JPanel tenantFormPanel;
+    private javax.swing.JComboBox<String> tenantHouseIdComboBox;
     private javax.swing.JLabel tenantHouseIdDisplayLabel;
-    private javax.swing.JLabel tenantHouseIdValueLabel;
     private javax.swing.JPanel tenantListPanel;
     private javax.swing.JScrollPane tenantListScrollPane;
     private javax.swing.JTable tenantListTable;
@@ -3278,6 +3374,17 @@ public class LandlordView extends javax.swing.JFrame {
      * @param value
      */
     
+    public JComboBox<String> getTenantHouseIdComboBox() {
+        return tenantHouseIdComboBox;
+    }
+
+    public void setTenantHouseIdComboBox(JComboBox<String> tenantHouseIdComboBox) {
+        this.tenantHouseIdComboBox = tenantHouseIdComboBox;
+    }
+    public void setTenantHouseIdComboBoxText(String text){
+        this.tenantHouseIdComboBox.setSelectedItem(text);
+    }
+    
     public void setTenantidTextField(String value){
         this.tenantidTextField.setText(value);
     }
@@ -3291,11 +3398,10 @@ public class LandlordView extends javax.swing.JFrame {
     }
 
     public String getFirstNameTextField(){
-        if (!   this.firstnameTextField.getText().isEmpty()){
+        if (!this.firstnameTextField.getText().isEmpty()){
             return this.firstnameTextField.getText();
         }
         else {
-            System.out.println("error");
             JOptionPane.showMessageDialog(this, "Please enter first name!", "Warning",JOptionPane.WARNING_MESSAGE);
             return null;
             
@@ -3354,7 +3460,6 @@ public class LandlordView extends javax.swing.JFrame {
 
     public void setPhoneNumberTextField(String value){
         this.phoneNumberTextField.setText(value);
-
     }
     
     public String getPhoneNumberTextField(){
@@ -3366,9 +3471,9 @@ public class LandlordView extends javax.swing.JFrame {
     }
 
     public void setGenderComboBox(String value){
-        if (value == "Male"){
+        if (value.equals("Male")){
             genderComboBox.setSelectedIndex(0);
-        } else if (value == "Female"){
+        } else if (value.equals("Female")){
             genderComboBox.setSelectedIndex(1);
         }
     }
@@ -3377,7 +3482,7 @@ public class LandlordView extends javax.swing.JFrame {
         if ( (String)this.genderComboBox.getSelectedItem() == "Male"){
             return "Male";
 
-        }else if ((String)this.genderComboBox.getSelectedItem() != "Female" ){
+        }else if ((String)this.genderComboBox.getSelectedItem() == "Female" ){
             return "Female";
 
         }else {
@@ -3465,6 +3570,34 @@ public class LandlordView extends javax.swing.JFrame {
         setHouseRentPriceTextField(String.valueOf(house.getHouseRentPrice()));
         setHouseDescriptionTextArea(house.getHouseDescription());
     }
+    public void populateTenantForm(Tenant tenant){
+        setTenantidTextField(tenant.getTenantId());
+        setGenderComboBox(tenant.getGender());
+        setFirstnameTextField(tenant.getFirstName());
+        setLastnameTextField(tenant.getSurName());
+        setEmailTextField(tenant.geteMail());
+        setPhoneNumberTextField(tenant.getPhoneNumber());
+        setDobDateChooser(tenant.getDateOfBirth(tenant.getDob()));
+        setTenantHouseIdComboBoxText(tenant.getHouseId());
+
+    }
+    // count label getters and setters
+    public JLabel getHouseCountLabel() {
+        return houseCountLabel;
+    }
+
+    public void setHouseCountLabel(JLabel houseCountLabel) {
+        this.houseCountLabel = houseCountLabel;
+    }
+
+    public JLabel getTenantCountLabel() {
+        return tenantCountLabel;
+    }
+
+    public void setTenantCountLabel(JLabel tenantCountLabel) {
+        this.tenantCountLabel = tenantCountLabel;
+    }
+    
     
     //table functions
     public JTable getHouseListTable(){
@@ -3480,4 +3613,12 @@ public class LandlordView extends javax.swing.JFrame {
         return tenantListTable;
     }
 
+    public void setTenantListTable(javax.swing.JTable tenantListTable) {
+        this.tenantListTable = tenantListTable;
+    }
+
+
+    
+
+    
 }

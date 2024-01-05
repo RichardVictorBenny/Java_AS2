@@ -1,8 +1,14 @@
 package com.mycompany.rentalsystem.funcitons;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.stream.Collectors;
+
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -40,21 +46,25 @@ public class Database {
      * @param values - String table heading with comma seperation
      * @param record - Arraylist<?> id as String and object as Book
      */
-    public void insert(String table, HashMap<String, Object> record){
-        Collection<String> keyValues = record.keySet();
-        String values = keyValues.stream().collect(Collectors.joining(","));
+    public void insert(String table, String values, ArrayList<Object> record){
+        /* String values = columnArray.stream().collect(Collectors.joining(",")); */
 
         String query = "INSERT INTO "+ table + " ("+values+") VALUES(?,?)";
+        record.get(1).toString();
         try {
+            
+            byte[] object = FileConvertion.toByteArray(record.get(1));
             this.statement = connnection.prepareStatement(query);
-            this.statement.setObject(1, record.get("houseId"));
-            this.statement.setObject(2, record.get("houseObject"));
+            this.statement.setObject(1, record.get(0));
+            this.statement.setObject(2, object);
             this.statement.execute();
             this.statement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
             //add to logger
+        } catch (Exception exception){
+            exception.printStackTrace();
         }
     }
 
@@ -70,10 +80,37 @@ public class Database {
         return null;
     }
 
-    public void delete(String table, String id ){
+    public ResultSet findTenant(String id){
         try {
-            this.statement = connnection.prepareStatement("DELETE FROM "+table+" WHERE houseId = (?)");
+            this.statement = connnection.prepareStatement("SELECT * FROM Tenants WHERE tenantId = ?");
             this.statement.setString(1, id);
+            ResultSet result = this.statement.executeQuery();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        return null;
+    }
+
+    public ResultSet findHouse(String id){
+        try {
+            this.statement = connnection.prepareStatement("SELECT * FROM houses WHERE houseId = ?");
+            this.statement.setString(1, id);
+            ResultSet result = this.statement.executeQuery();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void delete(String table, String columnLabel, String id ){
+        String query = "DELETE FROM "+table+" WHERE "+ columnLabel +" = "+ id;
+
+        try {
+            this.statement = connnection.prepareStatement(query);
             this.statement.execute();
             this.statement.close();
         } catch (Exception e) {
@@ -81,28 +118,43 @@ public class Database {
         }
     }
 
-    public void update(String table, HashMap<String, Object> record){
-        Collection<String> keyValues = record.keySet();
-        String value = keyValues.stream().collect(Collectors.joining(","));
+    public void updateHouse(String id, Object house ){
 
-        String query = "UPDATE "+ table+" SET houseObject = (?) WHERE houseId = (?)";
+        String query = "UPDATE houses SET houseObject = ? WHERE houseId = ?";
         try {
-            System.out.println(String.valueOf(record.get("houseId")));
+            byte[] object = FileConvertion.toByteArray(house);
             this.statement = connnection.prepareStatement(query);
-            this.statement.setObject(1, record.get("houseObject"));
-            this.statement.setObject(2, record.get("houseId"));
+            this.statement.setObject(1, object);
+            this.statement.setObject(2, id);
             this.statement.execute();
             this.statement.close();
-            System.out.println("updated");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    public void updateTenant(String id, Object tenant ){
+
+        String query = "UPDATE tenants SET tenantObject = ? WHERE tenantId = ?";
+        try {
+            byte[] object = FileConvertion.toByteArray(tenant); 
+            this.statement = connnection.prepareStatement(query);
+            this.statement.setObject(1, object);
+            this.statement.setObject(2, id);
+            this.statement.execute();
+            this.statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public String toString() {
         return "Database [username=" + username + ", password=" + password + ", database=" + database + ", url=" + url
                 + "]";
     }
+
+    
 }
 

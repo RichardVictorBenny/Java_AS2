@@ -11,14 +11,9 @@ public class Person {
         this.firstName = firstName;
         this.surName = surName;
         this.eMail = eMail;
-    
         this.phoneNumber = phoneNumber;
     }
     
-
-
-
-
     public void seteMail(String eMail) {
         this.eMail = eMail;
     }
@@ -38,19 +33,19 @@ public class Person {
 
 
     public String geteMail() {
-        return eMail;
+        return this.eMail;
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return this.phoneNumber;
     }
 
     public String getSurName() {
-        return surName;
+        return this.surName;
     }
 
 

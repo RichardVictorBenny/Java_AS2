@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class House implements Serializable {
     private static Integer houseId = 2000;
-    private static Integer totalHouseCount;
+    private static Integer totalHouseCount = 0;
     private Integer extHouseId;
     private String houseType, houseAddress, houseDescription;
     private Integer houseRentPrice;
@@ -33,6 +33,7 @@ public class House implements Serializable {
                 Integer houseRentPrice){
                     House.houseId++;
                     this.extHouseId = House.houseId;
+                    House.totalHouseCount++;
                     this.houseType = houseType;
                     this.houseAddress = houseAddress;
                     this.houseDescription = houseDescription;

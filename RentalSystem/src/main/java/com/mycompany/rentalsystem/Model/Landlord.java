@@ -9,19 +9,11 @@ package com.mycompany.rentalsystem.Model;
  *
  * @author Richard
  */ 
-public class Landlord extends Person{
+public class Landlord {
     private static int landlordID;
     private String extlandlordID;
     
     public Landlord(){}
-    public Landlord(String landlordID, String firstName, String surName, String eMail, String phoneNumber){
-        super(firstName, surName, eMail, phoneNumber);
-        this.extlandlordID = landlordID;
-    }
-    public Landlord( String firstName, String surName, String eMail, String phoneNumber){
-        super(firstName, surName,  eMail, phoneNumber);
-        this.landlordID+=1;
-    }
 
 
     
