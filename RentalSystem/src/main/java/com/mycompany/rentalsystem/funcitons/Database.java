@@ -145,6 +145,20 @@ public class Database {
         }
     }
 
+    public void updatePassword(String table, String newPassword, String username){
+        String query = "UPDATE "+table+" SET password = ? WHERE username = ?";
+        try {
+            this.statement = connnection.prepareStatement(query);
+            this.statement.setString(1, newPassword);
+            this.statement.setString(2, username);
+            this.statement.execute();
+           
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public ResultSet passwordCheck(String tableName, String username){
         String query = "SELECT * FROM "+tableName+" WHERE username = ?";
         try {

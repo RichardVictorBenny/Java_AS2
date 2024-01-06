@@ -4,8 +4,18 @@
  */
 package com.mycompany.rentalsystem.View;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import com.mycompany.rentalsystem.Model.Tenant;
+import com.mycompany.rentalsystem.funcitons.Password;
+
 
 
 /**
@@ -13,6 +23,8 @@ import javax.swing.JFrame;
  * @author HP
  */
 public class TenantView extends JFrame {
+
+    
 
     /**
      * Creates new form NewJFrame
@@ -42,6 +54,18 @@ public class TenantView extends JFrame {
         signoutButton.addActionListener(menubarListener);
     }
 
+    public void addAccountLabelListener(MouseListener mouseListener){
+        accountLabel.addMouseListener(mouseListener);
+    }
+
+    public void accountUpdatePasswordButtonListener(ActionListener listener){
+        accountUpdatePasswordButton.addActionListener(listener);
+    }
+
+    public void maintenanceRequestSubmitButtonListener(ActionListener listerner){
+        maintenanceRequestSubmitButton.addActionListener(listerner);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,7 +75,6 @@ public class TenantView extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tenantDashboard1 = new javax.swing.JTabbedPane();
         tenantPanel = new javax.swing.JPanel();
         titlePanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
@@ -108,7 +131,6 @@ public class TenantView extends JFrame {
         maintenancePanel = new javax.swing.JPanel();
         maintenanceRequestPanel = new javax.swing.JPanel();
         maintenanceRequestSearchTextField = new javax.swing.JTextField();
-        maintenanceRequestSearchButton = new javax.swing.JButton();
         maintenanceRequestListScrollPane = new javax.swing.JScrollPane();
         maintenanceRequestListTable = new javax.swing.JTable();
         maintenanceDetailsPanel = new javax.swing.JPanel();
@@ -128,20 +150,28 @@ public class TenantView extends JFrame {
         dobDisplayLabel = new javax.swing.JLabel();
         tenantidValueLabel = new javax.swing.JLabel();
         tenantFirstnameValueLabel = new javax.swing.JLabel();
-        tenantGenderValueLabel1 = new javax.swing.JLabel();
+        tenantGenderValueLabel = new javax.swing.JLabel();
         tenantEmailValueLabel = new javax.swing.JLabel();
-        tenantLastnameValueLabel1 = new javax.swing.JLabel();
+        tenantLastnameValueLabel = new javax.swing.JLabel();
         tenantPhoneValueLabel = new javax.swing.JLabel();
         tenantDobValueLabel = new javax.swing.JLabel();
         tenantDobValueLabel1 = new javax.swing.JLabel();
-
-        tenantDashboard1.setBackground(new java.awt.Color(255, 204, 204));
-        tenantDashboard1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        tenantDashboard1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
-        tenantDashboard1.setEnabled(false);
-        tenantDashboard1.setFocusable(false);
-        tenantDashboard1.setRequestFocusEnabled(false);
-        tenantDashboard1.setVerifyInputWhenFocusTarget(false);
+        accountResetPasswordPanel = new javax.swing.JPanel();
+        accountResetPasswordDisplayLabel = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(120, 0), new java.awt.Dimension(120, 0), new java.awt.Dimension(120, 32767));
+        accoutNewPasswordDisplayLabel = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(60, 0), new java.awt.Dimension(60, 0), new java.awt.Dimension(60, 32767));
+        accountNewPasswordTextField = new javax.swing.JTextField();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(120, 0), new java.awt.Dimension(120, 0), new java.awt.Dimension(120, 32767));
+        jPanel5 = new javax.swing.JPanel();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(120, 0), new java.awt.Dimension(120, 0), new java.awt.Dimension(120, 32767));
+        accountConfirmPasswordDisplayLabel = new javax.swing.JLabel();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(60, 0), new java.awt.Dimension(60, 0), new java.awt.Dimension(60, 32767));
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(60, 0), new java.awt.Dimension(60, 0), new java.awt.Dimension(60, 32767));
+        accountConfirmPasswordField = new javax.swing.JPasswordField();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(120, 0), new java.awt.Dimension(120, 0), new java.awt.Dimension(120, 32767));
+        accountUpdatePasswordButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
@@ -195,7 +225,7 @@ public class TenantView extends JFrame {
         dashboardButton.setFocusPainted(false);
         dashboardButton.setFocusable(false);
         dashboardButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+
 
         paymentButton.setBackground(new java.awt.Color(51, 51, 51));
         paymentButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -204,7 +234,7 @@ public class TenantView extends JFrame {
         paymentButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(153, 153, 153)));
         paymentButton.setFocusPainted(false);
         paymentButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+
 
         maintenanceButton.setBackground(new java.awt.Color(51, 51, 51));
         maintenanceButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -213,7 +243,7 @@ public class TenantView extends JFrame {
         maintenanceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(153, 153, 153)));
         maintenanceButton.setFocusPainted(false);
         maintenanceButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+
 
         otherButton.setBackground(new java.awt.Color(51, 51, 51));
         otherButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -222,7 +252,7 @@ public class TenantView extends JFrame {
         otherButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(153, 153, 153)));
         otherButton.setFocusPainted(false);
         otherButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+
 
         signoutButton.setBackground(new java.awt.Color(51, 51, 51));
         signoutButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -231,7 +261,7 @@ public class TenantView extends JFrame {
         signoutButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(153, 153, 153)));
         signoutButton.setFocusPainted(false);
         signoutButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        
+
         javax.swing.GroupLayout menubarPanelLayout = new javax.swing.GroupLayout(menubarPanel);
         menubarPanel.setLayout(menubarPanelLayout);
         menubarPanelLayout.setHorizontalGroup(
@@ -365,9 +395,6 @@ public class TenantView extends JFrame {
         homePaymentButton.setForeground(new java.awt.Color(255, 51, 51));
         homePaymentButton.setText("PAY NOW");
         homePaymentButton.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(255, 102, 102)));
-        
-
-
 
 
         javax.swing.GroupLayout paymentDetailPanelLayout = new javax.swing.GroupLayout(paymentDetailPanel);
@@ -412,14 +439,18 @@ public class TenantView extends JFrame {
 
         dashboardMaintenanceSummaryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1234", "Recieved", "arun"}
+
             },
+            
             new String [] {
                 "Ticket no", "Status", "Requested by"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -433,7 +464,6 @@ public class TenantView extends JFrame {
         dashboardNewMaintenanceButton.setForeground(new java.awt.Color(255, 51, 51));
         dashboardNewMaintenanceButton.setText("New Request");
         dashboardNewMaintenanceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(255, 102, 102)));
-        
 
         javax.swing.GroupLayout maintenanceTrackingPanelLayout = new javax.swing.GroupLayout(maintenanceTrackingPanel);
         maintenanceTrackingPanel.setLayout(maintenanceTrackingPanelLayout);
@@ -459,15 +489,16 @@ public class TenantView extends JFrame {
 
         inspectionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Date", "Time", "Inspector", "Status"
             }
-        ));
+        ){
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+        });
         inspectionScrollPane.setViewportView(inspectionTable);
 
         javax.swing.GroupLayout notificationPanelLayout = new javax.swing.GroupLayout(notificationPanel);
@@ -622,11 +653,7 @@ public class TenantView extends JFrame {
         actionPayStripeButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         actionPayStripeButton.setText("Stripe");
         actionPayStripeButton.setPreferredSize(new java.awt.Dimension(250, 50));
-        actionPayStripeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                actionPayStripeButtonActionPerformed(evt);
-            }
-        });
+
 
         actionPayPaypalButton.setBackground(new java.awt.Color(248, 255, 255));
         actionPayPaypalButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -670,11 +697,9 @@ public class TenantView extends JFrame {
 
         paymentHistoryListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, "",  null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
+            
             new String [] {
                 "Payment ID", "Due Date", "Paid on", "Amount"
             }
@@ -695,11 +720,7 @@ public class TenantView extends JFrame {
             }
         });
         paymentHistoryListTable.getTableHeader().setReorderingAllowed(false);
-        paymentHistoryListTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                paymentHistoryListTableMouseClicked(evt);
-            }
-        });
+
         paymentHistoryListScrollPane.setViewportView(paymentHistoryListTable);
 
         javax.swing.GroupLayout costDetailsPanelLayout = new javax.swing.GroupLayout(costDetailsPanel);
@@ -742,7 +763,7 @@ public class TenantView extends JFrame {
             .addGroup(paymentPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(costDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         tenantDashboard.add(paymentPanel, "card3");
@@ -750,23 +771,11 @@ public class TenantView extends JFrame {
         maintenancePanel.setPreferredSize(new java.awt.Dimension(1380, 810));
 
         maintenanceRequestSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        maintenanceRequestSearchTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maintenanceRequestSearchTextFieldActionPerformed(evt);
-            }
-        });
 
-        maintenanceRequestSearchButton.setBackground(new java.awt.Color(248, 255, 255));
-        maintenanceRequestSearchButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        maintenanceRequestSearchButton.setIcon(new javax.swing.ImageIcon("D:\\OneDrive\\Documents\\UoN-notes\\YEAR 2\\CSY2094 - JAVA\\1 AS2\\RentalSystem\\src\\main\\java\\com\\mycompany\\rentalsystem\\images\\magnifying-glass.png")); // NOI18N
-        maintenanceRequestSearchButton.setBorder(null);
 
         maintenanceRequestListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Request ID", "Request Date", "Status"
@@ -774,6 +783,9 @@ public class TenantView extends JFrame {
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -791,8 +803,7 @@ public class TenantView extends JFrame {
                     .addGroup(maintenanceRequestPanelLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(maintenanceRequestSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        )
                     .addGroup(maintenanceRequestPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1130, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -803,8 +814,7 @@ public class TenantView extends JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, maintenanceRequestPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(maintenanceRequestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(maintenanceRequestSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(maintenanceRequestSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(maintenanceRequestListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
@@ -890,49 +900,49 @@ public class TenantView extends JFrame {
 
         tenantDashboard.add(othersPanel, "card5");
 
-        tenantidDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        tenantidDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         tenantidDisplayLabel.setText("Tenant ID");
 
-        genderDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        genderDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         genderDisplayLabel.setText("Gender");
 
-        emailDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        emailDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         emailDisplayLabel.setText("Email");
 
-        phoneNumberDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        phoneNumberDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         phoneNumberDisplayLabel.setText("Phone Number");
 
-        lastnameDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        lastnameDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         lastnameDisplayLabel.setText("Last Name");
 
-        firstnameDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        firstnameDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         firstnameDisplayLabel.setText("First Name");
 
-        dobDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        dobDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         dobDisplayLabel.setText("Date of Birth");
 
-        tenantidValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        tenantidValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         tenantidValueLabel.setText("1234");
 
-        tenantFirstnameValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        tenantFirstnameValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         tenantFirstnameValueLabel.setText("Male");
 
-        tenantGenderValueLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tenantGenderValueLabel1.setText("Male");
+        tenantGenderValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
+        tenantGenderValueLabel.setText("Male");
 
-        tenantEmailValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        tenantEmailValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         tenantEmailValueLabel.setText("Male");
 
-        tenantLastnameValueLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tenantLastnameValueLabel1.setText("Male");
+        tenantLastnameValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
+        tenantLastnameValueLabel.setText("Male");
 
-        tenantPhoneValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        tenantPhoneValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         tenantPhoneValueLabel.setText("Male");
 
-        tenantDobValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        tenantDobValueLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         tenantDobValueLabel.setText("Male");
 
-        tenantDobValueLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
+        tenantDobValueLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 40)); // NOI18N
         tenantDobValueLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tenantDobValueLabel1.setText("Your Info");
 
@@ -948,7 +958,7 @@ public class TenantView extends JFrame {
                     .addComponent(dobDisplayLabel)
                     .addComponent(emailDisplayLabel)
                     .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(tenantGenderValueLabel1)
+                        .addComponent(tenantGenderValueLabel)
                         .addGroup(tenantFormPanelLayout.createSequentialGroup()
                             .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(tenantidDisplayLabel)
@@ -958,7 +968,7 @@ public class TenantView extends JFrame {
                                 .addComponent(tenantFirstnameValueLabel)
                                 .addComponent(tenantidValueLabel)
                                 .addComponent(tenantEmailValueLabel)
-                                .addComponent(tenantLastnameValueLabel1)
+                                .addComponent(tenantLastnameValueLabel)
                                 .addComponent(tenantPhoneValueLabel)
                                 .addComponent(tenantDobValueLabel))))
                     .addComponent(phoneNumberDisplayLabel))
@@ -980,7 +990,7 @@ public class TenantView extends JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genderDisplayLabel)
-                    .addComponent(tenantGenderValueLabel1))
+                    .addComponent(tenantGenderValueLabel))
                 .addGap(18, 18, 18)
                 .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(firstnameDisplayLabel)
@@ -988,7 +998,7 @@ public class TenantView extends JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lastnameDisplayLabel)
-                    .addComponent(tenantLastnameValueLabel1))
+                    .addComponent(tenantLastnameValueLabel))
                 .addGap(18, 18, 18)
                 .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailDisplayLabel)
@@ -1001,7 +1011,71 @@ public class TenantView extends JFrame {
                 .addGroup(tenantFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dobDisplayLabel)
                     .addComponent(tenantDobValueLabel))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(355, Short.MAX_VALUE))
+        );
+
+        accountResetPasswordDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 40)); // NOI18N
+        accountResetPasswordDisplayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        accountResetPasswordDisplayLabel.setText("Reset Password");
+
+        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel4.add(filler2);
+
+        accoutNewPasswordDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
+        accoutNewPasswordDisplayLabel.setText("New Password");
+        jPanel4.add(accoutNewPasswordDisplayLabel);
+        jPanel4.add(filler1);
+
+        accountNewPasswordTextField.setMinimumSize(new java.awt.Dimension(250, 50));
+        accountNewPasswordTextField.setPreferredSize(new java.awt.Dimension(250, 50));
+        jPanel4.add(accountNewPasswordTextField);
+        jPanel4.add(filler3);
+
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel5.add(filler4);
+
+        accountConfirmPasswordDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
+        accountConfirmPasswordDisplayLabel.setText("Confirm ");
+        jPanel5.add(accountConfirmPasswordDisplayLabel);
+        jPanel5.add(filler5);
+        jPanel5.add(filler7);
+        jPanel5.add(accountConfirmPasswordField);
+        jPanel5.add(filler6);
+
+        accountUpdatePasswordButton.setBackground(new java.awt.Color(248, 255, 255));
+        accountUpdatePasswordButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        accountUpdatePasswordButton.setText("Update");
+        accountUpdatePasswordButton.setPreferredSize(new java.awt.Dimension(200, 40));
+
+
+        javax.swing.GroupLayout accountResetPasswordPanelLayout = new javax.swing.GroupLayout(accountResetPasswordPanel);
+        accountResetPasswordPanel.setLayout(accountResetPasswordPanelLayout);
+        accountResetPasswordPanelLayout.setHorizontalGroup(
+            accountResetPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountResetPasswordPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(accountResetPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(accountResetPasswordDisplayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 817, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountResetPasswordPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(accountUpdatePasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(298, 298, 298))
+        );
+        accountResetPasswordPanelLayout.setVerticalGroup(
+            accountResetPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accountResetPasswordPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(accountResetPasswordDisplayLabel)
+                .addGap(43, 43, 43)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(accountUpdatePasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout accountPanelLayout = new javax.swing.GroupLayout(accountPanel);
@@ -1011,14 +1085,18 @@ public class TenantView extends JFrame {
             .addGroup(accountPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tenantFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(854, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(accountResetPasswordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         accountPanelLayout.setVerticalGroup(
             accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tenantFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addGap(30, 30, 30)
+                .addGroup(accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tenantFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountResetPasswordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(436, Short.MAX_VALUE))
         );
 
         tenantDashboard.add(accountPanel, "card6");
@@ -1120,17 +1198,20 @@ public class TenantView extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_maintenanceRequestSearchTextFieldActionPerformed
 
-    public void maintenanceRequestSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceRequestSubmitButtonActionPerformed
-        // TODO add your handling code here:
+    public String maintenanceRequestSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceRequestSubmitButtonActionPerformed
+        String request = maintenanceDescriptionTextArea.getText();
+        if(request!=null){
+            return request;
+        } else {return null;}   
     }//GEN-LAST:event_maintenanceRequestSubmitButtonActionPerformed
 
     public void accountLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountLabelMouseClicked
         // TODO add your handling code here:
+        
         tenantDashboard.removeAll();
         tenantDashboard.add(accountPanel);
         tenantDashboard.repaint();
         tenantDashboard.revalidate();
-        System.out.println("Account clicked");
     }//GEN-LAST:event_accountLabelMouseClicked
 
     public void paymentHistoryListTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentHistoryListTableMouseClicked
@@ -1139,17 +1220,37 @@ public class TenantView extends JFrame {
     }//GEN-LAST:event_paymentHistoryListTableMouseClicked
 
     public void signoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutButtonActionPerformed
-        // TODO add your handling code here:
-        System.out.print("sign out");
+        this.dispose();
     }//GEN-LAST:event_signoutButtonActionPerformed
+
+    public String accountUpdatePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountUpdatePasswordButtonActionPerformed
+        String newPassword = this.accountNewPasswordTextField.getText();
+        String confirmPassword = String.valueOf(this.accountConfirmPasswordField.getPassword());
+        
+        if(newPassword.equals(confirmPassword )){
+            return newPassword;
+        } else{
+            JOptionPane.showMessageDialog(this, "Passwords do not match", "Warning", JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+
+    }//GEN-LAST:event_accountUpdatePasswordButtonActionPerformed
+
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel accountConfirmPasswordDisplayLabel;
+    private javax.swing.JPasswordField accountConfirmPasswordField;
     private javax.swing.JLabel accountLabel;
+    private javax.swing.JTextField accountNewPasswordTextField;
     private javax.swing.JPanel accountPanel;
+    private javax.swing.JLabel accountResetPasswordDisplayLabel;
+    private javax.swing.JPanel accountResetPasswordPanel;
+    private javax.swing.JButton accountUpdatePasswordButton;
+    private javax.swing.JLabel accoutNewPasswordDisplayLabel;
     private javax.swing.JLabel actionPayDisplayLabel;
     private javax.swing.JButton actionPayPaypalButton;
     private javax.swing.JButton actionPayStripeButton;
@@ -1177,6 +1278,13 @@ public class TenantView extends JFrame {
     private javax.swing.JLabel dueDateDisplayLabel;
     private javax.swing.JLabel dueDateLabel;
     private javax.swing.JLabel emailDisplayLabel;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
     private javax.swing.JLabel firstnameDisplayLabel;
     private javax.swing.JLabel genderDisplayLabel;
     private javax.swing.JPanel greetingPanel;
@@ -1188,6 +1296,8 @@ public class TenantView extends JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lastnameDisplayLabel;
     private javax.swing.JButton maintenanceButton;
     private javax.swing.JLabel maintenanceDescriptionLabel;
@@ -1198,7 +1308,6 @@ public class TenantView extends JFrame {
     private javax.swing.JScrollPane maintenanceRequestListScrollPane;
     private javax.swing.JTable maintenanceRequestListTable;
     private javax.swing.JPanel maintenanceRequestPanel;
-    private javax.swing.JButton maintenanceRequestSearchButton;
     private javax.swing.JTextField maintenanceRequestSearchTextField;
     private javax.swing.JButton maintenanceRequestSubmitButton;
     private javax.swing.JPanel maintenanceTrackingPanel;
@@ -1216,14 +1325,13 @@ public class TenantView extends JFrame {
     private javax.swing.JPanel receiptPanel;
     private javax.swing.JButton signoutButton;
     private javax.swing.JLayeredPane tenantDashboard;
-    private javax.swing.JTabbedPane tenantDashboard1;
     private javax.swing.JLabel tenantDobValueLabel;
     private javax.swing.JLabel tenantDobValueLabel1;
     private javax.swing.JLabel tenantEmailValueLabel;
     private javax.swing.JLabel tenantFirstnameValueLabel;
     private javax.swing.JPanel tenantFormPanel;
-    private javax.swing.JLabel tenantGenderValueLabel1;
-    private javax.swing.JLabel tenantLastnameValueLabel1;
+    private javax.swing.JLabel tenantGenderValueLabel;
+    private javax.swing.JLabel tenantLastnameValueLabel;
     private javax.swing.JLabel tenantName;
     private javax.swing.JPanel tenantPanel;
     private javax.swing.JLabel tenantPhoneValueLabel;
@@ -1233,7 +1341,67 @@ public class TenantView extends JFrame {
     private javax.swing.JPanel titlePanel;
     // End of variables declaration//GEN-END:variables
     
+    //getters and setters
 
+    
+    public javax.swing.JPasswordField getAccountConfirmPasswordField() {
+        return accountConfirmPasswordField;
+    }
+
+    public javax.swing.JTextArea getMaintenanceDescriptionTextArea() {
+        return maintenanceDescriptionTextArea;
+    }
+
+    public void setMaintenanceDescriptionTextArea(javax.swing.JTextArea maintenanceDescriptionTextArea) {
+        this.maintenanceDescriptionTextArea = maintenanceDescriptionTextArea;
+    }
+
+    public javax.swing.JButton getMaintenanceRequestSubmitButton() {
+        return maintenanceRequestSubmitButton;
+    }
+
+    public void setMaintenanceRequestSubmitButton(javax.swing.JButton maintenanceRequestSubmitButton) {
+        this.maintenanceRequestSubmitButton = maintenanceRequestSubmitButton;
+    }
+
+    public void setAccountConfirmPasswordField(javax.swing.JPasswordField accountConfirmPasswordField) {
+        this.accountConfirmPasswordField = accountConfirmPasswordField;
+    }
+
+    public javax.swing.JTextField getAccountNewPasswordTextField() {
+        return accountNewPasswordTextField;
+    }
+
+    public void setAccountNewPasswordTextField(javax.swing.JTextField accountNewPasswordTextField) {
+        this.accountNewPasswordTextField = accountNewPasswordTextField;
+    }
+
+    public javax.swing.JButton getAccountUpdatePasswordButton() {
+        return accountUpdatePasswordButton;
+    }
+
+    public void setAccountUpdatePasswordButton(javax.swing.JButton accountUpdatePasswordButton) {
+        this.accountUpdatePasswordButton = accountUpdatePasswordButton;
+    }
+
+    // other functions
+    public void populateAccountTenantForm(Tenant tenant){
+        this.tenantidValueLabel.setText(tenant.getTenantId());
+        this.tenantGenderValueLabel.setText(tenant.getGender());
+        this.tenantFirstnameValueLabel.setText(tenant.getFirstName());
+        this.tenantLastnameValueLabel.setText(tenant.getSurName());
+        this.tenantEmailValueLabel.setText(tenant.geteMail());
+        this.tenantPhoneValueLabel.setText(tenant.getPhoneNumber());
+        this.tenantDobValueLabel.setText(tenant.getFormatedDob(tenant.getDob()));
+    }
+
+    public void clearResetPassword(){
+        this.accountNewPasswordTextField.setText("");
+        this.accountConfirmPasswordField.setText("");
+    }
+    
+
+    
     
     
 }

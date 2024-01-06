@@ -38,8 +38,6 @@ import com.mysql.cj.jdbc.Blob;
 public class LandlordController {
     private LandlordView landlordView;
     private Landlord landlordModel;
-    private HashMap<String, Object> houseArray = new HashMap<>();
-    private HashMap<String, Object> tenantArray = new HashMap<>();
     private Database database = new Database();
     private int houseCount = 0;
     private int tenantCount = 0;
@@ -212,12 +210,10 @@ public class LandlordController {
 
                             tenantCount = 0;
                             refreshTable("Tenants", landlordView.getTenantListTable());
-
-                            //saving temp passord to file
                             
                             
                             // uncomment the code
-                            /* try {
+                             try {
                                 new SentEmail().sentMail(tempTenantObj.geteMail(), "YOUR CREDENTIALS", """
                                         Hi %s,
 
@@ -232,7 +228,7 @@ public class LandlordController {
                                         String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob()))));
                             } catch (GeneralSecurityException | IOException | MessagingException e1) {
                                 e1.printStackTrace();
-                            } */
+                            } 
 
                             
                         }
@@ -414,12 +410,6 @@ public class LandlordController {
                 // rebuild House object form ByteArray
                 Blob houseBlob = (Blob) allHouseRows.getBlob("houseObject");
                 byte[] houseByte = houseBlob.getBytes(1, (int) houseBlob.length());
-                /*
-                 * ByteArrayInputStream byteArrInpStm = new ByteArrayInputStream(houseByte);
-                 * ObjectInputStream objInpStm = new ObjectInputStream(byteArrInpStm);
-                 * House tempHouseObj = (House) objInpStm.readObject();
-                 */
-
                 House tempHouseObj = (House) FileConvertion.toObject(houseByte);
 
                 data[1] = tempHouseObj.getHouseType();

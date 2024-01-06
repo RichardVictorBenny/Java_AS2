@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileWriter;
 
 import javax.swing.JOptionPane;
 
@@ -52,6 +53,12 @@ public class LoginController {
                 // does validation and moves to dashboard
                 if (loginModel.validate(username, password, usermode)) {
                     loginView.dispose();
+
+                    //making a SESSION file for later use
+                    FileWriter fw = new FileWriter("src/main/java/com/mycompany/rentalsystem/files/SESSION.txt");
+                    fw.write(username);
+                    fw.close();
+
                     switch (usermode) {
                         case "Tenant" -> {
                             TenantView view = new TenantView();
@@ -105,11 +112,6 @@ public class LoginController {
                         break;
 
                     case "Landlord":
-                        JOptionPane.showMessageDialog(loginView, "Contact Admin!", "Reset",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        break;
-
-                    case "Admin":
                         String pin = JOptionPane.showInputDialog("Enter your secert key:");
                         loginModel.resetPassword(pin);
                         break;

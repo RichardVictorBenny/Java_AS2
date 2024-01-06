@@ -4,8 +4,16 @@
  */
 package com.mycompany.rentalsystem.Model;
 
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Scanner;
+
+import javax.annotation.processing.Filer;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +24,7 @@ import java.time.format.DateTimeFormatter;
  *
  */
 public class Tenant implements Serializable{
+    private String sessionId;
     private String extTenantID;
     private String gender, firstName, surName, eMail, phoneNumber;
     private static Integer tenantID = 5000;
@@ -23,7 +32,13 @@ public class Tenant implements Serializable{
     private String houseId;
     private LocalDate dateOfBirth;
 
-    public Tenant(){}
+    public Tenant() throws IOException{
+        //reading session file for getting correct object
+        //FileReader in = new FileReader("src/main/java/com/mycompany/rentalsystem/files/SESSION.txt");
+        Scanner in = new Scanner(new FileReader("src/main/java/com/mycompany/rentalsystem/files/SESSION.txt"));
+        this.sessionId = in.nextLine();
+        in.close();
+    }
 
 
     public Tenant( String firstName, String surName, String eMail, String phoneNumber, String tenantID, String gender,  LocalDate dateOfBirth,  String houseId) {
@@ -131,6 +146,16 @@ public class Tenant implements Serializable{
 
     public String getSurName() {
         return this.surName;
+    }
+
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     

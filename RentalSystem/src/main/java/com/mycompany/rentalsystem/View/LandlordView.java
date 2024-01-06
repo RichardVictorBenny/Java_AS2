@@ -389,11 +389,6 @@ public class LandlordView extends javax.swing.JFrame {
         dashboardButton.setFocusPainted(false);
         dashboardButton.setFocusable(false);
         dashboardButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        dashboardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dashboardButtonActionPerformed(evt);
-            }
-        });
 
         housesButton.setBackground(new java.awt.Color(242, 242, 242));
         housesButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -402,11 +397,6 @@ public class LandlordView extends javax.swing.JFrame {
         housesButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         housesButton.setFocusPainted(false);
         housesButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        housesButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                housesButtonActionPerformed(evt);
-            }
-        });
 
         tenantsButton.setBackground(new java.awt.Color(242, 242, 242));
         tenantsButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -415,11 +405,7 @@ public class LandlordView extends javax.swing.JFrame {
         tenantsButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         tenantsButton.setFocusPainted(false);
         tenantsButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        tenantsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantsButtonActionPerformed(evt);
-            }
-        });
+
 
         maintenanceButton.setBackground(new java.awt.Color(242, 242, 242));
         maintenanceButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -428,11 +414,7 @@ public class LandlordView extends javax.swing.JFrame {
         maintenanceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         maintenanceButton.setFocusPainted(false);
         maintenanceButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        maintenanceButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maintenanceButtonActionPerformed(evt);
-            }
-        });
+
 
         paymentButton.setBackground(new java.awt.Color(242, 242, 242));
         paymentButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -441,11 +423,7 @@ public class LandlordView extends javax.swing.JFrame {
         paymentButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         paymentButton.setFocusPainted(false);
         paymentButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        paymentButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paymentButtonActionPerformed(evt);
-            }
-        });
+
 
         otherButton.setBackground(new java.awt.Color(242, 242, 242));
         otherButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -454,11 +432,7 @@ public class LandlordView extends javax.swing.JFrame {
         otherButton.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 0, 0, new java.awt.Color(51, 51, 51)));
         otherButton.setFocusPainted(false);
         otherButton.setPreferredSize(new java.awt.Dimension(200, 50));
-        otherButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                otherButtonActionPerformed(evt);
-            }
-        });
+
 
         signoutButton.setBackground(new java.awt.Color(242, 242, 242));
         signoutButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1115,41 +1089,24 @@ public class LandlordView extends javax.swing.JFrame {
         houseClearFormButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseClearFormButton.setText("CLEAR");
         houseClearFormButton.setBorder(null);
-        houseClearFormButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseClearFormButtonActionPerformed(evt);
-            }
-        });
+
 
         houseAddButton.setBackground(new java.awt.Color(255, 255, 204));
         houseAddButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseAddButton.setText("ADD");
         houseAddButton.setBorder(null);
-        houseAddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseAddButtonActionPerformed(evt);
-            }
-        });
+
 
         houseUpdateButton.setBackground(new java.awt.Color(255, 255, 204));
         houseUpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseUpdateButton.setText("UPDATE");
         houseUpdateButton.setBorder(null);
-        houseUpdateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseUpdateButtonActionPerformed(evt);
-            }
-        });
+;
 
         houseDeleteButton.setBackground(new java.awt.Color(255, 255, 204));
         houseDeleteButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         houseDeleteButton.setText("DELETE");
         houseDeleteButton.setBorder(null);
-        houseDeleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseDeleteButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout houseButtonPanelLayout = new javax.swing.GroupLayout(houseButtonPanel);
         houseButtonPanel.setLayout(houseButtonPanelLayout);
@@ -1251,16 +1208,17 @@ public class LandlordView extends javax.swing.JFrame {
         houseListScrollPane.setViewportView(houseListTable);
 
         houseSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        houseSearchTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        houseSearchTextField.addKeyListener(new java.awt.event.KeyAdapter (){
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt){
                 houseSearchTextFieldActionPerformed(evt);
             }
         });
-        houseSearchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+        /* houseSearchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 houseSearchTextFieldKeyReleased(evt);
             }
-        });
+        }); */
 
         javax.swing.GroupLayout houseListPanelLayout = new javax.swing.GroupLayout(houseListPanel);
         houseListPanel.setLayout(houseListPanelLayout);
@@ -1334,15 +1292,18 @@ public class LandlordView extends javax.swing.JFrame {
         });
 
         firstnameTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        firstnameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+        firstnameTextField.addKeyListener(new java.awt.event.KeyAdapter (){
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt){
                 firstnameTextFieldActionPerformed(evt);
             }
         });
 
         phoneNumberTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        phoneNumberTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        phoneNumberTextField.addKeyListener(new java.awt.event.KeyAdapter (){
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt){
                 phoneNumberTextFieldActionPerformed(evt);
             }
         });
@@ -1351,8 +1312,9 @@ public class LandlordView extends javax.swing.JFrame {
         lastnameDisplayLabel.setText("Last Name");
 
         lastnameTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lastnameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        lastnameTextField.addKeyListener(new java.awt.event.KeyAdapter (){
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt){
                 lastnameTextFieldActionPerformed(evt);
             }
         });
@@ -1361,8 +1323,9 @@ public class LandlordView extends javax.swing.JFrame {
         firstnameDisplayLabel.setText("First Name");
 
         emailTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        emailTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        emailTextField.addKeyListener(new java.awt.event.KeyAdapter (){
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt){
                 emailTextFieldActionPerformed(evt);
             }
         });
@@ -1374,41 +1337,21 @@ public class LandlordView extends javax.swing.JFrame {
         tenantClearFormButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantClearFormButton.setText("CLEAR");
         tenantClearFormButton.setBorder(null);
-        tenantClearFormButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantClearFormButtonActionPerformed(evt);
-            }
-        });
 
         tenantAddButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantAddButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantAddButton.setText("ADD");
         tenantAddButton.setBorder(null);
-        tenantAddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantAddButtonActionPerformed(evt);
-            }
-        });
 
         tenantUpdateButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantUpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantUpdateButton.setText("UPDATE");
         tenantUpdateButton.setBorder(null);
-        tenantUpdateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantUpdateButtonActionPerformed(evt);
-            }
-        });
 
         tenantDeleteButton.setBackground(new java.awt.Color(255, 255, 204));
         tenantDeleteButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tenantDeleteButton.setText("DELETE");
         tenantDeleteButton.setBorder(null);
-        tenantDeleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantDeleteButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout tenantButtonPanelLayout = new javax.swing.GroupLayout(tenantButtonPanel);
         tenantButtonPanel.setLayout(tenantButtonPanelLayout);
@@ -1517,11 +1460,13 @@ public class LandlordView extends javax.swing.JFrame {
         );
 
         tenantSearchTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tenantSearchTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tenantSearchTextField.addKeyListener(new java.awt.event.KeyAdapter (){
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt){
                 tenantSearchTextFieldActionPerformed(evt);
             }
         });
+        
 
         tenantListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1605,10 +1550,6 @@ public class LandlordView extends javax.swing.JFrame {
 
         paymentUpcomingListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
             },
             new String [] {
                 "Payment ID", "Amount", "Type", "House ID", "Due Date", "Status"
@@ -2177,10 +2118,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         errorReviewListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Log ID", "Tenant Name", "Date Issued", "House ID"
@@ -2208,10 +2146,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         errorNewListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Log ID", "Tenant Name", "Date Issued", "House ID"
@@ -2236,10 +2171,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         previousErrorListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Tenant Name", "Date Issued", "House ID"
@@ -2611,10 +2543,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         previousErrorListTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Tenant Name", "Date Issued", "House ID"
@@ -2897,6 +2826,10 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }// GEN-LAST:event_otherButtonActionPerformed
 
+    public void signoutButtonActionPerformed(java.awt.event.ActionEvent evt){
+        this.dispose();
+    }
+
     public void houseidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_houseidTextFieldActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_houseidTextFieldActionPerformed
@@ -2917,23 +2850,23 @@ public class LandlordView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_genderComboBoxActionPerformed
 
-    public void firstnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_firstnameTextFieldActionPerformed
+    public void firstnameTextFieldActionPerformed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_firstnameTextFieldActionPerformed
         checkNameInput(this.firstnameTextField.getText(), this.firstnameTextField);
     }// GEN-LAST:event_firstnameTextFieldActionPerformed
 
-    public void lastnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_lastnameTextFieldActionPerformed
+    public void lastnameTextFieldActionPerformed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_lastnameTextFieldActionPerformed
         checkNameInput(this.lastnameTextField.getText(), this.lastnameTextField);
     }// GEN-LAST:event_lastnameTextFieldActionPerformed
 
-    public void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailTextFieldActionPerformed
+    public void emailTextFieldActionPerformed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_emailTextFieldActionPerformed
         checkEmailInput(this.emailTextField.getText(), this.emailTextField);
     }// GEN-LAST:event_emailTextFieldActionPerformed
 
-    public void phoneNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_phoneNumberTextFieldActionPerformed
+    public void phoneNumberTextFieldActionPerformed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_phoneNumberTextFieldActionPerformed
         checkNumberInput(this.phoneNumberTextField.getText(), this.phoneNumberTextField);
     }// GEN-LAST:event_phoneNumberTextFieldActionPerformed
 
-    public void tenantSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tenantSearchTextFieldActionPerformed
+    public void tenantSearchTextFieldActionPerformed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_tenantSearchTextFieldActionPerformed
         Sorting.sortTable(this.tenantListTable, this.getTenantSearchTextField().getText());
     }// GEN-LAST:event_tenantSearchTextFieldActionPerformed
 
@@ -2941,7 +2874,7 @@ public class LandlordView extends javax.swing.JFrame {
         clearHouseForm();
     }// GEN-LAST:event_houseClearFormButtonActionPerformed
 
-    public void houseSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt){
+    public void houseSearchTextFieldActionPerformed(java.awt.event.KeyEvent evt){
         Sorting.sortTable(this.houseListTable, this.houseSearchTextField.getText());
     }
 
@@ -3136,10 +3069,7 @@ public class LandlordView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_othersTenantResetPasswordButtonActionPerformed
 
-    private void houseSearchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_houseSearchTextFieldKeyReleased
-
-        // TODO add your handling code here:
-    }// GEN-LAST:event_houseSearchTextFieldKeyReleased
+    
 
     /*
      * public static void main(String args[]) {
@@ -3678,9 +3608,12 @@ public class LandlordView extends javax.swing.JFrame {
      */
     public void checkNameInput(String input, JTextField component) {
         char[] codepoint = input.toCharArray();
+        
         for (char i : codepoint) {
             if (!Character.isAlphabetic(i)) {
                 component.setBackground(new Color(255, 128, 128));
+            } else if(input.isEmpty()){
+                component.setBackground(new Color(255,255,255));
             } else{
                 component.setBackground(new Color(255,255,255));
             }

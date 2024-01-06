@@ -107,7 +107,6 @@ public class LoginView extends JFrame {
         usermode.add("Please Select");
         usermode.add("Tenant");
         usermode.add("Landlord");
-        usermode.add("Admin");
 
         usermodePanel.setBackground(new java.awt.Color(255, 204, 204));
         usermodePanel.setPreferredSize(new java.awt.Dimension(200, 30));

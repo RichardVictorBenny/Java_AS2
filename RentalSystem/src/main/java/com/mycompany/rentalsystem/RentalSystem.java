@@ -5,6 +5,8 @@
 package com.mycompany.rentalsystem;
 
 
+import java.io.IOException;
+
 import com.mycompany.rentalsystem.Controller.LandlordController;
 import com.mycompany.rentalsystem.Controller.LoginController;
 import com.mycompany.rentalsystem.Controller.TenantController;/*  */
@@ -25,7 +27,7 @@ import com.mycompany.rentalsystem.View.TenantView;
 public class RentalSystem {
 
     
-    public static void main(String[] args) {
+    public static void main(String[] args){
         
         /*
         LoginView view = new LoginView();
@@ -34,13 +36,13 @@ public class RentalSystem {
         
          
         TenantView view = new TenantView();
-        TenantModel model = new TenantModel();
+        Tenant model = new Tenant();
         TenantController controller = new TenantController(view, model);
         
         
         LandlordView view = new LandlordView();
-       Landlord model = new Landlord();
-       LandlordController controller = new LandlordController(view, model);
+        Landlord model = new Landlord();
+        LandlordController controller = new LandlordController(view, model);
         
         LandlordView view = new LandlordView();
         TenantView view = new TenantView();
@@ -48,14 +50,17 @@ public class RentalSystem {
         AdminView view = new AdminView();
         
 */
-       LoginView view = new LoginView();
+        try{
+        LoginView view = new LoginView();
         LoginModel model = new LoginModel();
-        LoginController controller = new LoginController(view, model);
-        
+        LoginController controller = new LoginController(view, model); 
             
         java.awt.EventQueue.invokeLater(() -> {
             view.setVisible(true);
         });
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
 
     }

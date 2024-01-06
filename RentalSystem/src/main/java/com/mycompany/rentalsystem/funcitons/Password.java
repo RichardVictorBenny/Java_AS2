@@ -12,9 +12,8 @@ public class Password {
     private static Database database = new Database();
     public static void savePassword(String username, String password, String userMode){
         String filename = switch (userMode) {
-            case "Tenant" -> "src/main/java/com/mycompany/rentalsystem/files/TenantLogin.bin";
-            case "Landlord" -> "src/main/java/com/mycompany/rentalsystem/files/LandlordLogin.bin";
-            case "Admin" -> "src/main/java/com/mycompany/rentalsystem/files/AdminLogin.bin";
+            case "Tenant" -> "tenantpasswords";
+            case "Landlord" -> "landlordpasswords";
             default -> "";
         };
 

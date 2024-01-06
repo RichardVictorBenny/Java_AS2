@@ -1,6 +1,7 @@
 package com.mycompany.rentalsystem.funcitons;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +35,7 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.codec.binary.Base64;
 
 public class SentEmail {
-    private static final String filePath = "credentials.json";
+    private static final String filePath = "src/main/java/com/mycompany/rentalsystem/files/credentials.json";
     private static final JsonFactory JsonFactory = GsonFactory.getDefaultInstance();
     private static final String fromEmailAddress = "uk.developer.java@gmail.com";
     private final Gmail service;
@@ -48,7 +49,8 @@ public class SentEmail {
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
-        InputStream in = SentEmail.class.getResourceAsStream(filePath);
+        //InputStream in = SentEmail.class.getResourceAsStream(filePath);
+        InputStream in = new FileInputStream(filePath);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + filePath);
         }
@@ -109,9 +111,4 @@ public class SentEmail {
         return message;
     }
 
-    public static void main(String[] args) throws Exception {
-        new SentEmail().sentMail("richardvictorbenny@gmail.com", "test 1", """
-            test message
-        """);
-    }
 }
