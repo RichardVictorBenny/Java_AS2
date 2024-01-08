@@ -31,6 +31,7 @@ public class Tenant implements Serializable{
     private static Integer totalTenantCount = 0;
     private String houseId;
     private LocalDate dateOfBirth;
+    private LocalDate rentPayDate;
 
     /**
      * Contructor that gets the sessionId from the file.
@@ -91,6 +92,7 @@ public class Tenant implements Serializable{
         this.gender= gender;
         this.dateOfBirth = dob;
         this.houseId = houseId;
+        this.rentPayDate = LocalDate.now().plusDays(7);
     }
 
     public String toString(){
@@ -176,6 +178,14 @@ public class Tenant implements Serializable{
         return this.surName;
     }
 
+
+    public LocalDate getRentPayDate() {
+        return rentPayDate;
+    }
+
+    public void setRentPayDate(LocalDate rentPayDate) {
+        this.rentPayDate = rentPayDate;
+    }
 
     public String getSessionId() {
         return sessionId;

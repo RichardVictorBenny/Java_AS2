@@ -131,10 +131,8 @@ public class TenantView extends JFrame {
         costBreakdownPanel = new javax.swing.JPanel();
         amountToPayDisplayLabel = new javax.swing.JLabel();
         breakdownRentDisplayLabel = new javax.swing.JLabel();
-        breakdownDamagesDisplayLabel = new javax.swing.JLabel();
         breakdownLateDisplayLabel = new javax.swing.JLabel();
         breakdownRentAmountLabel = new javax.swing.JLabel();
-        breakdownDamagesAmountLabel = new javax.swing.JLabel();
         breakdownLateAmountLabel = new javax.swing.JLabel();
         breakdownTotalAmountDisplayLabel = new javax.swing.JLabel();
         breakdownTotalAmountLabel = new javax.swing.JLabel();
@@ -560,8 +558,6 @@ public class TenantView extends JFrame {
         breakdownRentDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         breakdownRentDisplayLabel.setText("Rent");
 
-        breakdownDamagesDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        breakdownDamagesDisplayLabel.setText("Damages");
 
         breakdownLateDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         breakdownLateDisplayLabel.setText("Late Fee");
@@ -569,8 +565,6 @@ public class TenantView extends JFrame {
         breakdownRentAmountLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         breakdownRentAmountLabel.setText("99");
 
-        breakdownDamagesAmountLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        breakdownDamagesAmountLabel.setText("99");
 
         breakdownLateAmountLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         breakdownLateAmountLabel.setText("99");
@@ -600,12 +594,10 @@ public class TenantView extends JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(costBreakdownPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(breakdownLateDisplayLabel)
-                            .addComponent(breakdownDamagesDisplayLabel)
                             .addComponent(breakdownTotalAmountDisplayLabel))))
                 .addGap(37, 37, 37)
                 .addGroup(costBreakdownPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(breakdownRentAmountLabel)
-                    .addComponent(breakdownDamagesAmountLabel)
                     .addComponent(breakdownLateAmountLabel)
                     .addComponent(breakdownTotalAmountLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -631,9 +623,7 @@ public class TenantView extends JFrame {
                     .addComponent(breakdownRentDisplayLabel)
                     .addComponent(breakdownRentAmountLabel))
                 .addGap(30, 30, 30)
-                .addGroup(costBreakdownPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(breakdownDamagesDisplayLabel)
-                    .addComponent(breakdownDamagesAmountLabel))
+                
                 .addGap(30, 30, 30)
                 .addGroup(costBreakdownPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(breakdownLateDisplayLabel)
@@ -695,10 +685,7 @@ public class TenantView extends JFrame {
 
         paymentHistoryListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, "",  new Double(56.0)},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Payment ID", "Due Date", "Paid on", "Amount"
@@ -780,6 +767,9 @@ public class TenantView extends JFrame {
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1221,8 +1211,6 @@ public class TenantView extends JFrame {
     private javax.swing.JButton actionPayStripeButton;
     private javax.swing.JButton actionPayVisaButton;
     private javax.swing.JLabel amountToPayDisplayLabel;
-    private javax.swing.JLabel breakdownDamagesAmountLabel;
-    private javax.swing.JLabel breakdownDamagesDisplayLabel;
     private javax.swing.JLabel breakdownLateAmountLabel;
     private javax.swing.JLabel breakdownLateDisplayLabel;
     private javax.swing.JLabel breakdownRentAmountLabel;
@@ -1380,8 +1368,69 @@ public class TenantView extends JFrame {
         this.contactMessageSendButton = contactMessageSendButton;
     }
 
-    // other functions
     
+
+    
+    public javax.swing.JLabel getBreakdownLateAmountLabel() {
+        return breakdownLateAmountLabel;
+    }
+
+    public void setBreakdownLateAmountLabel(javax.swing.JLabel breakdownLateAmountLabel) {
+        this.breakdownLateAmountLabel = breakdownLateAmountLabel;
+    }
+
+    public javax.swing.JLabel getBreakdownRentAmountLabel() {
+        return breakdownRentAmountLabel;
+    }
+
+    public void setBreakdownRentAmountLabel(javax.swing.JLabel breakdownRentAmountLabel) {
+        this.breakdownRentAmountLabel = breakdownRentAmountLabel;
+    }
+
+    public javax.swing.JLabel getBreakdownTotalAmountLabel() {
+        return breakdownTotalAmountLabel;
+    }
+
+    public void setBreakdownTotalAmountLabel(javax.swing.JLabel breakdownTotalAmountLabel) {
+        this.breakdownTotalAmountLabel = breakdownTotalAmountLabel;
+    }
+
+    public javax.swing.JLabel getDisplayDateLabel() {
+        return displayDateLabel;
+    }
+
+    public void setDisplayDateLabel(javax.swing.JLabel displayDateLabel) {
+        this.displayDateLabel = displayDateLabel;
+    }
+
+    public javax.swing.JButton getHomePaymentButton() {
+        return homePaymentButton;
+    }
+
+    public void setHomePaymentButton(javax.swing.JButton homePaymentButton) {
+        this.homePaymentButton = homePaymentButton;
+    }
+
+    public javax.swing.JLabel getDisplayRentLabel() {
+        return displayRentLabel;
+    }
+
+    public void setDisplayRentLabel(javax.swing.JLabel displayRentLabel) {
+        this.displayRentLabel = displayRentLabel;
+    }
+
+    
+
+    public javax.swing.JLabel getDueDateLabel() {
+        return dueDateLabel;
+    }
+
+    public void setDueDateLabel(javax.swing.JLabel dueDateLabel) {
+        this.dueDateLabel = dueDateLabel;
+    }
+
+        // other functions
+
     /**
      * populates the tenant form
      * @param tenant Tenant object

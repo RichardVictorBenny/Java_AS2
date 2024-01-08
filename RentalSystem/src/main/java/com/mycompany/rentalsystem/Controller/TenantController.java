@@ -4,6 +4,7 @@
  */
 package com.mycompany.rentalsystem.Controller;
 
+import com.google.common.util.concurrent.ExecutionError;
 import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.*;
 import com.mycompany.rentalsystem.funcitons.Database;
@@ -35,6 +36,7 @@ import javax.swing.JTextField;
 
 /**
  * class that perform controls the flow according to the user input
+ * 
  * @author Richard
  *
  */
@@ -48,7 +50,7 @@ public class TenantController {
      * refreshes the needed tables.
      * get the user form the SESSION.txt file
      * 
-     * @param tenantView 
+     * @param tenantView
      * @param tenantModel
      * @throws SQLException
      * @throws Exception
@@ -60,14 +62,15 @@ public class TenantController {
         ResultSet tenant = database.findTenant(tenantModel.getSessionId());
         while (tenant.next()) {
             try {
-                Blob tenantBlob = tenant.getBlob("tenantObject");
-                byte[] tenantByte = tenantBlob.getBytes(1, (int) tenantBlob.length());
-                this.tenantModel = (Tenant) FileConvertion.toObject(tenantByte);
-            } catch (ClassCastException e) {
+                this.tenantModel = (Tenant) FileConvertion.toObject(tenant.getBlob("tenantObject"));
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
+
+        setRentDetails(this.tenantModel, this.tenantView);
+        
 
         TableRefresh.refreshTable(tenantView, database, "maintenance", tenantView.getMaintenanceRequestListTable());
 
@@ -97,8 +100,10 @@ public class TenantController {
                     data.add(request);
                     data.add("Received");
 
-                    database.insert("maintenance", "logId, tenantName, dateOfIssue, houseId, tenantId, description, status", data);
-                    TableRefresh.refreshTable(tenantView, database, "maintenance", tenantView.getMaintenanceRequestListTable());
+                    database.insert("maintenance",
+                            "logId, tenantName, dateOfIssue, houseId, tenantId, description, status", data);
+                    TableRefresh.refreshTable(tenantView, database, "maintenance",
+                            tenantView.getMaintenanceRequestListTable());
 
                     tenantView.getMaintenanceDescriptionTextArea().setText("");
                     JOptionPane.showMessageDialog(tenantView, "New Request made successfully.", "Success",
@@ -113,16 +118,18 @@ public class TenantController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String message = tenantView.contactMessageSendButtonActionPerformed(e);
-                if(!message.equals("")){
+                if (!message.equals("")) {
                     try {
                         sendMessage(message);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(tenantView, "Message cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(tenantView, "Message cannot be empty!", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
-            }});
+            }
+        });
 
         tenantView.accountUpdatePasswordButtonListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -182,10 +189,57 @@ public class TenantController {
             }
 
         });
+
     }
 
     /**
-     * Inner class that implements the ActionListener interface that handles switching between different panels.
+     * Sets the Payment dates
+     * Calculate the next payment day
+     * sets the rent to pay.
+     * does calulations for late fee. current rate 50.
+     * 
+     * @param tenant Tenant - current object instance
+     * @param tenantView TenantView - current object instance
+     */
+    private void setRentDetails(Tenant tenant, TenantView tenantView) {
+        House house = null;
+        Integer lateFee = 0;
+        Integer rent =0;
+        try {
+            String dueDate = tenant.getFormatedDob(tenant.getRentPayDate());
+            tenantView.getDisplayDateLabel()
+                    .setText(dueDate);
+            tenantView.getDueDateLabel().setText(dueDate);
+            tenant.setRentPayDate(tenant.getRentPayDate().plusDays(30));
+
+
+            ResultSet resultSet = database.findHouse(tenant.getHouseId());
+            while (resultSet.next()) {
+                house = (House) FileConvertion.toObject(resultSet.getBlob("houseObject"));
+            }
+            rent = house.getHouseRentPrice();
+
+            //setting the value to the proper rent
+            tenantView.getBreakdownRentAmountLabel().setText(String.valueOf(rent));
+            tenantView.getBreakdownLateAmountLabel().setText(String.valueOf(lateFee));
+
+            LocalDate todayDate = LocalDate.now();
+            if (todayDate.isAfter(tenant.getRentPayDate())){
+                lateFee = 50;
+                rent+=lateFee;
+            }
+
+            tenantView.getBreakdownTotalAmountLabel().setText(String.valueOf(rent));
+            tenantView.getDisplayRentLabel().setText(String.valueOf(rent));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Inner class that implements the ActionListener interface that handles
+     * switching between different panels.
      */
     class MenubarListener implements ActionListener {
         @Override
@@ -232,7 +286,7 @@ public class TenantController {
                 JTextField textField = (JTextField) e.getSource();
                 switch (textField.getName()) {
                     case "MAINTENANCE":
-                        Sorting.sortTable(tenantView.getMaintenanceRequestListTable(), textField.getText() );
+                        Sorting.sortTable(tenantView.getMaintenanceRequestListTable(), textField.getText());
                         break;
 
                     default:
@@ -243,13 +297,13 @@ public class TenantController {
 
     }
 
-    
     /**
      * Send email to Landlord.
+     * 
      * @param message
      * @throws Exception
      */
-    public void sendMessage(String message) throws Exception{
+    public void sendMessage(String message) throws Exception {
         String landlordEmail = "uk.developer.java@gmail.com";
         new SentEmail().sentMail(landlordEmail, "Message From Tenant", message);
     }

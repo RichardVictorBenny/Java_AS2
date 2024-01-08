@@ -38,7 +38,7 @@ import com.mycompany.rentalsystem.funcitons.PasswordGenerator;
 import com.mycompany.rentalsystem.funcitons.SentEmail;
 import com.mycompany.rentalsystem.funcitons.Sorting;
 import com.mycompany.rentalsystem.funcitons.TableRefresh;
-import com.mysql.cj.jdbc.Blob;
+import java.sql.Blob;
 
 /**
  * controls the flow of actions as per the user input
@@ -630,11 +630,7 @@ public class LandlordController {
         }
         try {
             while (set.next()) {
-                Blob objectBlob;
-                objectBlob = (Blob) set.getBlob(label);
-                byte[] byteArray = objectBlob.getBytes(1, (int) objectBlob.length());
-
-                Object object = (Object) FileConvertion.toObject(byteArray);
+                Object object = (Object) FileConvertion.toObject(set.getBlob(label));
                 set.close();
                 return object;
             }
