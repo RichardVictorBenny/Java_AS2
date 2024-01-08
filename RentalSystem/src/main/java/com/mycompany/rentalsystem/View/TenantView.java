@@ -1216,7 +1216,7 @@ public class TenantView extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_maintenanceRequestSearchTextFieldActionPerformed
 
-    public String maintenanceRequestSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenanceRequestSubmitButtonActionPerformed
+    public String maintenanceRequestSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) throws NullPointerException {//GEN-FIRST:event_maintenanceRequestSubmitButtonActionPerformed
         String request = maintenanceDescriptionTextArea.getText();
         if(!request.equals("")){
             return request;

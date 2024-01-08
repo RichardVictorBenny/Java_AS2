@@ -4,7 +4,6 @@
  */
 package com.mycompany.rentalsystem.Controller;
 
-import java.awt.MenuShortcut;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +20,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -28,7 +30,9 @@ import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.LandlordView;
 import com.mycompany.rentalsystem.funcitons.Database;
 import com.mycompany.rentalsystem.funcitons.FileConvertion;
+import com.mycompany.rentalsystem.funcitons.Hashing;
 import com.mycompany.rentalsystem.funcitons.Password;
+import com.mycompany.rentalsystem.funcitons.PasswordGenerator;
 import com.mycompany.rentalsystem.funcitons.SentEmail;
 import com.mycompany.rentalsystem.funcitons.Sorting;
 import com.mycompany.rentalsystem.funcitons.TableRefresh;
@@ -95,9 +99,41 @@ public class LandlordController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //geenerate and send new passowrd
+                String password = PasswordGenerator.generatePassword();
+                String tenantId = landlordView.getTenantResetTenantIdTextField().getText();
+                Tenant tenant = null;
+                try {
+                        database.updatePassword("tenantpasswords",
+                                Hashing.doHashing(password, tenantId),
+                                tenantId);
+                        tenant = (Tenant) getObjectFromId(tenantId, "tenantObject");
+                        try {
+                            new SentEmail().sentMail(tenant.geteMail(), "Your new Password", """
+                                    Hi %s,
+                                    This is the newly generated password for your account.
+                                    Password: %s
+
+                                    Change your password immediately. 
+
+                                    -landlord
+                                    -do not reply
+                                    """.formatted(tenant.getFirstName(), password));
+                        } catch (AddressException e1) {
+                            e1.printStackTrace();
+                        } catch (GeneralSecurityException e1) {
+                            e1.printStackTrace();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        } catch (MessagingException e1) {
+                            e1.printStackTrace();
+                        }
+                    JOptionPane.showMessageDialog(landlordView, "Password reset successfully", "password reset", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (NoSuchAlgorithmException exception) {
+                        exception.printStackTrace();
+                    }
+                    
+                
             }
-            
         });
         landlordView.othersTenantResetPasswordButtonListener(new ActionListener() {
 
@@ -486,7 +522,7 @@ public class LandlordController {
                 set = database.findHouse(id);
                 break;
             case "tenantObject":
-                set = database.findTenant(id);
+               set = database.findTenant(id);
                 break;
             default:
                 break;

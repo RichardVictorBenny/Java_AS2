@@ -1,7 +1,7 @@
 package com.mycompany.rentalsystem.Model;
 
 public class Maintenance {
-    private static Integer logId = 8000;
+    private static Integer logId = 80000;
     private static Integer count = 0;
     private String maintenanceId;
     private static String maintenaceTableLabels = "logId, tenantName, dateOfIssue, houseId, tenantId, description, status";
@@ -43,7 +43,7 @@ public class Maintenance {
     }
 
 
-    public Integer getLogId() {
+    public static Integer getLogId() {
         return logId;
     }
 

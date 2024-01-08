@@ -13,7 +13,6 @@ import com.mycompany.rentalsystem.funcitons.Sorting;
 import com.mycompany.rentalsystem.funcitons.TableRefresh;
 import com.mycompany.rentalsystem.funcitons.FileConvertion;
 
-import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -43,13 +42,13 @@ public class TenantController {
     private TenantView tenantView;
     protected Tenant tenantModel;
     private Database database = new Database();
-    private Maintenance maintenance = new Maintenance();
+
 
     public TenantController(TenantView tenantView, Tenant tenantModel) throws SQLException, Exception {
         this.tenantView = tenantView;
         this.tenantModel = tenantModel;
 
-        TableRefresh.refreshTable(tenantView, database, "maintenance", tenantView.getMaintenanceRequestListTable());
+        
 
         
 
@@ -65,6 +64,8 @@ public class TenantController {
 
         }
 
+        TableRefresh.refreshTable(tenantView, database, "maintenance", tenantView.getMaintenanceRequestListTable());
+
         tenantView.addDashboardButtonListener(new MenubarListener());
         tenantView.addPaymentButtonListener(new MenubarListener());
         tenantView.addMaintenanceButtonListener(new MenubarListener());
@@ -79,11 +80,9 @@ public class TenantController {
                 String request = tenantView.maintenanceRequestSubmitButtonActionPerformed(e);
                 ArrayList<Object> data = new ArrayList<>();
                 LocalDate today = LocalDate.now();
-                // add request to database with all the needed values
-                // logId, tenantName, dateOfIssue, houseId, tenantId, description, status
 
                 if (!request.equals(null)) {
-                    data.add(String.valueOf(new Maintenance().getLogId()));
+                    data.add(String.valueOf(Maintenance.getLogId()));
                     data.add(TenantController.this.tenantModel.getFirstName() + " "
                             + TenantController.this.tenantModel.getSurName());
                     data.add(TenantController.this.tenantModel.getFormatedDob(today));
@@ -92,7 +91,8 @@ public class TenantController {
                     data.add(request);
                     data.add("Received");
 
-                    database.insert("maintenance", Maintenance.getMaintenaceTableLabels(), data);
+                    database.insert("maintenance", "logId, tenantName, dateOfIssue, houseId, tenantId, description, status", data);
+                    TableRefresh.refreshTable(tenantView, database, "maintenance", tenantView.getMaintenanceRequestListTable());
 
                     tenantView.getMaintenanceDescriptionTextArea().setText("");
                     JOptionPane.showMessageDialog(tenantView, "New Request made successfully.", "Success",

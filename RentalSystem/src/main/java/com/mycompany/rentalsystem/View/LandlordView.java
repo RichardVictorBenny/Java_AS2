@@ -3503,6 +3503,14 @@ public class LandlordView extends javax.swing.JFrame {
         return tenantSearchTextField;
     }
 
+    public javax.swing.JTextField getTenantResetTenantIdTextField() {
+        return tenantResetTenantIdTextField;
+    }
+
+    public void setTenantResetTenantIdTextField(javax.swing.JTextField tenantResetTenantIdTextField) {
+        this.tenantResetTenantIdTextField = tenantResetTenantIdTextField;
+    }
+
     public javax.swing.JButton getErrorDetailsHouseInfoButton() {
         return errorDetailsHouseInfoButton;
     }
