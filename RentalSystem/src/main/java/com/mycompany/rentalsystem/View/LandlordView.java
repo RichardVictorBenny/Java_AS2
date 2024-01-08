@@ -35,6 +35,20 @@ public class LandlordView extends javax.swing.JFrame {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Dashboard");
+
+        dashboardButton.setName("dashboard");
+        housesButton.setName("houses");
+        tenantsButton.setName("tenants");
+        maintenanceButton.setName("maintenance");
+        paymentButton.setName("payments");
+        otherButton.setName("others");
+        signoutButton.setName("signOut");
+        homeHouseButton.setName("houses");
+        homeTenantDetailsButton.setName("tenants");
+        seeNewRequestsButton.setName("maintenance");
+        homeUpcomingPaymentButton.setName("payments");
+    
+
         this.getHouseListTable().setName("HOUSE TABLE");
         this.getTenantListTable().setName("TENANT TABLE");
         this.getErrorNewListTable().setName("NEW ERROR");
@@ -68,6 +82,22 @@ public class LandlordView extends javax.swing.JFrame {
             }
         });
 
+    }
+    
+    public void homeHouseButtonListener(ActionListener menubarListener){
+        homeHouseButton.addActionListener(menubarListener);
+    }
+    
+    public void homeTenantDetailsButtonListener(ActionListener menubarListener){
+        homeTenantDetailsButton.addActionListener(menubarListener);
+    }
+    
+    public void seeNewRequestsButtonListener(ActionListener menubarListener){
+        seeNewRequestsButton.addActionListener(menubarListener);
+    }
+    
+    public void homeUpcomingPaymentButtonListener(ActionListener menubarListener){
+        homeUpcomingPaymentButton.addActionListener(menubarListener);
     }
 
     public void addDashboardButtonListener(ActionListener menubarListener) {

@@ -4,6 +4,7 @@
  */
 package com.mycompany.rentalsystem.Controller;
 
+import java.awt.MenuShortcut;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -78,6 +79,11 @@ public class LandlordController {
         landlordView.addPaymentButtonListener(new MenubarListener());
         landlordView.addOtherButtonListener(new MenubarListener());
         landlordView.addSignoutButtonListener(new MenubarListener());
+        landlordView.homeHouseButtonListener(new MenubarListener());
+        landlordView.homeTenantDetailsButtonListener(new MenubarListener());
+        landlordView.seeNewRequestsButtonListener(new MenubarListener());
+        landlordView.homeUpcomingPaymentButtonListener(new MenubarListener());
+
         landlordView.othersLogTenantViewButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -140,27 +146,27 @@ public class LandlordController {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() instanceof JButton) {
                 JButton menuButtonPressed = (JButton) e.getSource();
-                String menuButtonName = menuButtonPressed.getText();
+                String menuButtonName = menuButtonPressed.getName();
                 switch (menuButtonName) {
-                    case "Dashboard":
+                    case "dashboard":
                         landlordView.dashboardButtonActionPerformed(e);
                         break;
-                    case "Houses":
+                    case "houses":
                         landlordView.housesButtonActionPerformed(e);
                         break;
-                    case "Tenant":
+                    case "tenants":
                         landlordView.tenantsButtonActionPerformed(e);
                         break;
-                    case "Maintenance":
+                    case "maintenance":
                         landlordView.maintenanceButtonActionPerformed(e);
                         break;
-                    case "Payments":
+                    case "payments":
                         landlordView.paymentButtonActionPerformed(e);
                         break;
-                    case "Others":
+                    case "others":
                         landlordView.otherButtonActionPerformed(e);
                         break;
-                    case "Sign Out":
+                    case "signOut":
                         landlordView.dispose();
                         // exits program
                         break;
