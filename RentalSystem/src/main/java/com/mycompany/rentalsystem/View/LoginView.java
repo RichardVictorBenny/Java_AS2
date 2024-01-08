@@ -253,24 +253,7 @@ public class LoginView extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-/*     private void usernameInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameInputActionPerformed
-
-    private void passwordInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordInputActionPerformed
-
-    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-        //add login checks and input checks here:
-    }//GEN-LAST:event_loginButtonActionPerformed
-
-    private void forgotPasswordLabelFocusGained(java.awt.event.FocusEvent evt) {                                                
-        // TODO add your handling code here:
-    }    
-    */                                              
+                                             
 
     
 

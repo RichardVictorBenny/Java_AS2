@@ -19,7 +19,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 
+ * implements the serializable interface
  * @author Richard
  *
  */
@@ -32,6 +32,11 @@ public class Tenant implements Serializable{
     private String houseId;
     private LocalDate dateOfBirth;
 
+    /**
+     * Contructor that gets the sessionId from the file.
+     * To be used only when the controller is initiated.
+     * @throws IOException
+     */
     public Tenant() throws IOException{
         //reading session file for getting correct object
         //FileReader in = new FileReader("src/main/java/com/mycompany/rentalsystem/files/SESSION.txt");
@@ -40,7 +45,18 @@ public class Tenant implements Serializable{
         in.close();
     }
 
-
+    /**
+     * Constructor used to create a instance of the object taken from the database.
+     * 
+     * @param firstName 
+     * @param surName
+     * @param eMail
+     * @param phoneNumber
+     * @param tenantID
+     * @param gender
+     * @param dateOfBirth
+     * @param houseId
+     */
     public Tenant( String firstName, String surName, String eMail, String phoneNumber, String tenantID, String gender,  LocalDate dateOfBirth,  String houseId) {
         this.extTenantID = tenantID;
         this.firstName = firstName;
@@ -52,6 +68,18 @@ public class Tenant implements Serializable{
         this.houseId = houseId;
     }
 
+    /**
+     * Constructor that creates a new Tenant from the details provided. 
+     * Id is assigned automatically
+     * 
+     * @param firstName
+     * @param surName
+     * @param eMail
+     * @param phoneNumber
+     * @param gender
+     * @param dob
+     * @param houseId
+     */
     public Tenant(String firstName, String surName, String eMail, String phoneNumber, String gender,  LocalDate dob, String houseId) {
         Tenant.tenantID++;
         Tenant.totalTenantCount++;
@@ -158,10 +186,5 @@ public class Tenant implements Serializable{
         this.sessionId = sessionId;
     }
 
-    
-
-    
-
-    
 }
 

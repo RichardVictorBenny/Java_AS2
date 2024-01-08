@@ -1,17 +1,15 @@
 package com.mycompany.rentalsystem.funcitons;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.sql.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
+/**
+ * A class that establishes connection with the database. 
+ * 
+ * @author Richard
+ */
 public class Database {
-
     private String username = "root";
     private String password = "richard";
     private String database = "objects";
@@ -20,7 +18,7 @@ public class Database {
     PreparedStatement statement;
 
     /**
-     * Database
+     * Constructor for the database class
      */
     public Database() {
         try {
@@ -38,6 +36,8 @@ public class Database {
     }
 
     /**
+     * inserts value into the database
+     * 
      * @param table  - String table name
      * @param values - String table heading with comma seperation
      * @param record - Arraylist<?> id as String and object as Book
@@ -69,6 +69,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches all the rows in a database.
+     * @param table String - table name
+     * @return ResultSet
+     */
     public ResultSet findAll(String table) {
         try {
             this.statement = connnection.prepareStatement("SELECT * FROM " + table);
@@ -81,6 +86,14 @@ public class Database {
         return null;
     }
 
+    /**
+     * Finds rows that meets the where condition
+     * 
+     * @param tableName String - name of table
+     * @param idColumnName String - name of the column in the where clause
+     * @param idValue String - value in the Where condition
+     * @return ResultSet
+     */
     public ResultSet find(String tableName, String idColumnName, String idValue) {
         try {
             this.statement = connnection
@@ -94,6 +107,12 @@ public class Database {
         return null;
     }
 
+    /**
+     * Updates the maintenance table; status of the request
+     * 
+     * @param statusValue String - Status of the request
+     * @param idValue String - id of the request
+     */
     public void updateMaintenance(String statusValue, String idValue) {
         try {
             this.statement = connnection.prepareStatement("UPDATE maintenance SET status = ? WHERE logId = ?");
@@ -105,6 +124,12 @@ public class Database {
         }
     }
 
+    /**
+     * Find funtion specific to the tenant table
+     * 
+     * @param id String - tenantID
+     * @return ResultSet
+     */
     public ResultSet findTenant(String id) {
         try {
             this.statement = connnection.prepareStatement("SELECT * FROM Tenants WHERE tenantId = ?");
@@ -118,6 +143,11 @@ public class Database {
         return null;
     }
 
+    /**
+     * Find funtion specific to the house table
+     * @param id String - houseId
+     * @return ResultSet
+     */
     public ResultSet findHouse(String id) {
         try {
             this.statement = connnection.prepareStatement("SELECT * FROM houses WHERE houseId = ?");
@@ -130,6 +160,12 @@ public class Database {
         return null;
     }
 
+    /**
+     * Deletes the specified row from the specified table
+     * @param table String - Name of the table
+     * @param columnLabel String - Name of the Column
+     * @param id String - value of the column
+     */
     public void delete(String table, String columnLabel, String id) {
         String query = "DELETE FROM " + table + " WHERE " + columnLabel + " = " + id;
 
@@ -142,6 +178,11 @@ public class Database {
         }
     }
 
+    /**
+     * Update funtion specific to the house table
+     * @param id String - houseId
+     * @param house Object - House instance
+     */
     public void updateHouse(String id, Object house) {
 
         String query = "UPDATE houses SET houseObject = ? WHERE houseId = ?";
@@ -157,6 +198,11 @@ public class Database {
         }
     }
 
+    /**
+     * Update funtion specific to the tenant table
+     * @param id String - tenatId
+     * @param tenant - Tenant instance
+     */
     public void updateTenant(String id, Object tenant) {
 
         String query = "UPDATE tenants SET tenantObject = ? WHERE tenantId = ?";
@@ -172,6 +218,13 @@ public class Database {
         }
     }
 
+    /**
+     * Update funtion specfic to the password table
+     * 
+     * @param table String - table name
+     * @param newPassword String - new password to be added
+     * @param username String - id
+     */
     public void updatePassword(String table, String newPassword, String username) {
         String query = "UPDATE " + table + " SET password = ? WHERE username = ?";
         try {
@@ -186,6 +239,12 @@ public class Database {
 
     }
 
+    /**
+     * find function specific for the getting the password of the user
+     * @param tableName String - name of table
+     * @param username - String - userId
+     * @return ResultSet
+     */
     public ResultSet passwordCheck(String tableName, String username) {
         String query = "SELECT * FROM " + tableName + " WHERE username = ?";
         try {

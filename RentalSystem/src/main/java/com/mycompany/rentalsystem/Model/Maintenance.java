@@ -1,5 +1,8 @@
 package com.mycompany.rentalsystem.Model;
 
+/**
+ * Class to set ids to maintenance request.
+ */
 public class Maintenance {
     private static Integer logId = 80000;
     private static Integer count = 0;
@@ -7,7 +10,9 @@ public class Maintenance {
     private static String maintenaceTableLabels = "logId, tenantName, dateOfIssue, houseId, tenantId, description, status";
 
 
-
+    /**
+     * Constructor of the class
+     */
     public Maintenance(){
         logId++;
         count++;

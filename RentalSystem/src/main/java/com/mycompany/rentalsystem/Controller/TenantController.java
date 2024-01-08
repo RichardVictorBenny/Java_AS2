@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
- * 
+ * class that perform controls the flow according to the user input
  * @author Richard
  *
  */
@@ -43,14 +43,19 @@ public class TenantController {
     protected Tenant tenantModel;
     private Database database = new Database();
 
-
+    /**
+     * Constructor for the class
+     * refreshes the needed tables.
+     * get the user form the SESSION.txt file
+     * 
+     * @param tenantView 
+     * @param tenantModel
+     * @throws SQLException
+     * @throws Exception
+     */
     public TenantController(TenantView tenantView, Tenant tenantModel) throws SQLException, Exception {
         this.tenantView = tenantView;
         this.tenantModel = tenantModel;
-
-        
-
-        
 
         ResultSet tenant = database.findTenant(tenantModel.getSessionId());
         while (tenant.next()) {
@@ -76,6 +81,7 @@ public class TenantController {
         tenantView.maintenanceRequestSearchTextFieldListener(new TenantKeyListener());
 
         tenantView.maintenanceRequestSubmitButtonListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String request = tenantView.maintenanceRequestSubmitButtonActionPerformed(e);
                 ArrayList<Object> data = new ArrayList<>();
@@ -178,6 +184,9 @@ public class TenantController {
         });
     }
 
+    /**
+     * Inner class that implements the ActionListener interface that handles switching between different panels.
+     */
     class MenubarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {

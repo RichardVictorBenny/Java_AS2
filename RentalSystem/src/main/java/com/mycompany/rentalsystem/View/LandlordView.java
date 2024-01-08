@@ -3076,7 +3076,6 @@ public class LandlordView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void dashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_dashboardButtonActionPerformed
-        // TODO add your handling code here:
         // landlordDashboard.setSelectedIndex(0);
         landlordDashboard.removeAll();
         landlordDashboard.add(homeScrollPanel);
@@ -3086,7 +3085,6 @@ public class LandlordView extends javax.swing.JFrame {
     }// GEN-LAST:event_dashboardButtonActionPerformed
 
     public void housesButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_housesButtonActionPerformed
-        // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(housesPanel);
         landlordDashboard.repaint();
@@ -3102,7 +3100,6 @@ public class LandlordView extends javax.swing.JFrame {
     }// GEN-LAST:event_tenantsButtonActionPerformed
 
     public void maintenanceButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_maintenanceButtonActionPerformed
-        // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(errorPanel);
         landlordDashboard.repaint();
@@ -3111,7 +3108,6 @@ public class LandlordView extends javax.swing.JFrame {
 
 
     public void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentButtonActionPerformed
-        // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(paymentsPanel);
         landlordDashboard.repaint();
@@ -3119,7 +3115,6 @@ public class LandlordView extends javax.swing.JFrame {
     }// GEN-LAST:event_paymentButtonActionPerformed
 
     public void otherButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_otherButtonActionPerformed
-        // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(othersHomePanel);
         landlordDashboard.repaint();
@@ -3246,7 +3241,7 @@ public class LandlordView extends javax.swing.JFrame {
     }// GEN-LAST:event_tenantDeleteButtonActionPerformed
 
     public void othersContractViewButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_othersContractViewButtonActionPerformed
-        // TODO add your handling code here:
+
         landlordDashboard.removeAll();
         landlordDashboard.add(othersViewContractPanel);
         landlordDashboard.repaint();
@@ -3254,7 +3249,6 @@ public class LandlordView extends javax.swing.JFrame {
     }// GEN-LAST:event_othersContractViewButtonActionPerformed
 
     public void othersContractNewButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_othersContractNewButtonActionPerformed
-        // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(othersIssueContractPanel);
         landlordDashboard.repaint();
@@ -3262,7 +3256,6 @@ public class LandlordView extends javax.swing.JFrame {
     }// GEN-LAST:event_othersContractNewButtonActionPerformed
 
     public void othersLogTenantViewButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_othersLogTenantViewButtonActionPerformed
-        // TODO add your handling code here:
         landlordDashboard.removeAll();
         landlordDashboard.add(othersMaintenancePanel);
         landlordDashboard.repaint();

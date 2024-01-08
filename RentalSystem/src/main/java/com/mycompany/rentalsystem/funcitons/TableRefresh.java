@@ -5,10 +5,7 @@ import java.sql.SQLException;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.html.ObjectView;
 
-import com.mycompany.rentalsystem.Controller.LandlordController;
-import com.mycompany.rentalsystem.Controller.TenantController;
 import com.mycompany.rentalsystem.Model.House;
 import com.mycompany.rentalsystem.Model.Maintenance;
 import com.mycompany.rentalsystem.Model.Tenant;
@@ -16,10 +13,17 @@ import com.mycompany.rentalsystem.View.LandlordView;
 import com.mycompany.rentalsystem.View.TenantView;
 import com.mysql.cj.jdbc.Blob;
 
-import io.opencensus.stats.Aggregation.LastValue;
 
 public class TableRefresh {
 
+    /**
+     * Uses the JTable Name to run the correct refresh funtion.
+     * 
+     * @param view Object the view the action has to performed
+     * @param database Database instance
+     * @param tableName String name of the table the values are stored in the database
+     * @param jTable JTable table which has to be refreshed
+     */
     public static void refreshTable(Object view, Database database, String tableName, JTable jTable) {
         ResultSet allRows = database.findAll(tableName);
 
@@ -220,6 +224,11 @@ public class TableRefresh {
         }
     }
 
+    /**
+     * inserts data into a give JTable
+     * @param table Jtable to which rows has to added
+     * @param data an array of data to be added; has to be consistant with the columns in the JTalbe.
+     */
     public static void insertValueTable(JTable table, String[] data) {
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         tableModel.addRow(data);
