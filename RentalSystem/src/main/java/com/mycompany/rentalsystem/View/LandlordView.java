@@ -84,6 +84,14 @@ public class LandlordView extends javax.swing.JFrame {
 
     }
     
+    public void othersTenantResetPasswordButtonListener(ActionListener listener) {
+        othersTenantResetPasswordButton.addActionListener(listener);
+    }
+
+    public void sendNewTenantPasswordListener(ActionListener listener){
+        sendNewTenantPassword.addActionListener(listener);
+    }
+
     public void homeHouseButtonListener(ActionListener menubarListener){
         homeHouseButton.addActionListener(menubarListener);
     }
@@ -439,6 +447,9 @@ public class LandlordView extends javax.swing.JFrame {
         maintenanceDescriptionTextArea = new javax.swing.JTextArea();
         maintenanceRequestieTextField = new javax.swing.JTextField();
         maintenanceHouseTextField = new javax.swing.JTextField();
+        tenantResetPasswordPanel = new javax.swing.JPanel();
+        tenantResetTenantIdTextField = new javax.swing.JTextField();
+        sendNewTenantPassword = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -2550,6 +2561,8 @@ public class LandlordView extends javax.swing.JFrame {
 
         othersLayeredPane.setLayout(new java.awt.CardLayout());
 
+        
+
         othersGreetingPanel.setBackground(new java.awt.Color(255, 204, 204));
         othersGreetingPanel
                 .setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(255, 153, 153)));
@@ -2982,6 +2995,37 @@ public class LandlordView extends javax.swing.JFrame {
 
         othersLayeredPane.add(othersMaintenancePanel, "card5");
 
+        tenantResetTenantIdTextField.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        tenantResetTenantIdTextField.setPreferredSize(new java.awt.Dimension(250, 50));
+
+
+        sendNewTenantPassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        sendNewTenantPassword.setText("Send Password");
+        sendNewTenantPassword.setPreferredSize(new java.awt.Dimension(250, 50));
+
+        javax.swing.GroupLayout tenantResetPasswordPanelLayout = new javax.swing.GroupLayout(tenantResetPasswordPanel);
+        tenantResetPasswordPanel.setLayout(tenantResetPasswordPanelLayout);
+        tenantResetPasswordPanelLayout.setHorizontalGroup(
+            tenantResetPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantResetPasswordPanelLayout.createSequentialGroup()
+                .addGap(154, 154, 154)
+                .addGroup(tenantResetPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tenantResetTenantIdTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                    .addComponent(sendNewTenantPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(908, Short.MAX_VALUE))
+        );
+        tenantResetPasswordPanelLayout.setVerticalGroup(
+            tenantResetPasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tenantResetPasswordPanelLayout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(tenantResetTenantIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(sendNewTenantPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(538, Short.MAX_VALUE))
+        );
+
+        othersLayeredPane.add(tenantResetPasswordPanel, "card6");
+
         landlordDashboard.add(othersLayeredPane, "card7");
 
         javax.swing.GroupLayout landlordPanelLayout = new javax.swing.GroupLayout(landlordPanel);
@@ -3225,6 +3269,13 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }// GEN-LAST:event_othersLogTenantViewButtonActionPerformed
 
+    public void othersTenantResetPasswordButtonActionPerformed(java.awt.event.ActionEvent evt){
+        landlordDashboard.removeAll();
+        landlordDashboard.add(tenantResetPasswordPanel);
+        landlordDashboard.repaint();
+        landlordDashboard.revalidate();
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -3429,6 +3480,8 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JPanel tenantListPanel;
     private javax.swing.JScrollPane tenantListScrollPane;
     private javax.swing.JTable tenantListTable;
+    private javax.swing.JPanel tenantResetPasswordPanel;
+    private javax.swing.JTextField tenantResetTenantIdTextField;
     private javax.swing.JTextField tenantSearchTextField;
     private javax.swing.JButton tenantUpdateButton;
     private javax.swing.JLabel tenantidDisplayLabel;
@@ -3437,6 +3490,7 @@ public class LandlordView extends javax.swing.JFrame {
     private javax.swing.JPanel tenantsPanel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel titlePanel;
+    private javax.swing.JButton sendNewTenantPassword;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -3714,6 +3768,18 @@ public class LandlordView extends javax.swing.JFrame {
         }
     }
 
+    
+
+    public javax.swing.JButton getOthersTenantResetPasswordButton() {
+        return othersTenantResetPasswordButton;
+    }
+
+
+    public void setOthersTenantResetPasswordButton(javax.swing.JButton othersTenantResetPasswordButton) {
+        this.othersTenantResetPasswordButton = othersTenantResetPasswordButton;
+    }
+
+
     public javax.swing.JTextField getPreviousErrorSearchTextField() {
         return previousErrorSearchTextField;
     }
@@ -3867,6 +3933,17 @@ public class LandlordView extends javax.swing.JFrame {
     public void setErrorDetailsLogidTextField(javax.swing.JTextField errorDetailsLogidTextField) {
         this.errorDetailsLogidTextField = errorDetailsLogidTextField;
     }
+    
+
+    public javax.swing.JButton getSendNewTenantPassword() {
+        return sendNewTenantPassword;
+    }
+
+
+    public void setSendNewTenantPassword(javax.swing.JButton sendNewTenantPassword) {
+        this.sendNewTenantPassword = sendNewTenantPassword;
+    }
+
 
     // table functions
     public JTable getHouseListTable() {

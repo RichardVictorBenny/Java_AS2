@@ -91,6 +91,23 @@ public class LandlordController {
                 TableRefresh.refreshTable(landlordView, database, "maintenance", landlordView.getMaintenanceRequestListTable());
             }
         });
+        landlordView.sendNewTenantPasswordListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //geenerate and send new passowrd
+            }
+            
+        });
+        landlordView.othersTenantResetPasswordButtonListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                landlordView.othersTenantResetPasswordButtonActionPerformed(e);
+            }
+            
+        });
+
 
         landlordView.houseAddButtonListener(new HouseListener());
         landlordView.houseUpdateButtonListener(new HouseListener());
