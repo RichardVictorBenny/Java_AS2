@@ -16,11 +16,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextField;
 
 import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.LandlordView;
@@ -29,6 +31,7 @@ import com.mycompany.rentalsystem.funcitons.FileConvertion;
 import com.mycompany.rentalsystem.funcitons.Password;
 import com.mycompany.rentalsystem.funcitons.SentEmail;
 import com.mycompany.rentalsystem.funcitons.Sorting;
+import com.mycompany.rentalsystem.funcitons.TableRefresh;
 import com.mysql.cj.jdbc.Blob;
 
 /**
@@ -39,15 +42,35 @@ public class LandlordController {
     private LandlordView landlordView;
     private Landlord landlordModel;
     private Database database = new Database();
-    private int houseCount = 0;
-    private int tenantCount = 0;
+    private Timer timer = new Timer();
 
     public LandlordController(LandlordView landlordView, Landlord landlordModel) {
         this.landlordView = landlordView;
         this.landlordModel = landlordModel;
 
-        refreshTable("Houses", landlordView.getHouseListTable());
-        refreshTable("Tenants", landlordView.getTenantListTable());
+        // reference:
+        // https://stackoverflow.com/questions/33073671/how-to-execute-a-method-every-minute
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                TableRefresh.refreshTable(landlordView, database, "Maintenance", landlordView.getErrorNewListTable());
+                TableRefresh.refreshTable(landlordView, database, "Maintenance",
+                        landlordView.getErrorReviewListTable());
+                TableRefresh.refreshTable(landlordView, database, "Maintenance",
+                        landlordView.getPreviousErrorListTable());
+
+                landlordView.getHouseCountLabel().setText(String.valueOf(calculateCount("Houses")));
+                landlordView.getTenantCountLabel().setText(String.valueOf(calculateCount("Tenants")));
+                landlordView.getNewMaintenanceRequestCount().setText(String.valueOf(calculateCount("maintenance")));
+            }
+        };
+        timer.schedule(task, 0, 600);
+
+        TableRefresh.refreshTable(landlordView, database, "Houses", landlordView.getHouseListTable());
+        TableRefresh.refreshTable(landlordView, database, "Tenants", landlordView.getTenantListTable());
+        landlordView.getHouseCountLabel().setText(String.valueOf(calculateCount("Houses")));
+        landlordView.getTenantCountLabel().setText(String.valueOf(calculateCount("Tenants")));
+        landlordView.getNewMaintenanceRequestCount().setText(String.valueOf(calculateCount("maintenance")));
 
         landlordView.addDashboardButtonListener(new MenubarListener());
         landlordView.addHousesButtonListener(new MenubarListener());
@@ -67,10 +90,40 @@ public class LandlordController {
         landlordView.tenantClearFormButtonListener(new TenantListener());
         landlordView.tenantUpdateButtonListener(new TenantListener());
 
+        landlordView.errorUpdateStatusButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value = (String) landlordView.getErrorDetailsStatusComboBox().getSelectedItem();
+                String id = (String) landlordView.getErrorDetailsLogidTextField().getText();
+                database.updateMaintenance(value, id);
+                landlordView.clearErrorDetailsForm();
+            }
+
+        });
+
         landlordView.houseListTableListener(new LandlordMouseListener());
         landlordView.tenantListTableListener(new LandlordMouseListener());
+        landlordView.errorNewListTableListener(new LandlordMouseListener());
+        landlordView.errorReviewListTableListener(new LandlordMouseListener());
+        landlordView.previousErrorListTable(new LandlordMouseListener());
 
         landlordView.houseSearchTextFieldListener(new LandlordKeyListener());
+        landlordView.tenantSearchTextFieldListener(new LandlordKeyListener());
+        landlordView.maintenanceRequestSearchTextFieldListener(new LandlordKeyListener());
+
+    }
+
+    private int calculateCount(String table) {
+        ResultSet result = database.findAll(table);
+        int count = 0;
+        try {
+            while (result.next()) {
+                count++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     class MenubarListener implements ActionListener {
@@ -87,7 +140,7 @@ public class LandlordController {
                     case "Houses":
                         landlordView.housesButtonActionPerformed(e);
                         break;
-                    case "Tenants":
+                    case "Tenant":
                         landlordView.tenantsButtonActionPerformed(e);
                         break;
                     case "Maintenance":
@@ -101,7 +154,7 @@ public class LandlordController {
                         break;
                     case "Sign Out":
                         landlordView.dispose();
-                        //exits program
+                        // exits program
                         break;
                     default:
                         break;
@@ -126,7 +179,7 @@ public class LandlordController {
                     case "ADD":
                         House houseObj = landlordView.houseAddButtonActionPerformed(e);
                         if (houseObj != null) {
-                            landlordView.insertValueTable(landlordView.getHouseListTable(), houseObj.getDataArray());
+                            TableRefresh.insertValueTable(landlordView.getHouseListTable(), houseObj.getDataArray());
                             record.add(houseObj.getHouseId());
                             record.add(FileConvertion.toByteArray(houseObj));
                             try {
@@ -137,8 +190,8 @@ public class LandlordController {
                             }
                             record.clear();
                             landlordView.clearHouseForm();
-                            houseCount = 0;
-                            refreshTable("Houses", landlordView.getHouseListTable());
+                            TableRefresh.refreshTable(landlordView, database, "Houses",
+                                    landlordView.getHouseListTable());
                         }
                         break;
                     case "CLEAR":
@@ -155,23 +208,21 @@ public class LandlordController {
                             record.clear();
                             landlordView.clearHouseForm();
 
-                            houseCount = 0;
-                            refreshTable("Houses", landlordView.getHouseListTable());
+                            TableRefresh.refreshTable(landlordView, database, "Houses",
+                                    landlordView.getHouseListTable());
                         }
                         break;
                     case "DELETE":
                         String id = landlordView.houseDeleteButtonActionPerformed(e);
                         try {
                             database.delete("houses", "houseId", id);
-                            
 
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
                         landlordView.clearHouseForm();
 
-                        houseCount = 0;
-                        refreshTable("Houses", landlordView.getHouseListTable());
+                        TableRefresh.refreshTable(landlordView, database, "Houses", landlordView.getHouseListTable());
 
                         break;
                     default:
@@ -194,26 +245,25 @@ public class LandlordController {
                 switch (buttonPressedName) {
                     case "ADD":
                         Tenant tempTenantObj = landlordView.tenantAddButtonActionPerformed(e);
-                        
+
                         if (tempTenantObj != null) {
                             record.add(tempTenantObj.getTenantId());
                             record.add(FileConvertion.toByteArray(tempTenantObj));
                             try {
                                 database.insert("tenants", "tenantId, tenantObject", record);
-                                Password.savePassword(tempTenantObj.getTenantId(), 
-                                    String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob())), "Tenant" );
+                                Password.savePassword(tempTenantObj.getTenantId(),
+                                        String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob())), "Tenant");
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
                             record.clear();
                             landlordView.clearTenantForm();
 
-                            tenantCount = 0;
-                            refreshTable("Tenants", landlordView.getTenantListTable());
-                            
-                            
+                            TableRefresh.refreshTable(landlordView, database, "Tenants",
+                                    landlordView.getTenantListTable());
+
                             // uncomment the code
-                             try {
+                            try {
                                 new SentEmail().sentMail(tempTenantObj.geteMail(), "YOUR CREDENTIALS", """
                                         Hi %s,
 
@@ -221,16 +271,15 @@ public class LandlordController {
                                         Your temporary password is %s.
                                         the format is 'DD-MM-YYYY'.
 
-                                        Kindly 
+                                        Kindly
                                         Landlord
-                                        """.formatted(tempTenantObj.getSurName(), 
-                                        tempTenantObj.getTenantId(), 
+                                        """.formatted(tempTenantObj.getSurName(),
+                                        tempTenantObj.getTenantId(),
                                         String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob()))));
                             } catch (GeneralSecurityException | IOException | MessagingException e1) {
                                 e1.printStackTrace();
-                            } 
+                            }
 
-                            
                         }
                         // functions.generateTempCredentials();
                         break;
@@ -248,23 +297,22 @@ public class LandlordController {
                             record.clear();
                             landlordView.clearTenantForm();
 
-                            tenantCount = 0;
-                            refreshTable("Tenants", landlordView.getTenantListTable());
+                            TableRefresh.refreshTable(landlordView, database, "Tenants",
+                                    landlordView.getTenantListTable());
                         }
                         break;
                     case "DELETE":
                         String id = landlordView.tenantDeleteButtonActionPerformed(e);
                         try {
                             database.delete("tenants", "tenantId", id);
-                            database.delete("tenantpasswords", "username" , id);
+                            database.delete("tenantpasswords", "username", id);
 
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
                         landlordView.clearTenantForm();
 
-                        tenantCount = 0;
-                        refreshTable("Tenants", landlordView.getTenantListTable());
+                        TableRefresh.refreshTable(landlordView, database, "Tenants", landlordView.getTenantListTable());
                         break;
                     default:
                         System.out.println("Action Not Recognised");
@@ -281,20 +329,44 @@ public class LandlordController {
             if (e.getSource() instanceof JTable) {
                 JTable clickedTable = (JTable) e.getSource();
                 String tableName = clickedTable.getName();
+                String id = getIdAtPoint(clickedTable, e);
+                ResultSet result;
                 switch (tableName) {
                     case "HOUSE TABLE":
-                        /*
-                         * int row = clickedTable.rowAtPoint(e.getPoint());
-                         * int rowId = Integer.valueOf((String) clickedTable.getModel().getValueAt(row,
-                         * 0));
-                         * House houseobject = (House) houseArray.get(String.valueOf(rowId));
-                         */
-                        House houseObject = (House) getObjectAtPoint(clickedTable, e, "houseObject");
+
+                        House houseObject = (House) getObjectFromId(id, "houseObject");
                         landlordView.populateHouseForm(houseObject);
                         break;
                     case "TENANT TABLE":
-                        Tenant tenantObject = (Tenant) getObjectAtPoint(clickedTable, e, "tenantObject");
+                        Tenant tenantObject = (Tenant) getObjectFromId(id, "tenantObject");
                         landlordView.populateTenantForm(tenantObject);
+                        break;
+
+                    case "NEW ERROR":
+                        result = database.find("maintenance", "logId", id);
+                        try {
+                            landlordView.populateErrorDetailsForm(result);
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    case "REVIEW":
+                        result = database.find("maintenance", "logId", id);
+                        try {
+                            landlordView.populateErrorDetailsForm(result);
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
+                        ;
+                        break;
+                    case "PREVIOUS":
+                        result = database.find("maintenance", "logId", id);
+                        try {
+                            landlordView.populateErrorDetailsForm(result);
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
+                        ;
                         break;
 
                     default:
@@ -324,7 +396,7 @@ public class LandlordController {
         }
     }
 
-    class LandlordKeyListener implements KeyListener{
+    class LandlordKeyListener implements KeyListener {
 
         @Override
         public void keyTyped(KeyEvent e) {
@@ -336,14 +408,36 @@ public class LandlordController {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            Sorting.sortTable(landlordView.getHouseListTable(), landlordView.getHouseSearchTextField().getText());
+            if (e.getSource() instanceof JTextField) {
+                JTextField textField = (JTextField) e.getSource();
+                switch (textField.getName()) {
+                    case "HOUSE SEARCH":
+                        Sorting.sortTable(landlordView.getHouseListTable(), textField.getText());
+                        break;
+                    case "TENANT SEARCH":
+                        Sorting.sortTable(landlordView.getTenantListTable(), textField.getText());
+                        break;
+                    case "MAINTENANCE":
+                        Sorting.sortTable(landlordView.getPreviousErrorListTable(), textField.getText());
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
         }
-        
+
     }
-    private Object getObjectAtPoint(JTable clickedTable, MouseEvent e, String label) {
+
+    private String getIdAtPoint(JTable clickedTable, MouseEvent e) {
         int row = clickedTable.rowAtPoint(e.getPoint());
         int rowId = Integer.valueOf((String) clickedTable.getModel().getValueAt(row, 0));
         String id = (String.valueOf(rowId));
+        return id;
+    }
+
+    private Object getObjectFromId(String id, String label) {
         ResultSet set = null;
         switch (label) {
             case "houseObject":
@@ -352,9 +446,9 @@ public class LandlordController {
             case "tenantObject":
                 set = database.findTenant(id);
                 break;
-
+            default:
+                break;
         }
-
         try {
             while (set.next()) {
                 Blob objectBlob;
@@ -370,89 +464,7 @@ public class LandlordController {
         }
 
         return null;
-    }
 
-    public void refreshTable(String tableName, JTable jTable) {
-        ResultSet allRows = database.findAll(tableName);
-        DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
-
-        try {
-            tableModel.getDataVector().removeAllElements();
-            tableModel.fireTableDataChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        switch (tableName) {
-            case "Houses":
-                refreshHouseListTable(allRows);
-                break;
-            case "Tenants":
-                refreshTenantlistTable(allRows);
-                break;
-            default:
-                break;
-        }
-
-    }
-
-    public void refreshHouseListTable(ResultSet allHouseRows) {
-        try {
-            landlordView.getTenantHouseIdComboBox().removeAllItems();
-            while (allHouseRows.next()) {
-                String[] data = new String[4];
-                data[0] = allHouseRows.getString("houseId");
-
-                // adding adding houseId to the tenant panel combobox
-
-                landlordView.getTenantHouseIdComboBox().addItem(data[0]);
-
-                // rebuild House object form ByteArray
-                Blob houseBlob = (Blob) allHouseRows.getBlob("houseObject");
-                byte[] houseByte = houseBlob.getBytes(1, (int) houseBlob.length());
-                House tempHouseObj = (House) FileConvertion.toObject(houseByte);
-
-                data[1] = tempHouseObj.getHouseType();
-                data[2] = tempHouseObj.getHouseAddress();
-                data[3] = String.valueOf(tempHouseObj.getHouseRentPrice());
-
-                landlordView.insertValueTable(landlordView.getHouseListTable(), data);
-                House.setHouseId(tempHouseObj.getHouseId());
-                houseCount++;
-
-            }
-
-            landlordView.getHouseCountLabel().setText(String.valueOf(this.houseCount));
-            allHouseRows.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void refreshTenantlistTable(ResultSet allTenantRows) {
-        try {
-            while (allTenantRows.next()) {
-                // String data = allTenantRows.getString("tenantId");
-
-                // rebuild House object form ByteArray
-                Blob blob = (Blob) allTenantRows.getBlob("tenantObject");
-                byte[] tenantByte = blob.getBytes(1, (int) blob.length());
-                Tenant tempObj = (Tenant) FileConvertion.toObject(tenantByte);
-                landlordView.insertValueTable(landlordView.getTenantListTable(), tempObj.getDataArray());
-                Tenant.setTenantId(Integer.valueOf(tempObj.getTenantId()));
-                // tenantArray.put(data, tempObj);
-                tenantCount++;
-            }
-            landlordView.getTenantCountLabel().setText(String.valueOf(tenantCount));
-            allTenantRows.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }

@@ -9,11 +9,15 @@ import com.mycompany.rentalsystem.View.*;
 import com.mycompany.rentalsystem.funcitons.Database;
 import com.mycompany.rentalsystem.funcitons.Hashing;
 import com.mycompany.rentalsystem.funcitons.SentEmail;
+import com.mycompany.rentalsystem.funcitons.Sorting;
+import com.mycompany.rentalsystem.funcitons.TableRefresh;
 import com.mycompany.rentalsystem.funcitons.FileConvertion;
 
-
+import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -22,86 +26,131 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 import javax.swing.Action;
 import javax.swing.JButton;
-
-
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  * 
  * @author Richard
  *
  */
-public class TenantController{
+public class TenantController {
     private TenantView tenantView;
     protected Tenant tenantModel;
     private Database database = new Database();
+    private Maintenance maintenance = new Maintenance();
 
-    public TenantController(TenantView tenantView, Tenant tenantModel) throws SQLException, Exception{
+    public TenantController(TenantView tenantView, Tenant tenantModel) throws SQLException, Exception {
         this.tenantView = tenantView;
         this.tenantModel = tenantModel;
 
-        ResultSet tenant = database.findTenant(tenantModel.getSessionId());
-        while(tenant.next()){
+        TableRefresh.refreshTable(tenantView, database, "maintenance", tenantView.getMaintenanceRequestListTable());
 
+        
+
+        ResultSet tenant = database.findTenant(tenantModel.getSessionId());
+        while (tenant.next()) {
             try {
-                Blob tenantBlob =  tenant.getBlob("tenantObject");
-            byte[] tenantByte = tenantBlob.getBytes(1, (int) tenantBlob.length());
-            this.tenantModel = (Tenant) FileConvertion.toObject(tenantByte);
+                Blob tenantBlob = tenant.getBlob("tenantObject");
+                byte[] tenantByte = tenantBlob.getBytes(1, (int) tenantBlob.length());
+                this.tenantModel = (Tenant) FileConvertion.toObject(tenantByte);
             } catch (ClassCastException e) {
                 e.printStackTrace();
             }
-            
-        }
-        
 
-        
-        
+        }
+
         tenantView.addDashboardButtonListener(new MenubarListener());
         tenantView.addPaymentButtonListener(new MenubarListener());
         tenantView.addMaintenanceButtonListener(new MenubarListener());
-        tenantView.addOtherButtonListener(new MenubarListener());
         tenantView.addSignoutButtonListener(new MenubarListener());
 
-        tenantView.maintenanceRequestSubmitButtonListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                String request = tenantView.maintenanceRequestSubmitButtonActionPerformed(e);
-                //add request to database with all the needed values
-            }
-        } );
+        tenantView.maintenanceRequestSearchTextFieldListener(new TenantKeyListener());
 
-        tenantView.accountUpdatePasswordButtonListener(new ActionListener()  {
-            public void actionPerformed(ActionEvent e){
+        tenantView.maintenanceRequestSubmitButtonListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String request = tenantView.maintenanceRequestSubmitButtonActionPerformed(e);
+                ArrayList<Object> data = new ArrayList<>();
+                LocalDate today = LocalDate.now();
+                // add request to database with all the needed values
+                // logId, tenantName, dateOfIssue, houseId, tenantId, description, status
+
+                if (!request.equals(null)) {
+                    data.add(String.valueOf(new Maintenance().getLogId()));
+                    data.add(TenantController.this.tenantModel.getFirstName() + " "
+                            + TenantController.this.tenantModel.getSurName());
+                    data.add(TenantController.this.tenantModel.getFormatedDob(today));
+                    data.add(TenantController.this.tenantModel.getHouseId());
+                    data.add(TenantController.this.tenantModel.getTenantId());
+                    data.add(request);
+                    data.add("Received");
+
+                    database.insert("maintenance", Maintenance.getMaintenaceTableLabels(), data);
+
+                    tenantView.getMaintenanceDescriptionTextArea().setText("");
+                    TableRefresh.refreshTable(tenantView, database, "maintenance",
+                            tenantView.getMaintenanceRequestListTable());
+                    JOptionPane.showMessageDialog(tenantView, "New Request made successfully.", "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            }
+
+        });
+        tenantView.contactMessageSendButtonListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String message = tenantView.contactMessageSendButtonActionPerformed(e);
+                if(!message.equals("")){
+                    try {
+                        sendMessage(message);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(tenantView, "Message cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }});
+
+        tenantView.accountUpdatePasswordButtonListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 String tenantId = TenantController.this.tenantModel.getTenantId();
                 String password = tenantView.accountUpdatePasswordButtonActionPerformed(e);
-                if(password!=null){
+                if (password != null) {
                     try {
                         database.updatePassword("tenantpasswords",
-                            Hashing.doHashing(password, tenantId),
-                            tenantId);
+                                Hashing.doHashing(password, tenantId),
+                                tenantId);
                     } catch (NoSuchAlgorithmException exception) {
                         exception.printStackTrace();
                     }
                     tenantView.clearResetPassword();
                     try {
-                        new SentEmail().sentMail(TenantController.this.tenantModel.geteMail(), "Password Change Detected", """
-                                A Password change was detected!!
+                        new SentEmail().sentMail(TenantController.this.tenantModel.geteMail(),
+                                "Password Change Detected", """
+                                        A Password change was detected!!
 
-                                Contact Landlord Immediately!! if it was not you. Else ignore
-                                
-                                --auto generated
-                                --do not reply
-                                """);
+                                        Contact Landlord Immediately!! if it was not you. Else ignore
+
+                                        --auto generated
+                                        --do not reply
+                                        """);
                     } catch (GeneralSecurityException | IOException | MessagingException e1) {
                         e1.printStackTrace();
                     }
-                } else{
+                } else {
                     throw new NullPointerException("passwords didn't match");
                 }
             }
-            
+
         });
 
         tenantView.addAccountLabelListener(new MouseListener() {
@@ -127,14 +176,14 @@ public class TenantController{
             @Override
             public void mouseExited(MouseEvent e) {
             }
-            
+
         });
     }
 
-    class MenubarListener implements ActionListener{
+    class MenubarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() instanceof JButton){
+            if (e.getSource() instanceof JButton) {
                 JButton menuButtonPressed = (JButton) e.getSource();
                 String menuButtonName = menuButtonPressed.getText();
                 switch (menuButtonName) {
@@ -147,9 +196,6 @@ public class TenantController{
                     case "Maintenance":
                         tenantView.maintenanceButtonActionPerformed(e);
                         break;
-                    case "Others":
-                        tenantView.otherButtonActionPerformed(e);
-                        break;
                     case "Sign Out":
                         tenantView.signoutButtonActionPerformed(e);
                         break;
@@ -160,8 +206,48 @@ public class TenantController{
         }
     }
 
+    /**
+     * inner class to handle filtering tables
+     */
+    class TenantKeyListener implements KeyListener {
 
-    //getter and setter
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getSource() instanceof JTextField) {
+                JTextField textField = (JTextField) e.getSource();
+                switch (textField.getName()) {
+                    case "MAINTENANCE":
+                        Sorting.sortTable(tenantView.getMaintenanceRequestListTable(), textField.getText() );
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+    }
+
+    
+    /**
+     * Send email to Landlord.
+     * @param message
+     * @throws Exception
+     */
+    public void sendMessage(String message) throws Exception{
+        String landlordEmail = "uk.developer.java@gmail.com";
+        new SentEmail().sentMail(landlordEmail, "Message From Tenant", message);
+    }
+
+    // getter and setter
     public Tenant getTenantModel() {
         return tenantModel;
     }
@@ -170,7 +256,4 @@ public class TenantController{
         this.tenantModel = tenantModel;
     }
 
-    
-    
 }
-

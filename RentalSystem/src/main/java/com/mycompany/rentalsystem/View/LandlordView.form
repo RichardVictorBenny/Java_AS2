@@ -250,7 +250,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Tenants"/>
+                <Property name="text" type="java.lang.String" value="Tenant"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                     <MatteColorBorder bottom="0" left="5" right="0" top="0">
@@ -1029,7 +1029,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="8" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -2610,6 +2610,7 @@
                               <Font name="Segoe UI" size="12" style="1"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="More Details"/>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 30]"/>
                             </Property>
@@ -2955,6 +2956,7 @@
                               <Font name="Segoe UI" size="12" style="1"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="More Details"/>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 30]"/>
                             </Property>
@@ -2972,6 +2974,7 @@
                               <Font name="Segoe UI" size="12" style="1"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="More Details"/>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 30]"/>
                             </Property>
@@ -3125,7 +3128,7 @@
                                       <Component id="errorUpdateStatusButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="errorDetailsLogidTextField" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="errorDetialsDateTextField" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="errorDetailsDateTextField" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="errorDescriptionScrollPane" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -3155,7 +3158,7 @@
                               </Group>
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="errorDetialsDateTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="errorDetailsDateTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="errorDetialsDateDisplayLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
@@ -3228,14 +3231,14 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="errorDetailsLogidTextFieldActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="errorDetialsDateTextField">
+                    <Component class="javax.swing.JTextField" name="errorDetailsDateTextField">
                       <Properties>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[200, 30]"/>
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="errorDetialsDateTextFieldActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="errorDetailsDateTextFieldActionPerformed"/>
                       </Events>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="errorDescriptionScrollPane">
@@ -3282,6 +3285,7 @@
                           <Color blue="ff" green="ff" red="ef" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="More Info"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[150, 30]"/>
                         </Property>
@@ -3354,6 +3358,7 @@
                           <Color blue="ff" green="ff" red="ef" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="More Info"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[150, 30]"/>
                         </Property>
@@ -3547,7 +3552,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="othersGreetingPanel" pref="1387" max="32767" attributes="0"/>
+                          <Component id="othersGreetingPanel" pref="1345" max="32767" attributes="0"/>
                           <Component id="othersDashboardPanel" alignment="0" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
