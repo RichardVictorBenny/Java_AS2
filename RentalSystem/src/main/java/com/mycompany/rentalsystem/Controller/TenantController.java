@@ -4,7 +4,6 @@
  */
 package com.mycompany.rentalsystem.Controller;
 
-import com.google.common.util.concurrent.ExecutionError;
 import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.*;
 import com.mycompany.rentalsystem.funcitons.Database;
@@ -23,7 +22,6 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -32,6 +30,7 @@ import java.util.ArrayList;
 import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -70,7 +69,6 @@ public class TenantController {
         }
 
         setRentDetails(this.tenantModel, this.tenantView);
-        
 
         TableRefresh.refreshTable(tenantView, database, "maintenance", tenantView.getMaintenanceRequestListTable());
 
@@ -80,6 +78,10 @@ public class TenantController {
         tenantView.addSignoutButtonListener(new MenubarListener());
         tenantView.homePaymentButtonListener(new MenubarListener());
         tenantView.dashboardNewMaintenanceButtonListener(new MenubarListener());
+
+        tenantView.actionPayPaypalButtonListener(new PayListener());
+        tenantView.actionPayStripeButtonListener(new PayListener());
+        tenantView.actionPayVisaButtonListener(new PayListener());
 
         tenantView.maintenanceRequestSearchTextFieldListener(new TenantKeyListener());
 
@@ -190,6 +192,44 @@ public class TenantController {
 
         });
 
+        tenantView.maintenanceRequestListTableListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                if (e.getSource() instanceof JTable) {
+                    JTable clickedTable = (JTable) e.getSource();
+                    String id = TableRefresh.getIdAtPoint(clickedTable, e);
+                    ResultSet result = database.find("maintenance", "logId", id);
+
+                    try {
+                        while (result.next()) {
+                            tenantView.getMaintenanceDescriptionTextArea().setText(
+                                    result.getString("description"));
+                        }
+                    } catch (SQLException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+
+        });
     }
 
     /**
@@ -198,13 +238,13 @@ public class TenantController {
      * sets the rent to pay.
      * does calulations for late fee. current rate 50.
      * 
-     * @param tenant Tenant - current object instance
+     * @param tenant     Tenant - current object instance
      * @param tenantView TenantView - current object instance
      */
     private void setRentDetails(Tenant tenant, TenantView tenantView) {
         House house = null;
         Integer lateFee = 0;
-        Integer rent =0;
+        Integer rent = 0;
         try {
             String dueDate = tenant.getFormatedDob(tenant.getRentPayDate());
             tenantView.getDisplayDateLabel()
@@ -212,21 +252,20 @@ public class TenantController {
             tenantView.getDueDateLabel().setText(dueDate);
             tenant.setRentPayDate(tenant.getRentPayDate().plusDays(30));
 
-
             ResultSet resultSet = database.findHouse(tenant.getHouseId());
             while (resultSet.next()) {
                 house = (House) FileConvertion.toObject(resultSet.getBlob("houseObject"));
             }
             rent = house.getHouseRentPrice();
 
-            //setting the value to the proper rent
+            // setting the value to the proper rent
             tenantView.getBreakdownRentAmountLabel().setText(String.valueOf(rent));
             tenantView.getBreakdownLateAmountLabel().setText(String.valueOf(lateFee));
 
             LocalDate todayDate = LocalDate.now();
-            if (todayDate.isAfter(tenant.getRentPayDate())){
+            if (todayDate.isAfter(tenant.getRentPayDate())) {
                 lateFee = 50;
-                rent+=lateFee;
+                rent += lateFee;
             }
 
             tenantView.getBreakdownTotalAmountLabel().setText(String.valueOf(rent));
@@ -253,6 +292,11 @@ public class TenantController {
                         break;
                     case "Payment":
                         tenantView.paymentButtonActionPerformed(e);
+                        TableRefresh.refreshTable(TenantController.this.tenantView,
+                                database,
+                                "payments",
+                                TenantController.this.tenantView.getPaymentHistoryListTable());
+                        
                         break;
                     case "Maintenance":
                         tenantView.maintenanceButtonActionPerformed(e);
@@ -292,6 +336,37 @@ public class TenantController {
                     default:
                         break;
                 }
+            }
+        }
+
+    }
+
+    /**
+     * handles all the payment
+     */
+    class PayListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<Object> record = new ArrayList<>();
+            String id = String.valueOf(Payments.getPaymentId());
+            if (e.getSource() instanceof JButton) {
+                JButton button = (JButton) e.getSource();
+                record.add(id);
+                record.add(TenantController.this.tenantModel.getTenantId());
+                record.add(TenantController.this.tenantModel.getFormatedDob(LocalDate.now()));
+                record.add(button.getName());
+
+                try {
+                    database.insert("payments", "id, tenantId, date, type", record);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+
+                TableRefresh.refreshTable(TenantController.this.tenantView,
+                        database,
+                        "payments",
+                        TenantController.this.tenantView.getPaymentHistoryListTable());
             }
         }
 

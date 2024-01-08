@@ -17,7 +17,6 @@ public class Maintenance {
         logId++;
         count++;
         this.maintenanceId=String.valueOf(logId);
-
     }
 
 

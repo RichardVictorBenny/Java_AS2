@@ -32,7 +32,12 @@ public class TenantView extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         maintenanceRequestListTable.setName("MAINTENANCE");
+        dashboardMaintenanceSummaryTable.setName("MAINTENANCE");
         maintenanceRequestSearchTextField.setName("MAINTENANCE");
+
+        actionPayStripeButton.setName("STRIPE");
+        actionPayPaypalButton.setName("PAYPAL");
+        actionPayVisaButton.setName("VISA"); 
 
         homePaymentButton.setName("Payment");
         dashboardNewMaintenanceButton.setName("Maintenance");
@@ -40,6 +45,18 @@ public class TenantView extends JFrame {
         paymentButton.setName("Payment");
         maintenanceButton.setName("Maintenance");
         signoutButton.setName("signOut");
+
+        paymentHistoryListTable.setName("PAYMENTS");
+    }
+
+    public void actionPayPaypalButtonListener(ActionListener listener){
+        actionPayPaypalButton.addActionListener(listener);
+    }
+    public void actionPayStripeButtonListener(ActionListener listener){
+        actionPayStripeButton.addActionListener(listener);
+    }
+    public void actionPayVisaButtonListener(ActionListener listener){
+        actionPayVisaButton.addActionListener(listener);
     }
     
     public void homePaymentButtonListener(ActionListener menubarListener){
@@ -84,6 +101,10 @@ public class TenantView extends JFrame {
 
     public void contactMessageSendButtonListener(ActionListener listener){
         contactMessageSendButton.addActionListener(listener);
+    }
+
+    public void maintenanceRequestListTableListener(MouseListener listener){
+        maintenanceRequestListTable.addMouseListener(listener); 
     }
 
     /**
@@ -688,14 +709,14 @@ public class TenantView extends JFrame {
 
             },
             new String [] {
-                "Payment ID", "Due Date", "Paid on", "Amount"
+                "Payment ID", "Paid on", "Type"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -769,11 +790,14 @@ public class TenantView extends JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         maintenanceRequestListScrollPane.setViewportView(maintenanceRequestListTable);
@@ -1421,6 +1445,38 @@ public class TenantView extends JFrame {
 
     
 
+    public javax.swing.JButton getActionPayPaypalButton() {
+        return actionPayPaypalButton;
+    }
+
+    public void setActionPayPaypalButton(javax.swing.JButton actionPayPaypalButton) {
+        this.actionPayPaypalButton = actionPayPaypalButton;
+    }
+
+    public javax.swing.JButton getActionPayStripeButton() {
+        return actionPayStripeButton;
+    }
+
+    public void setActionPayStripeButton(javax.swing.JButton actionPayStripeButton) {
+        this.actionPayStripeButton = actionPayStripeButton;
+    }
+
+    public javax.swing.JButton getActionPayVisaButton() {
+        return actionPayVisaButton;
+    }
+
+    public void setActionPayVisaButton(javax.swing.JButton actionPayVisaButton) {
+        this.actionPayVisaButton = actionPayVisaButton;
+    }
+
+    public javax.swing.JTable getDashboardMaintenanceSummaryTable() {
+        return dashboardMaintenanceSummaryTable;
+    }
+
+    public void setDashboardMaintenanceSummaryTable(javax.swing.JTable dashboardMaintenanceSummaryTable) {
+        this.dashboardMaintenanceSummaryTable = dashboardMaintenanceSummaryTable;
+    }
+
     public javax.swing.JLabel getDueDateLabel() {
         return dueDateLabel;
     }
@@ -1429,6 +1485,7 @@ public class TenantView extends JFrame {
         this.dueDateLabel = dueDateLabel;
     }
 
+    
         // other functions
 
     /**
@@ -1443,6 +1500,14 @@ public class TenantView extends JFrame {
         this.tenantEmailValueLabel.setText(tenant.geteMail());
         this.tenantPhoneValueLabel.setText(tenant.getPhoneNumber());
         this.tenantDobValueLabel.setText(tenant.getFormatedDob(tenant.getDob()));
+    }
+
+    public javax.swing.JTable getPaymentHistoryListTable() {
+        return paymentHistoryListTable;
+    }
+
+    public void setPaymentHistoryListTable(javax.swing.JTable paymentHistoryListTable) {
+        this.paymentHistoryListTable = paymentHistoryListTable;
     }
 
     /**

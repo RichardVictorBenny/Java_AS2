@@ -451,7 +451,7 @@ public class LandlordController {
             if (e.getSource() instanceof JTable) {
                 JTable clickedTable = (JTable) e.getSource();
                 String tableName = clickedTable.getName();
-                String id = getIdAtPoint(clickedTable, e);
+                String id = TableRefresh.getIdAtPoint(clickedTable, e);
                 ResultSet result;
                 switch (tableName) {
                     case "HOUSE TABLE":
@@ -597,18 +597,7 @@ public class LandlordController {
 
     }
 
-    /**
-     * 
-     * @param clickedTable JTable instance of the table the aciton is being done on.
-     * @param e            MouseEvent instance
-     * @return String id of the row that is clicked on
-     */
-    private String getIdAtPoint(JTable clickedTable, MouseEvent e) {
-        int row = clickedTable.rowAtPoint(e.getPoint());
-        int rowId = Integer.valueOf((String) clickedTable.getModel().getValueAt(row, 0));
-        String id = (String.valueOf(rowId));
-        return id;
-    }
+
 
     /**
      * 
@@ -634,7 +623,7 @@ public class LandlordController {
                 set.close();
                 return object;
             }
-        } catch (SQLException exception) {
+        } catch (SQLException | NullPointerException exception) {
             exception.printStackTrace();
         }
 

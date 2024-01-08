@@ -6,8 +6,11 @@ import java.sql.SQLException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.event.MouseEvent;
+
 import com.mycompany.rentalsystem.Model.House;
 import com.mycompany.rentalsystem.Model.Maintenance;
+import com.mycompany.rentalsystem.Model.Payments;
 import com.mycompany.rentalsystem.Model.Tenant;
 import com.mycompany.rentalsystem.View.LandlordView;
 import com.mycompany.rentalsystem.View.TenantView;
@@ -51,11 +54,36 @@ public class TableRefresh {
             case "PREVIOUS":
                 refreshPreviousMaintenanceTables(view, allRows);
                 break;
+            case "PAYMENTS":
+            try {
+                
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+                refreshPaymentsTable(view, allRows);
+                break;
 
             default:
                 break;
         }
 
+    }
+    private static void refreshPaymentsTable(Object view, ResultSet result){
+        TenantView tenantView = (TenantView) view;
+        try {
+            while (result.next()) {
+                String[] data = {
+                        result.getString("id"),
+                        result.getString("date"),
+                        result.getString("type"),
+
+                };
+                insertValueTable(tenantView.getPaymentHistoryListTable(), data);
+                Payments.setPaymentId(Integer.valueOf(result.getString("id")) + 1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void refreshMaintenanceSecondaryRequestListTable(Object view, ResultSet result) {
@@ -91,9 +119,7 @@ public class TableRefresh {
                 landlordView.getTenantHouseIdComboBox().addItem(data[0]);
 
                 // rebuild House object form ByteArray
-                Blob houseBlob = (Blob) allHouseRows.getBlob("houseObject");
-                byte[] houseByte = houseBlob.getBytes(1, (int) houseBlob.length());
-                House tempHouseObj = (House) FileConvertion.toObject(houseByte);
+                House tempHouseObj = (House) FileConvertion.toObject(allHouseRows.getBlob("houseObject"));
 
                 data[1] = tempHouseObj.getHouseType();
                 data[2] = tempHouseObj.getHouseAddress();
@@ -116,12 +142,9 @@ public class TableRefresh {
         LandlordView landlordView = (LandlordView) view;
         try {
             while (allTenantRows.next()) {
-                // String data = allTenantRows.getString("tenantId");
-
                 // rebuild House object form ByteArray
-                Blob blob = (Blob) allTenantRows.getBlob("tenantObject");
-                byte[] tenantByte = blob.getBytes(1, (int) blob.length());
-                Tenant tempObj = (Tenant) FileConvertion.toObject(tenantByte);
+                Tenant tempObj = (Tenant) FileConvertion.toObject(allTenantRows.getBlob("tenantObject"));
+
                 insertValueTable(landlordView.getTenantListTable(), tempObj.getDataArray());
                 Tenant.setTenantId(Integer.valueOf(tempObj.getTenantId()));
                 // tenantArray.put(data, tempObj);
@@ -146,6 +169,9 @@ public class TableRefresh {
                         rows.getString("status")
                 };
                 insertValueTable(tenantView.getMaintenanceRequestListTable(), data);
+                
+                //adding value to dashboard table.
+                insertValueTable(tenantView.getDashboardMaintenanceSummaryTable(), data);
                 Maintenance.setLogId(Integer.valueOf(rows.getString("logId")) + 1);
             }
 
@@ -234,4 +260,16 @@ public class TableRefresh {
         tableModel.addRow(data);
     }
 
+    /**
+     * 
+     * @param clickedTable JTable instance of the table the aciton is being done on.
+     * @param e            MouseEvent instance
+     * @return String id of the row that is clicked on
+     */
+    public static String getIdAtPoint(JTable clickedTable, MouseEvent e) {
+        int row = clickedTable.rowAtPoint(e.getPoint());
+        int rowId = Integer.valueOf((String) clickedTable.getModel().getValueAt(row, 0));
+        String id = (String.valueOf(rowId));
+        return id;
+    }
 }
