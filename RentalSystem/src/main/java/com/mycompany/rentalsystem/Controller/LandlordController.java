@@ -15,7 +15,9 @@ import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,6 +42,7 @@ import com.mysql.cj.jdbc.Blob;
 
 /**
  * controls the flow of actions as per the user input
+ * 
  * @author Richard
  */
 public class LandlordController {
@@ -50,6 +53,7 @@ public class LandlordController {
 
     /**
      * Constructor of the LanlordController class.
+     * 
      * @param landlordView
      * @param landlordModel
      */
@@ -97,66 +101,68 @@ public class LandlordController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 landlordView.othersLogTenantViewButtonActionPerformed(e);
-                TableRefresh.refreshTable(landlordView, database, "maintenance", landlordView.getMaintenanceRequestListTable());
+                TableRefresh.refreshTable(landlordView, database, "maintenance",
+                        landlordView.getMaintenanceRequestListTable());
             }
         });
         landlordView.sendNewTenantPasswordListener(new ActionListener() {
-        /**
-         * {@inheritDoc}
-         * 
-         * updates database and sents email to the tenant who requested a manual password reset.
-         * @param e ActionEvent instance
-         */
+            /**
+             * {@inheritDoc}
+             * 
+             * updates database and sents email to the tenant who requested a manual
+             * password reset.
+             * 
+             * @param e ActionEvent instance
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 String password = PasswordGenerator.generatePassword();
                 String tenantId = landlordView.getTenantResetTenantIdTextField().getText();
                 Tenant tenant = null;
                 try {
-                        database.updatePassword("tenantpasswords",
-                                Hashing.doHashing(password, tenantId),
-                                tenantId);
-                        tenant = (Tenant) getObjectFromId(tenantId, "tenantObject");
-                        try {
-                            new SentEmail().sentMail(tenant.geteMail(), "Your new Password", """
-                                    Hi %s,
-                                    This is the newly generated password for your account.
-                                    Password: %s
+                    database.updatePassword("tenantpasswords",
+                            Hashing.doHashing(password, tenantId),
+                            tenantId);
+                    tenant = (Tenant) getObjectFromId(tenantId, "tenantObject");
+                    try {
+                        new SentEmail().sentMail(tenant.geteMail(), "Your new Password", """
+                                Hi %s,
+                                This is the newly generated password for your account.
+                                Password: %s
 
-                                    Change your password immediately. 
+                                Change your password immediately.
 
-                                    -landlord
-                                    -do not reply
-                                    """.formatted(tenant.getFirstName(), password));
-                        } catch (AddressException e1) {
-                            e1.printStackTrace();
-                        } catch (GeneralSecurityException e1) {
-                            e1.printStackTrace();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        } catch (MessagingException e1) {
-                            e1.printStackTrace();
-                        }
-                    JOptionPane.showMessageDialog(landlordView, "Password reset successfully", "password reset", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (NoSuchAlgorithmException exception) {
-                        exception.printStackTrace();
+                                -landlord
+                                -do not reply
+                                """.formatted(tenant.getFirstName(), password));
+                    } catch (AddressException e1) {
+                        e1.printStackTrace();
+                    } catch (GeneralSecurityException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    } catch (MessagingException e1) {
+                        e1.printStackTrace();
                     }
-                    
-                
+                    JOptionPane.showMessageDialog(landlordView, "Password reset successfully", "password reset",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } catch (NoSuchAlgorithmException exception) {
+                    exception.printStackTrace();
+                }
+
             }
         });
         landlordView.othersTenantResetPasswordButtonListener(new ActionListener() {
-        /**
-         * {@inheritDoc}
-         * switches to the change reset tenant password panel.
-         */
+            /**
+             * {@inheritDoc}
+             * switches to the change reset tenant password panel.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 landlordView.othersTenantResetPasswordButtonActionPerformed(e);
             }
-            
-        });
 
+        });
 
         landlordView.houseAddButtonListener(new HouseListener());
         landlordView.houseUpdateButtonListener(new HouseListener());
@@ -195,7 +201,8 @@ public class LandlordController {
 
     /**
      * calculates the number of rows in a given table
-     * @param table String  table name as in the database
+     * 
+     * @param table String table name as in the database
      * @return int count of the total rows
      */
     private int calculateCount(String table) {
@@ -212,7 +219,8 @@ public class LandlordController {
     }
 
     /**
-     * Inner class that implements the ActionListener interface that handles switching between different panels.
+     * Inner class that implements the ActionListener interface that handles
+     * switching between different panels.
      */
     class MenubarListener implements ActionListener {
 
@@ -253,13 +261,14 @@ public class LandlordController {
     }
 
     /**
-     * Innner .class that implements the ActionListener interface for performing tasks on the house panel. 
+     * Innner .class that implements the ActionListener interface for performing
+     * tasks on the house panel.
      */
     class HouseListener implements ActionListener {
 
-         /**
-          * {@inheritDoc}
-          */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             ArrayList<Object> record = new ArrayList<>();
@@ -268,7 +277,7 @@ public class LandlordController {
                 String buttonPressedName = buttonPressed.getText();
                 switch (buttonPressedName) {
                     case "ADD":
-                    //makes a houseObject and then adds that to the database
+                        // makes a houseObject and then adds that to the database
                         House houseObj = landlordView.houseAddButtonActionPerformed(e);
                         if (houseObj != null) {
                             TableRefresh.insertValueTable(landlordView.getHouseListTable(), houseObj.getDataArray());
@@ -327,7 +336,9 @@ public class LandlordController {
     }
 
     /**
-     * Inner class that implements AcitonListener inferface and performs action on the tenantPanel
+     * Inner class that implements AcitonListener inferface and performs action on
+     * the tenantPanel.
+     * Adds the date of creation to the tenantjoindate table in database
      */
     class TenantListener implements ActionListener {
         /**
@@ -343,17 +354,24 @@ public class LandlordController {
                     case "ADD":
                     // makes the needed Tenant instance and add that to the database
                         Tenant tempTenantObj = landlordView.tenantAddButtonActionPerformed(e);
+                        LocalDate localDate = LocalDate.now();
 
                         if (tempTenantObj != null) {
                             record.add(tempTenantObj.getTenantId());
                             record.add(FileConvertion.toByteArray(tempTenantObj));
                             try {
                                 database.insert("tenants", "tenantId, tenantObject", record);
+                                database.insert("tenantjoindate",
+                                 "tenantId, date",
+                                  new ArrayList<>(Arrays.asList(
+                                    tempTenantObj.getTenantId(),
+                                    tempTenantObj.getFormatedDob(localDate))));
                                 Password.savePassword(tempTenantObj.getTenantId(),
                                         String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob())), "Tenant");
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
+                            
                             record.clear();
                             landlordView.clearTenantForm();
 
@@ -421,7 +439,8 @@ public class LandlordController {
     }
 
     /**
-     * Inner class that implements the MouseListener interface and fills the relevant forms.
+     * Inner class that implements the MouseListener interface and fills the
+     * relevant forms.
      */
     class LandlordMouseListener implements MouseListener {
         /**
@@ -472,9 +491,9 @@ public class LandlordController {
                         break;
                     case "MAINTENANCE SECONDARY":
                         result = database.find("maintenance", "logId", id);
-                        try{
+                        try {
                             landlordView.populateOtherMaintenaceForm(result);
-                        } catch(SQLException exception){
+                        } catch (SQLException exception) {
                             exception.printStackTrace();
                         }
 
@@ -488,13 +507,16 @@ public class LandlordController {
 
         /**
          * {@inheritDoc}
+         * 
          * @deprecated
          */
         @Override
         public void mousePressed(MouseEvent e) {
         }
+
         /**
          * {@inheritDoc}
+         * 
          * @deprecated
          */
         @Override
@@ -503,6 +525,7 @@ public class LandlordController {
 
         /**
          * {@inheritDoc}
+         * 
          * @deprecated
          */
         @Override
@@ -511,6 +534,7 @@ public class LandlordController {
 
         /**
          * {@inheritDoc}
+         * 
          * @deprecated
          */
         @Override
@@ -524,6 +548,7 @@ public class LandlordController {
     class LandlordKeyListener implements KeyListener {
         /**
          * {@inheritDoc}
+         * 
          * @deprecated
          */
         @Override
@@ -532,6 +557,7 @@ public class LandlordController {
 
         /**
          * {@inheritDoc}
+         * 
          * @deprecated
          */
         @Override
@@ -540,6 +566,7 @@ public class LandlordController {
 
         /**
          * {@inheritDoc}
+         * 
          * @deprecated
          */
         @Override
@@ -557,7 +584,7 @@ public class LandlordController {
                         Sorting.sortTable(landlordView.getPreviousErrorListTable(), textField.getText());
                         break;
 
-                    case "MAINTENANCE":   
+                    case "MAINTENANCE":
                         Sorting.sortTable(landlordView.getMaintenanceRequestListTable(), textField.getText());
                         break;
 
@@ -573,7 +600,7 @@ public class LandlordController {
     /**
      * 
      * @param clickedTable JTable instance of the table the aciton is being done on.
-     * @param e MouseEvent instance
+     * @param e            MouseEvent instance
      * @return String id of the row that is clicked on
      */
     private String getIdAtPoint(JTable clickedTable, MouseEvent e) {
@@ -585,7 +612,7 @@ public class LandlordController {
 
     /**
      * 
-     * @param id String id of the object to be converted 
+     * @param id    String id of the object to be converted
      * @param label String column name of the relevant table and type
      * @return Object of the object associated with given id
      */
@@ -596,7 +623,7 @@ public class LandlordController {
                 set = database.findHouse(id);
                 break;
             case "tenantObject":
-               set = database.findTenant(id);
+                set = database.findTenant(id);
                 break;
             default:
                 break;
