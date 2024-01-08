@@ -15,7 +15,6 @@ import java.security.GeneralSecurityException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -79,6 +78,13 @@ public class LandlordController {
         landlordView.addPaymentButtonListener(new MenubarListener());
         landlordView.addOtherButtonListener(new MenubarListener());
         landlordView.addSignoutButtonListener(new MenubarListener());
+        landlordView.othersLogTenantViewButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                landlordView.othersLogTenantViewButtonActionPerformed(e);
+                TableRefresh.refreshTable(landlordView, database, "maintenance", landlordView.getMaintenanceRequestListTable());
+            }
+        });
 
         landlordView.houseAddButtonListener(new HouseListener());
         landlordView.houseUpdateButtonListener(new HouseListener());
@@ -105,11 +111,13 @@ public class LandlordController {
         landlordView.tenantListTableListener(new LandlordMouseListener());
         landlordView.errorNewListTableListener(new LandlordMouseListener());
         landlordView.errorReviewListTableListener(new LandlordMouseListener());
-        landlordView.previousErrorListTable(new LandlordMouseListener());
+        landlordView.previousErrorListTableListener(new LandlordMouseListener());
+        landlordView.maintenanceRequestListTableListener(new LandlordMouseListener());
 
         landlordView.houseSearchTextFieldListener(new LandlordKeyListener());
         landlordView.tenantSearchTextFieldListener(new LandlordKeyListener());
         landlordView.maintenanceRequestSearchTextFieldListener(new LandlordKeyListener());
+        landlordView.previousErrorSearchTextFieldListener(new LandlordKeyListener());
 
     }
 
@@ -368,6 +376,13 @@ public class LandlordController {
                         }
                         ;
                         break;
+                    case "MAINTENANCE SECONDARY":
+                        result = database.find("maintenance", "logId", id);
+                        try{
+                            landlordView.populateOtherMaintenaceForm(result);
+                        } catch(SQLException exception){
+                            exception.printStackTrace();
+                        }
 
                     default:
                         break;
@@ -417,8 +432,12 @@ public class LandlordController {
                     case "TENANT SEARCH":
                         Sorting.sortTable(landlordView.getTenantListTable(), textField.getText());
                         break;
-                    case "MAINTENANCE":
+                    case "PREVIOUS":
                         Sorting.sortTable(landlordView.getPreviousErrorListTable(), textField.getText());
+                        break;
+
+                    case "MAINTENANCE":   
+                        Sorting.sortTable(landlordView.getMaintenanceRequestListTable(), textField.getText());
                         break;
 
                     default:

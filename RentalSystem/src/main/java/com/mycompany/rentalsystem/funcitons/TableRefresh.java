@@ -32,10 +32,12 @@ public class TableRefresh {
             case "TENANT TABLE":
                 refreshTenantlistTable(view, allRows);
                 break;
-            
+
             case "MAINTENANCE":
                 refreshMaintenanceRequestListTable(view, allRows);
                 break;
+            case "MAINTENANCE SECONDARY":
+                refreshMaintenanceSecondaryRequestListTable(view, allRows);
             case "NEW ERROR":
                 refreshNewMaintenanceTables(view, allRows);
                 break;
@@ -50,6 +52,25 @@ public class TableRefresh {
                 break;
         }
 
+    }
+
+    private static void refreshMaintenanceSecondaryRequestListTable(Object view, ResultSet result) {
+        LandlordView landlordView = (LandlordView) view;
+        try {
+            while (result.next()) {
+                String[] data = {
+                        result.getString("logId"),
+                        result.getString("tenantName"),
+                        result.getString("dateOfIssue"),
+                        result.getString("houseId"),
+                        result.getString("status")
+                };
+                insertValueTable(landlordView.getMaintenanceRequestListTable(), data);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void refreshHouseListTable(Object view, ResultSet allHouseRows) {
@@ -79,7 +100,6 @@ public class TableRefresh {
 
             }
 
-           
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -102,7 +122,7 @@ public class TableRefresh {
                 Tenant.setTenantId(Integer.valueOf(tempObj.getTenantId()));
                 // tenantArray.put(data, tempObj);
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -115,16 +135,15 @@ public class TableRefresh {
         TenantView tenantView = (TenantView) view;
         try {
             while (rows.next()) {
-                 String[] data = {
+                String[] data = {
                         rows.getString("logId"),
+                        rows.getString("tenantName"),
                         rows.getString("dateOfIssue"),
                         rows.getString("status")
                 };
-                insertValueTable(tenantView.getMaintenanceRequestListTable(), data); 
-                Maintenance.setLogId(Integer.valueOf(rows.getString("logId")) + 1);  
-                }
-                
-                
+                insertValueTable(tenantView.getMaintenanceRequestListTable(), data);
+                Maintenance.setLogId(Integer.valueOf(rows.getString("logId")) + 1);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,65 +154,60 @@ public class TableRefresh {
         LandlordView landlordView = (LandlordView) view;
         try {
             while (result.next()) {
-                if (result.getString("status").equals("Received")){
-                String[] data = {
-                        result.getString("logId"),
-                        result.getString("tenantName"),
-                        result.getString("dateOfIssue"),
-                        result.getString("houseId")
-                };
+                if (result.getString("status").equals("Received")) {
+                    String[] data = {
+                            result.getString("logId"),
+                            result.getString("tenantName"),
+                            result.getString("dateOfIssue"),
+                            result.getString("houseId")
+                    };
 
-                insertValueTable(landlordView.getErrorNewListTable(), data);
+                    insertValueTable(landlordView.getErrorNewListTable(), data);
 
+                }
             }
-        }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-    } 
-    
-    private static void refreshReviewMaintenanceTables(Object view, ResultSet result){
+    }
+
+    private static void refreshReviewMaintenanceTables(Object view, ResultSet result) {
         LandlordView landlordView = (LandlordView) view;
         try {
             while (result.next()) {
-                if (result.getString("status").equals("In Review")){
-                String[] data = {
-                        result.getString("logId"),
-                        result.getString("tenantName"),
-                        result.getString("dateOfIssue"),
-                        result.getString("houseId")
-                };
-                insertValueTable(landlordView.getErrorReviewListTable(), data);
+                if (result.getString("status").equals("In Review")) {
+                    String[] data = {
+                            result.getString("logId"),
+                            result.getString("tenantName"),
+                            result.getString("dateOfIssue"),
+                            result.getString("houseId")
+                    };
+                    insertValueTable(landlordView.getErrorReviewListTable(), data);
+                }
             }
-        }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private static void refreshPreviousMaintenanceTables(Object view, ResultSet result){
+    private static void refreshPreviousMaintenanceTables(Object view, ResultSet result) {
         LandlordView landlordView = (LandlordView) view;
         try {
             while (result.next()) {
-                if (result.getString("status").equals("Rectified")){
-                String[] data = {
-                        result.getString("logId"),
-                        result.getString("tenantName"),
-                        result.getString("dateOfIssue"),
-                        result.getString("houseId")
-                };
-                insertValueTable(landlordView.getPreviousErrorListTable(), data);
+                if (result.getString("status").equals("Rectified")) {
+                    String[] data = {
+                            result.getString("logId"),
+                            result.getString("tenantName"),
+                            result.getString("dateOfIssue"),
+                            result.getString("houseId")
+                    };
+                    insertValueTable(landlordView.getPreviousErrorListTable(), data);
+                }
             }
-        }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void insertValueTable(JTable table, String[] data) {
-        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        tableModel.addRow(data);
     }
 
     public static void removeRows(JTable table) {
@@ -205,4 +219,10 @@ public class TableRefresh {
             e.printStackTrace();
         }
     }
+
+    public static void insertValueTable(JTable table, String[] data) {
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        tableModel.addRow(data);
+    }
+
 }
