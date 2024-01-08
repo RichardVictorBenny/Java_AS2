@@ -38,8 +38,23 @@ public class TenantView extends JFrame {
 
         maintenanceRequestListTable.setName("MAINTENANCE");
         maintenanceRequestSearchTextField.setName("MAINTENANCE");
+
+        homePaymentButton.setName("Payment");
+        dashboardNewMaintenanceButton.setName("Maintenance");
+        dashboardButton.setName("Dashboard");
+        paymentButton.setName("Payment");
+        maintenanceButton.setName("Maintenance");
+        signoutButton.setName("signOut");
     }
     
+    public void homePaymentButtonListener(ActionListener menubarListener){
+        homePaymentButton.addActionListener(menubarListener);
+    }
+    
+    public void dashboardNewMaintenanceButtonListener(ActionListener menubarListener){
+        dashboardNewMaintenanceButton.addActionListener(menubarListener);
+    }
+
     public void addDashboardButtonListener(ActionListener menubarListener){
         dashboardButton.addActionListener(menubarListener);
     }

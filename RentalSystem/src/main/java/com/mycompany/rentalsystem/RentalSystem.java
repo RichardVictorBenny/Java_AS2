@@ -47,9 +47,9 @@ public class RentalSystem {
         
 */
         try{
-        LandlordView view = new LandlordView();
-        Landlord model = new Landlord();
-        LandlordController controller = new LandlordController(view, model);
+        TenantView view = new TenantView();
+        Tenant model = new Tenant();
+        TenantController controller = new TenantController(view, model);
 
             
         java.awt.EventQueue.invokeLater(() -> {

@@ -30,10 +30,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.mail.MessagingException;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -71,6 +69,8 @@ public class TenantController {
         tenantView.addPaymentButtonListener(new MenubarListener());
         tenantView.addMaintenanceButtonListener(new MenubarListener());
         tenantView.addSignoutButtonListener(new MenubarListener());
+        tenantView.homePaymentButtonListener(new MenubarListener());
+        tenantView.dashboardNewMaintenanceButtonListener(new MenubarListener());
 
         tenantView.maintenanceRequestSearchTextFieldListener(new TenantKeyListener());
 
@@ -95,8 +95,6 @@ public class TenantController {
                     database.insert("maintenance", Maintenance.getMaintenaceTableLabels(), data);
 
                     tenantView.getMaintenanceDescriptionTextArea().setText("");
-                    TableRefresh.refreshTable(tenantView, database, "maintenance",
-                            tenantView.getMaintenanceRequestListTable());
                     JOptionPane.showMessageDialog(tenantView, "New Request made successfully.", "Success",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -185,7 +183,7 @@ public class TenantController {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() instanceof JButton) {
                 JButton menuButtonPressed = (JButton) e.getSource();
-                String menuButtonName = menuButtonPressed.getText();
+                String menuButtonName = menuButtonPressed.getName();
                 switch (menuButtonName) {
                     case "Dashboard":
                         tenantView.dashboardButtonActionPerformed(e);
@@ -196,7 +194,7 @@ public class TenantController {
                     case "Maintenance":
                         tenantView.maintenanceButtonActionPerformed(e);
                         break;
-                    case "Sign Out":
+                    case "signOut":
                         tenantView.signoutButtonActionPerformed(e);
                         break;
                     default:

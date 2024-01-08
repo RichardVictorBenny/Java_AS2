@@ -200,7 +200,6 @@ public class LandlordView extends javax.swing.JFrame {
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         landlordPanel = new javax.swing.JPanel();
         titlePanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
@@ -1147,20 +1146,10 @@ public class LandlordView extends javax.swing.JFrame {
         houseRentDisplayLabel.setText("Rent Price");
 
         houseidTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        houseidTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseidTextFieldActionPerformed(evt);
-            }
-        });
 
         houseTypeComboBox.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         houseTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
                 new String[] { "Detached", "Semi-Detached", "Terraced Houses", "End of Terrace" }));
-        houseTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseTypeComboBoxActionPerformed(evt);
-            }
-        });
 
         houseDescriptionTextArea.setColumns(20);
         houseDescriptionTextArea.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
@@ -1168,18 +1157,10 @@ public class LandlordView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(houseDescriptionTextArea);
 
         houseAddressTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        houseAddressTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseAddressTextFieldActionPerformed(evt);
-            }
-        });
+
 
         houseRentTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        houseRentTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                houseRentTextFieldActionPerformed(evt);
-            }
-        });
+
 
         houseClearFormButton.setBackground(new java.awt.Color(255, 255, 204));
         houseClearFormButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1395,19 +1376,9 @@ public class LandlordView extends javax.swing.JFrame {
         phoneNumberDisplayLabel.setText("Phone Number");
 
         tenantidTextField.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        tenantidTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenantidTextFieldActionPerformed(evt);
-            }
-        });
 
         genderComboBox.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         genderComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
-        genderComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genderComboBoxActionPerformed(evt);
-            }
-        });
 
         firstnameTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -2002,11 +1973,6 @@ public class LandlordView extends javax.swing.JFrame {
         paymentTenantAmountTextField.setPreferredSize(new java.awt.Dimension(250, 30));
 
         paymentTenantNameTextField.setPreferredSize(new java.awt.Dimension(250, 30));
-        paymentTenantNameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paymentTenantNameTextFieldActionPerformed(evt);
-            }
-        });
 
         paymentTenantHouseTextField.setPreferredSize(new java.awt.Dimension(250, 30));
 
@@ -3069,43 +3035,6 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }// GEN-LAST:event_maintenanceButtonActionPerformed
 
-    public void homeHouseButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_homeHouseButtonActionPerformed
-        // TODO add your handling code here:
-        landlordDashboard.removeAll();
-        landlordDashboard.add(housesPanel);
-        landlordDashboard.repaint();
-        landlordDashboard.revalidate();
-
-    }// GEN-LAST:event_homeHouseButtonActionPerformed
-
-    public void homeTenantDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_homeTenantDetailsButtonActionPerformed
-        // TODO add your handling code here:
-        landlordDashboard.removeAll();
-        landlordDashboard.add(tenantsPanel);
-        landlordDashboard.repaint();
-        landlordDashboard.revalidate();
-    }// GEN-LAST:event_homeTenantDetailsButtonActionPerformed
-
-    public void seeNewRequestsButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_seeNewRequestsButtonActionPerformed
-        // TODO add your handling code here:
-        landlordDashboard.removeAll();
-        landlordDashboard.add(errorPanel);
-        landlordDashboard.repaint();
-        landlordDashboard.revalidate();
-    }// GEN-LAST:event_seeNewRequestsButtonActionPerformed
-
-    public void homeUpcomingPaymentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_homeUpcomingPaymentButtonActionPerformed
-        // TODO add your handling code here:
-        landlordDashboard.removeAll();
-        landlordDashboard.add(paymentsPanel);
-        landlordDashboard.repaint();
-        landlordDashboard.revalidate();
-    }// GEN-LAST:event_homeUpcomingPaymentButtonActionPerformed
-
-    public void homeTotalCashButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_homeTotalCashButtonActionPerformed
-        // TODO add your handling code here:
-        // take to analytics page
-    }// GEN-LAST:event_homeTotalCashButtonActionPerformed
 
     public void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentButtonActionPerformed
         // TODO add your handling code here:
@@ -3126,26 +3055,6 @@ public class LandlordView extends javax.swing.JFrame {
     public void signoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.dispose();
     }
-
-    public void houseidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_houseidTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_houseidTextFieldActionPerformed
-
-    public void houseTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_houseTypeComboBoxActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_houseTypeComboBoxActionPerformed
-
-    public void houseAddressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_houseAddressTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_houseAddressTextFieldActionPerformed
-
-    public void tenantidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tenantidTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_tenantidTextFieldActionPerformed
-
-    public void genderComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_genderComboBoxActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_genderComboBoxActionPerformed
 
     public void firstnameTextFieldActionPerformed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_firstnameTextFieldActionPerformed
         checkNameInput(this.firstnameTextField.getText(), this.firstnameTextField);
@@ -3214,10 +3123,6 @@ public class LandlordView extends javax.swing.JFrame {
         return houseToDelete;
     }// GEN-LAST:event_houseDeleteButtonActionPerformed
 
-    public void houseRentTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_houseRentTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_houseRentTextFieldActionPerformed
-
     public void tenantClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_tenantClearFormButtonActionPerformed
         clearTenantForm();
     }// GEN-LAST:event_tenantClearFormButtonActionPerformed
@@ -3266,46 +3171,6 @@ public class LandlordView extends javax.swing.JFrame {
         return tenantToDelete;
     }// GEN-LAST:event_tenantDeleteButtonActionPerformed
 
-    public void maintenanceRequestSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_maintenanceRequestSearchTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_maintenanceRequestSearchTextFieldActionPerformed
-
-    public void maintenanceRequestieDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_maintenanceRequestieDetailsButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_maintenanceRequestieDetailsButtonActionPerformed
-
-    public void paymentUpcomingHouseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentUpcomingHouseDetailsButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_paymentUpcomingHouseDetailsButtonActionPerformed
-
-    public void paymentUpcomingUpdateDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentUpcomingUpdateDetailsButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_paymentUpcomingUpdateDetailsButtonActionPerformed
-
-    public void paymentTenantNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentTenantNameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_paymentTenantNameTextFieldActionPerformed
-
-    public void paymentTenantTeantDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentTenantTeantDetailsButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_paymentTenantTeantDetailsButtonActionPerformed
-
-    public void paymentTenantHouseDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentTenantHouseDetailsButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_paymentTenantHouseDetailsButtonActionPerformed
-
-    public void paymentUpcomingIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentUpcomingIdTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_paymentUpcomingIdTextFieldActionPerformed
-
-    public void paymentUpcomingTypeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentUpcomingTypeTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_paymentUpcomingTypeTextFieldActionPerformed
-
-    public void paymentUpcomingHouseAddButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_paymentUpcomingHouseAddButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_paymentUpcomingHouseAddButtonActionPerformed
-
     public void othersContractViewButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_othersContractViewButtonActionPerformed
         // TODO add your handling code here:
         landlordDashboard.removeAll();
@@ -3330,87 +3195,10 @@ public class LandlordView extends javax.swing.JFrame {
         landlordDashboard.revalidate();
     }// GEN-LAST:event_othersLogTenantViewButtonActionPerformed
 
-    public void errorDetailsLogidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_errorDetailsLogidTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_errorDetailsLogidTextFieldActionPerformed
 
-    public void errorDetialsDateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_errorDetialsDateTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_errorDetialsDateTextFieldActionPerformed
-
-    public void errorTenantTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_errorTenantTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_errorTenantTextFieldActionPerformed
-
-    public void errorTenantInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_errorTenantInfoButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_errorTenantInfoButtonActionPerformed
-
-    public void errorUpdateStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_errorUpdateStatusButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_errorUpdateStatusButtonActionPerformed
-
-    public void errorDetailsHouseidTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_errorDetailsHouseidTextFieldActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_errorDetailsHouseidTextFieldActionPerformed
-
-    public void errorDetailsHouseInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_errorDetailsHouseInfoButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_errorDetailsHouseInfoButtonActionPerformed
-
-    public void othersScheduleInspectionButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_othersScheduleInspectionButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_othersScheduleInspectionButtonActionPerformed
-
-    public void othersTenantResetPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_othersTenantResetPasswordButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_othersTenantResetPasswordButtonActionPerformed
-
-    /*
-     * public static void main(String args[]) {
-     * /* Set the Nimbus look and feel
-     */
-    // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-    // (optional) ">
-    /*
-     * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-     * look and feel.
-     * For details see
-     * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-     * 
-     * try {
-     * for (javax.swing.UIManager.LookAndFeelInfo info :
-     * javax.swing.UIManager.getInstalledLookAndFeels()) {
-     * if ("Nimbus".equals(info.getName())) {
-     * javax.swing.UIManager.setLookAndFeel(info.getClassName());
-     * break;
-     * }
-     * }
-     * } catch (ClassNotFoundException ex) {
-     * java.util.logging.Logger.getLogger(LandlordView.class.getName()).log(java.
-     * util.logging.Level.SEVERE, null, ex);
-     * } catch (InstantiationException ex) {
-     * java.util.logging.Logger.getLogger(LandlordView.class.getName()).log(java.
-     * util.logging.Level.SEVERE, null, ex);
-     * } catch (IllegalAccessException ex) {
-     * java.util.logging.Logger.getLogger(LandlordView.class.getName()).log(java.
-     * util.logging.Level.SEVERE, null, ex);
-     * } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-     * java.util.logging.Logger.getLogger(LandlordView.class.getName()).log(java.
-     * util.logging.Level.SEVERE, null, ex);
-     * }
-     * //</editor-fold>
-     * 
-     * /* Create and display the form
-     * java.awt.EventQueue.invokeLater(() -> {
-     * new LandlordView().setVisible(true);
-     * });
-     * }
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountLabel;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel cashDisplayLabel;
     private javax.swing.JLabel cashReceivedLabel;
     private javax.swing.JButton dashboardButton;
