@@ -9,8 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseEvent;
 
 import com.mycompany.rentalsystem.Model.House;
-import com.mycompany.rentalsystem.Model.Maintenance;
-import com.mycompany.rentalsystem.Model.Payments;
 import com.mycompany.rentalsystem.Model.Tenant;
 import com.mycompany.rentalsystem.View.LandlordView;
 import com.mycompany.rentalsystem.View.TenantView;

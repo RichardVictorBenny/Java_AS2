@@ -14,6 +14,13 @@ import java.security.NoSuchAlgorithmException;
  * @author Richard
  */
 public class Hashing {
+    /**
+     * performs the one way hashing 
+     * @param password String - user password
+     * @param username String - user username
+     * @return String the hashed password
+     * @throws NoSuchAlgorithmException
+     */
     public static String doHashing(String password, String username) throws NoSuchAlgorithmException{
         String passwordText = username + password;
         MessageDigest digest = MessageDigest.getInstance("SHA-256");

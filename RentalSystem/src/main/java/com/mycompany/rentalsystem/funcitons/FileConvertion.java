@@ -9,7 +9,15 @@ import java.sql.SQLException;
 
 import java.sql.Blob;
 
+/**
+ * A class to handle convertions form one type to another
+ */
 public class FileConvertion {
+    /**
+     * converts the provided object to byte[]
+     * @param objectToConvert Object
+     * @return byte[] of the object
+     */
     public static byte[] toByteArray(Object objectToConvert) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos;
@@ -23,7 +31,12 @@ public class FileConvertion {
         byte[] object = bos.toByteArray();
         return object;
     }
-
+    
+    /**
+     * Converts Blob into usable objects.
+     * @param objectBlob Blob
+     * @return Object
+     */
     public static Object toObject(Blob objectBlob) {
         try {
             byte[] byteArray = objectBlob.getBytes(1, (int) objectBlob.length());

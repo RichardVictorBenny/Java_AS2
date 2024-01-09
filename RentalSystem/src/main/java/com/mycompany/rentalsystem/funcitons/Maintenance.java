@@ -1,4 +1,4 @@
-package com.mycompany.rentalsystem.Model;
+package com.mycompany.rentalsystem.funcitons;
 
 /**
  * Class to set ids to maintenance request.

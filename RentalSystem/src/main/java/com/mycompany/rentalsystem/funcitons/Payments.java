@@ -1,4 +1,4 @@
-package com.mycompany.rentalsystem.Model;
+package com.mycompany.rentalsystem.funcitons;
 
 public class Payments {
     private static int paymentId = 90000;

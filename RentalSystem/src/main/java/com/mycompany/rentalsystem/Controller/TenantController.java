@@ -8,6 +8,8 @@ import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.*;
 import com.mycompany.rentalsystem.funcitons.Database;
 import com.mycompany.rentalsystem.funcitons.Hashing;
+import com.mycompany.rentalsystem.funcitons.Maintenance;
+import com.mycompany.rentalsystem.funcitons.Payments;
 import com.mycompany.rentalsystem.funcitons.SentEmail;
 import com.mycompany.rentalsystem.funcitons.Sorting;
 import com.mycompany.rentalsystem.funcitons.TableRefresh;

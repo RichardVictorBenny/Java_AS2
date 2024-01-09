@@ -40,6 +40,12 @@ public class SentEmail {
     private static final String fromEmailAddress = "uk.developer.java@gmail.com";
     private final Gmail service;
 
+    /**
+     * Constructor of the class.
+     * 
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
     public SentEmail() throws GeneralSecurityException, IOException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         service = new Gmail.Builder(HTTP_TRANSPORT, JsonFactory, getCredentials(HTTP_TRANSPORT))
@@ -47,6 +53,12 @@ public class SentEmail {
                 .build();
     }
 
+    /**
+     * static function to load the client secrets.
+     * @param HTTP_TRANSPORT NetHttpTransport
+     * @return Credential
+     * @throws IOException
+     */
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
         //InputStream in = SentEmail.class.getResourceAsStream(filePath);
@@ -68,13 +80,20 @@ public class SentEmail {
         return credential;
     }
 
+    /**
+     * sents the email 
+     * @param toEmailAddress 
+     * @param subject
+     * @param messageBody
+     * @return
+     * @throws GeneralSecurityException
+     * @throws IOException
+     * @throws AddressException
+     * @throws MessagingException
+     */
     public Message sentMail(String toEmailAddress, String subject, String messageBody)
             throws GeneralSecurityException, IOException, AddressException, MessagingException {
-        
-        /* final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JsonFactory, getCredentials(HTTP_TRANSPORT))
-                .setApplicationName("RENTAL MANAGEMENT")
-                .build(); */
+
 
         // Encode as MIME message
         Properties props = new Properties();
