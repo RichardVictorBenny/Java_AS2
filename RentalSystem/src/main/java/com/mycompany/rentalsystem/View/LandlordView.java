@@ -55,6 +55,7 @@ public class LandlordView extends javax.swing.JFrame {
         this.getErrorReviewListTable().setName("REVIEW");
         this.getPreviousErrorListTable().setName("PREVIOUS");
         this.getMaintenanceRequestListTable().setName("MAINTENANCE SECONDARY");
+        this.getPaymentTenantListTable().setName("TENANT PAYMENTS");
 
         this.getHouseSearchTextField().setName("HOUSE SEARCH");
         this.getTenantSearchTextField().setName("TENANT SEARCH");
@@ -3946,7 +3947,15 @@ public class LandlordView extends javax.swing.JFrame {
     }
 
 
-    // table functions
+    public javax.swing.JTable getPaymentTenantListTable() {
+        return paymentTenantListTable;
+}
+
+public void setPaymentTenantListTable(javax.swing.JTable paymentTenantListTable) {
+        this.paymentTenantListTable = paymentTenantListTable;
+}
+
+// table functions
     public JTable getHouseListTable() {
         return houseListTable;
     }

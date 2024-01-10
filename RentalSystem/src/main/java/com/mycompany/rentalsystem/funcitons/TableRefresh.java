@@ -52,22 +52,15 @@ public class TableRefresh {
             case "PREVIOUS":
                 refreshPreviousMaintenanceTables(view, allRows);
                 break;
-            case "PAYMENTS":
-            try {
-                
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            }
-                refreshPaymentsTable(view, allRows);
-                break;
-
             default:
                 break;
         }
 
     }
-    private static void refreshPaymentsTable(Object view, ResultSet result){
-        TenantView tenantView = (TenantView) view;
+    public static void refreshPaymentsTable(Database database, JTable table, String id){
+        removeRows(table);
+        ResultSet result = database.find("payments", "tenantId", id);
+        
         try {
             while (result.next()) {
                 String[] data = {
@@ -76,7 +69,7 @@ public class TableRefresh {
                         result.getString("type"),
 
                 };
-                insertValueTable(tenantView.getPaymentHistoryListTable(), data);
+                insertValueTable(table, data);
                 Payments.setPaymentId(Integer.valueOf(result.getString("id")) + 1);
             }
         } catch (SQLException e) {

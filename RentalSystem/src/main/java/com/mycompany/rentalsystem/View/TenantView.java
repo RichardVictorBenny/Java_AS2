@@ -7,6 +7,7 @@ package com.mycompany.rentalsystem.View;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -47,7 +48,15 @@ public class TenantView extends JFrame {
         signoutButton.setName("signOut");
 
         paymentHistoryListTable.setName("PAYMENTS");
+
+        
     }
+
+
+    public void windowListener(WindowAdapter listener){
+        this.addWindowListener(listener);   
+    }
+
 
     public void actionPayPaypalButtonListener(ActionListener listener){
         actionPayPaypalButton.addActionListener(listener);
