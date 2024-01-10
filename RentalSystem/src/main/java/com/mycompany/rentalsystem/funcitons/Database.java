@@ -92,6 +92,12 @@ public class Database {
         return null;
     }
 
+    public ResultSet findLastRow(String table, String primaryKey) throws SQLException{
+        String query = "SELECT * FROM "+ table +" ORDER BY "+ primaryKey +" DESC LIMIT 1";
+        
+        this.statement = connnection.prepareStatement(query);
+        return this.statement.executeQuery();
+    }
     /**
      * Finds rows that meets the where condition
      * 

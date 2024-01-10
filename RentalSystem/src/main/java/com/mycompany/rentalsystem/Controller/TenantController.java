@@ -67,7 +67,9 @@ public class TenantController {
 
         setRentDetails(this.tenantModel, this.tenantView);
 
-        TableRefresh.refreshTable(tenantView, database, "maintenance", tenantView.getMaintenanceRequestListTable());
+        JTable[] table = { tenantView.getMaintenanceRequestListTable(),
+                tenantView.getDashboardMaintenanceSummaryTable() };
+        TableRefresh.refreshMaintenanceRequestListTable(database, table, this.tenantModel.getTenantId());
 
         tenantView.addDashboardButtonListener(new MenubarListener());
         tenantView.addPaymentButtonListener(new MenubarListener());
@@ -108,8 +110,10 @@ public class TenantController {
 
                     database.insert("maintenance",
                             "logId, tenantName, dateOfIssue, houseId, tenantId, description, status", data);
-                    TableRefresh.refreshTable(tenantView, database, "maintenance",
-                            tenantView.getMaintenanceRequestListTable());
+                    JTable[] table = { tenantView.getMaintenanceRequestListTable(),
+                            tenantView.getDashboardMaintenanceSummaryTable() };
+                    TableRefresh.refreshMaintenanceRequestListTable(database, table,
+                            TenantController.this.tenantModel.getTenantId());
 
                     tenantView.getMaintenanceDescriptionTextArea().setText("");
                     JOptionPane.showMessageDialog(tenantView, "New Request made successfully.", "Success",
@@ -255,8 +259,6 @@ public class TenantController {
                     .setText(dueDate);
             tenantView.getDueDateLabel().setText(dueDate);
 
-            
-
             ResultSet resultSet = database.findHouse(tenant.getHouseId());
             while (resultSet.next()) {
                 house = (House) FileConvertion.toObject(resultSet.getBlob("houseObject"));
@@ -304,6 +306,9 @@ public class TenantController {
                         break;
                     case "Maintenance":
                         tenantView.maintenanceButtonActionPerformed(e);
+                        TableRefresh.refreshMaintenanceRequestListTable(database,
+                                new JTable[] { tenantView.getMaintenanceRequestListTable() },
+                                TenantController.this.tenantModel.getTenantId());
                         break;
                     case "signOut":
                         tenantView.signoutButtonActionPerformed(e);
@@ -354,22 +359,41 @@ public class TenantController {
         @Override
         public void actionPerformed(ActionEvent e) {
             ArrayList<Object> record = new ArrayList<>();
-            String id = String.valueOf(Payments.getPaymentId());
+
             if (e.getSource() instanceof JButton) {
                 JButton button = (JButton) e.getSource();
+                String payId = "";
+
+                // sets the payment id to latest.
+                try {
+                    ResultSet row = database.findLastRow("payments", "id");
+                    while (row.next()) {
+                        payId = row.getString("id");
+                        Payments.setPaymentId(Integer.valueOf(payId));
+                    }
+                } catch (SQLException | NumberFormatException e1) {
+                    e1.printStackTrace();
+                }
+
+                String id = String.valueOf(Payments.getPaymentId());
+                System.out.println(id);
 
                 record.add(id);
                 record.add(TenantController.this.tenantModel.getTenantId());
                 record.add(TenantController.this.tenantModel.getFormatedDob(LocalDate.now()));
                 record.add(button.getName());
+                record.add(TenantController.this.tenantModel.getFirstName());
+                record.add(tenantView.getDisplayRentLabel().getText());
+                record.add(TenantController.this.tenantModel.getHouseId());
 
                 try {
-                    database.insert("payments", "id, tenantId, date, type", record);
+                    database.insert("payments", "id, tenantId, date, type, tenantName, Amount, houseId", record);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
 
-                TenantController.this.tenantModel.setRentPayDate(TenantController.this.tenantModel.getRentPayDate().plusDays(30));
+                TenantController.this.tenantModel
+                        .setRentPayDate(TenantController.this.tenantModel.getRentPayDate().plusDays(30));
 
                 setRentDetails(tenantModel, tenantView);
 
@@ -377,7 +401,8 @@ public class TenantController {
                         TenantController.this.tenantView.getPaymentHistoryListTable(),
                         TenantController.this.tenantModel.getTenantId());
 
-                JOptionPane.showMessageDialog(tenantView, "Payment successfull.", "Payment Status", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(tenantView, "Payment successfull.", "Payment Status",
+                        JOptionPane.INFORMATION_MESSAGE);
 
             }
         }

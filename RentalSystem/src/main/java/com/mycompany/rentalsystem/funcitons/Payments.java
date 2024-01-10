@@ -10,7 +10,7 @@ public class Payments {
     }
 
     public static int getPaymentId() {
-        return paymentId++;
+        return paymentId+=1;
     }
 
     public static void setPaymentId(int paymentId) {

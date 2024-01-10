@@ -15,6 +15,7 @@ import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,10 +57,13 @@ public class LandlordController {
      * 
      * @param landlordView
      * @param landlordModel
+     * @throws SQLException
+     * @throws NumberFormatException
      */
-    public LandlordController(LandlordView landlordView, Landlord landlordModel) {
+    public LandlordController(LandlordView landlordView, Landlord landlordModel) throws NumberFormatException, SQLException {
         this.landlordView = landlordView;
         this.landlordModel = landlordModel;
+        
 
         // reference:
         // https://stackoverflow.com/questions/33073671/how-to-execute-a-method-every-minute
@@ -78,6 +82,10 @@ public class LandlordController {
             }
         };
         timer.schedule(task, 0, 600);
+
+        landlordView.getCashReceivedLabel().setText(String.valueOf(calculateTotalRentFromTenants()));
+
+        
 
         TableRefresh.refreshTable(landlordView, database, "Houses", landlordView.getHouseListTable());
         TableRefresh.refreshTable(landlordView, database, "Tenants", landlordView.getTenantListTable());
@@ -191,12 +199,12 @@ public class LandlordController {
         landlordView.errorReviewListTableListener(new LandlordMouseListener());
         landlordView.previousErrorListTableListener(new LandlordMouseListener());
         landlordView.maintenanceRequestListTableListener(new LandlordMouseListener());
+        landlordView.paymentTenantListTableListener(new LandlordMouseListener());
 
         landlordView.houseSearchTextFieldListener(new LandlordKeyListener());
         landlordView.tenantSearchTextFieldListener(new LandlordKeyListener());
         landlordView.maintenanceRequestSearchTextFieldListener(new LandlordKeyListener());
         landlordView.previousErrorSearchTextFieldListener(new LandlordKeyListener());
-
     }
 
     /**
@@ -244,6 +252,7 @@ public class LandlordController {
                         break;
                     case "payments":
                         landlordView.paymentButtonActionPerformed(e);
+                        TableRefresh.refreshTable(landlordView, database, "payments", landlordView.getPaymentTenantListTable());
                         break;
                     case "others":
                         landlordView.otherButtonActionPerformed(e);
@@ -487,7 +496,7 @@ public class LandlordController {
                         } catch (SQLException exception) {
                             exception.printStackTrace();
                         }
-                        ;
+                        
                         break;
                     case "MAINTENANCE SECONDARY":
                         result = database.find("maintenance", "logId", id);
@@ -495,6 +504,15 @@ public class LandlordController {
                             landlordView.populateOtherMaintenaceForm(result);
                         } catch (SQLException exception) {
                             exception.printStackTrace();
+                        }
+                    case "TENANT PAYMENTS":
+                        result = database.find("payments", "id", id);
+                        try{
+                            landlordView.populateTenantPaymentForm(result);
+                        } catch (SQLException exception) {
+                            exception.printStackTrace();
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
                         }
 
                     default:
@@ -629,6 +647,23 @@ public class LandlordController {
 
         return null;
 
+    }
+
+    /**
+     * calculates the total rent paid by tenants and output as a Double
+     * @throws SQLException
+     * @throws NumberFormatException
+     * @return Double total rent paid.
+     */
+    public Double calculateTotalRentFromTenants() throws NullPointerException, NumberFormatException, SQLException{
+        ResultSet result = database.findAll("payments");
+        Double rentTotal = 0.0;
+        while(result.next()){
+                rentTotal+=Double.valueOf(result.getString("Amount"));
+
+            
+        }
+        return rentTotal;
     }
 
 }

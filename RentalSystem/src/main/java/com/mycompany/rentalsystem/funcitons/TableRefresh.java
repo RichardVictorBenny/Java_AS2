@@ -14,16 +14,16 @@ import com.mycompany.rentalsystem.View.LandlordView;
 import com.mycompany.rentalsystem.View.TenantView;
 import com.mysql.cj.jdbc.Blob;
 
-
 public class TableRefresh {
 
     /**
      * Uses the JTable Name to run the correct refresh funtion.
      * 
-     * @param view Object the view the action has to performed
-     * @param database Database instance
-     * @param tableName String name of the table the values are stored in the database
-     * @param jTable JTable table which has to be refreshed
+     * @param view      Object the view the action has to performed
+     * @param database  Database instance
+     * @param tableName String name of the table the values are stored in the
+     *                  database
+     * @param jTable    JTable table which has to be refreshed
      */
     public static void refreshTable(Object view, Database database, String tableName, JTable jTable) {
         ResultSet allRows = database.findAll(tableName);
@@ -38,9 +38,6 @@ public class TableRefresh {
                 refreshTenantlistTable(view, allRows);
                 break;
 
-            case "MAINTENANCE":
-                refreshMaintenanceRequestListTable(view, allRows);
-                break;
             case "MAINTENANCE SECONDARY":
                 refreshMaintenanceSecondaryRequestListTable(view, allRows);
             case "NEW ERROR":
@@ -52,15 +49,20 @@ public class TableRefresh {
             case "PREVIOUS":
                 refreshPreviousMaintenanceTables(view, allRows);
                 break;
+            case "TENANT PAYMENTS":
+                refreshLandlordTenantPaymentsTable(allRows, jTable);
+                break;
             default:
                 break;
         }
 
     }
-    public static void refreshPaymentsTable(Database database, JTable table, String id){
+
+
+    public static void refreshPaymentsTable(Database database, JTable table, String id) {
         removeRows(table);
         ResultSet result = database.find("payments", "tenantId", id);
-        
+
         try {
             while (result.next()) {
                 String[] data = {
@@ -70,7 +72,7 @@ public class TableRefresh {
 
                 };
                 insertValueTable(table, data);
-                Payments.setPaymentId(Integer.valueOf(result.getString("id")) + 1);
+                //Payments.setPaymentId(Integer.valueOf(result.getString("id")) + 1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,20 +151,21 @@ public class TableRefresh {
 
     }
 
-    private static void refreshMaintenanceRequestListTable(Object view, ResultSet rows) {
-        TenantView tenantView = (TenantView) view;
+    public static void refreshMaintenanceRequestListTable(Database database, JTable[] table, String id) {
+        ResultSet rows = database.find("maintenance", "tenantId", id);
+        for (JTable jTable : table) {
+                    removeRows(jTable);
+        }
         try {
             while (rows.next()) {
                 String[] data = {
                         rows.getString("logId"),
-                        rows.getString("tenantName"),
                         rows.getString("dateOfIssue"),
                         rows.getString("status")
                 };
-                insertValueTable(tenantView.getMaintenanceRequestListTable(), data);
-                
-                //adding value to dashboard table.
-                insertValueTable(tenantView.getDashboardMaintenanceSummaryTable(), data);
+                for (JTable jTable : table) {
+                    insertValueTable(jTable, data);
+                }
                 Maintenance.setLogId(Integer.valueOf(rows.getString("logId")) + 1);
             }
 
@@ -231,6 +234,25 @@ public class TableRefresh {
         }
     }
 
+    public static void refreshLandlordTenantPaymentsTable(ResultSet result, JTable table) {
+        try {
+            while (result.next()) {
+                String[] data = {
+                        result.getString("id"),
+                        result.getString("tenantName"),
+                        result.getString("Amount"),
+                        result.getString("houseId"),
+                        result.getString("date"),
+                        result.getString("type")
+                };
+                insertValueTable(table, data);
+                //Payments.setPaymentId(Integer.valueOf(result.getString("id")) + 1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void removeRows(JTable table) {
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         try {
@@ -243,8 +265,10 @@ public class TableRefresh {
 
     /**
      * inserts data into a give JTable
+     * 
      * @param table Jtable to which rows has to added
-     * @param data an array of data to be added; has to be consistant with the columns in the JTalbe.
+     * @param data  an array of data to be added; has to be consistant with the
+     *              columns in the JTalbe.
      */
     public static void insertValueTable(JTable table, String[] data) {
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
