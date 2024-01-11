@@ -350,7 +350,6 @@ public class LandlordView extends javax.swing.JFrame {
                 tenantListScrollPane = new javax.swing.JScrollPane();
                 tenantListTable = new javax.swing.JTable();
                 paymentsPanel = new javax.swing.JPanel();
-                paymentUpcomingPanel = new javax.swing.JPanel();
                 paymentUpcomingDisplayLabel = new javax.swing.JLabel();
                 paymentUpcomingScrollPane = new javax.swing.JScrollPane();
                 paymentUpcomingListTable = new javax.swing.JTable();
@@ -1087,8 +1086,8 @@ public class LandlordView extends javax.swing.JFrame {
                                                                                 .addGroup(jPanel8Layout
                                                                                                 .createSequentialGroup()
                                                                                                 .addComponent(totalRentCollected)
-                                                                                        .addPreferredGap(
-                                                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                                                 .addComponent(requestDisplayLabel1,
                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                                 46,
@@ -2034,8 +2033,6 @@ public class LandlordView extends javax.swing.JFrame {
 
                 landlordDashboard.add(tenantsPanel, "card4");
 
-                paymentUpcomingPanel.setPreferredSize(new java.awt.Dimension(834, 400));
-
                 paymentUpcomingDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
                 paymentUpcomingDisplayLabel.setText("Upcoming Payments");
 
@@ -2299,51 +2296,6 @@ public class LandlordView extends javax.swing.JFrame {
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addGap(15, 15, 15)));
 
-                javax.swing.GroupLayout paymentUpcomingPanelLayout = new javax.swing.GroupLayout(paymentUpcomingPanel);
-                paymentUpcomingPanel.setLayout(paymentUpcomingPanelLayout);
-                paymentUpcomingPanelLayout.setHorizontalGroup(
-                                paymentUpcomingPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addGroup(paymentUpcomingPanelLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addGroup(paymentUpcomingPanelLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(paymentUpcomingScrollPane,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                700,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addGap(18, 18, 18)
-                                                                                                .addComponent(paymentUpcomingDetailsPanel,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE))
-                                                                                .addGroup(paymentUpcomingPanelLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addComponent(paymentUpcomingDisplayLabel)
-                                                                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                                                .addContainerGap()));
-                paymentUpcomingPanelLayout.setVerticalGroup(
-                                paymentUpcomingPanelLayout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(paymentUpcomingPanelLayout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addComponent(paymentUpcomingDisplayLabel)
-                                                                .addGap(12, 12, 12)
-                                                                .addGroup(paymentUpcomingPanelLayout
-                                                                                .createParallelGroup(
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(paymentUpcomingDetailsPanel,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(paymentUpcomingScrollPane,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                0, Short.MAX_VALUE))
-                                                                .addContainerGap()));
-
                 paymentTenantDisplayLabel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
                 paymentTenantDisplayLabel.setText("Payments from Tenants");
 
@@ -2582,11 +2534,11 @@ public class LandlordView extends javax.swing.JFrame {
                                                                                                 javax.swing.GroupLayout.Alignment.LEADING)
                                                                                 .addComponent(paymentUpcomingDetailsPanel1,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                700,
                                                                                                 Short.MAX_VALUE)
                                                                                 .addComponent(paymentTenantScrollPane,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                0, Short.MAX_VALUE))
+                                                                                                700, Short.MAX_VALUE))
                                                                 .addContainerGap()));
 
                 javax.swing.GroupLayout paymentsPanelLayout = new javax.swing.GroupLayout(paymentsPanel);
@@ -2598,10 +2550,6 @@ public class LandlordView extends javax.swing.JFrame {
                                                                 .addGroup(paymentsPanelLayout
                                                                                 .createParallelGroup(
                                                                                                 javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(paymentUpcomingPanel,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                1333,
-                                                                                                Short.MAX_VALUE)
                                                                                 .addComponent(paymentTenantPanel,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -2611,11 +2559,6 @@ public class LandlordView extends javax.swing.JFrame {
                                 paymentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(paymentsPanelLayout.createSequentialGroup()
                                                                 .addContainerGap()
-                                                                .addComponent(paymentUpcomingPanel,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
                                                                 .addComponent(paymentTenantPanel,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -4068,7 +4011,7 @@ public class LandlordView extends javax.swing.JFrame {
         private javax.swing.JLabel paymentUpcomingIdDisplayLabel;
         private javax.swing.JTextField paymentUpcomingIdTextField;
         private javax.swing.JTable paymentUpcomingListTable;
-        private javax.swing.JPanel paymentUpcomingPanel;
+        // private javax.swing.JPanel paymentUpcomingPanel;
         private javax.swing.JScrollPane paymentUpcomingScrollPane;
         private javax.swing.JComboBox<String> paymentUpcomingStatusComboBox;
         private javax.swing.JLabel paymentUpcomingStatusDisplayLabel;
@@ -4549,8 +4492,6 @@ public class LandlordView extends javax.swing.JFrame {
         public void setPaymentTenantListTable(javax.swing.JTable paymentTenantListTable) {
                 this.paymentTenantListTable = paymentTenantListTable;
         }
-        
-        
 
         public javax.swing.JLabel getCashReceivedLabel() {
                 return cashReceivedLabel;
@@ -4721,7 +4662,7 @@ public class LandlordView extends javax.swing.JFrame {
 
         public void populateTenantPaymentForm(ResultSet row) throws SQLException, ParseException {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                while(row.next()){
+                while (row.next()) {
                         this.getPaymentTenantIdTextField().setText(row.getString("id"));
                         this.getPaymentTenantAmountTextField().setText(row.getString("Amount"));
                         this.getPaymentTenantDueDateChooser().setDate(dateFormat.parse(row.getString("date")));
