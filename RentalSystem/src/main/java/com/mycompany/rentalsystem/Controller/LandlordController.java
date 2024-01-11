@@ -19,6 +19,8 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse.File;
 import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.LandlordView;
 import com.mycompany.rentalsystem.funcitons.Database;
@@ -60,10 +63,10 @@ public class LandlordController {
      * @throws SQLException
      * @throws NumberFormatException
      */
-    public LandlordController(LandlordView landlordView, Landlord landlordModel) throws NumberFormatException, SQLException {
+    public LandlordController(LandlordView landlordView, Landlord landlordModel)
+            throws NumberFormatException, SQLException {
         this.landlordView = landlordView;
         this.landlordModel = landlordModel;
-        
 
         // reference:
         // https://stackoverflow.com/questions/33073671/how-to-execute-a-method-every-minute
@@ -84,8 +87,6 @@ public class LandlordController {
         timer.schedule(task, 0, 600);
 
         landlordView.getCashReceivedLabel().setText(String.valueOf(calculateTotalRentFromTenants()));
-
-        
 
         TableRefresh.refreshTable(landlordView, database, "Houses", landlordView.getHouseListTable());
         TableRefresh.refreshTable(landlordView, database, "Tenants", landlordView.getTenantListTable());
@@ -127,10 +128,14 @@ public class LandlordController {
                 String password = PasswordGenerator.generatePassword();
                 String tenantId = landlordView.getTenantResetTenantIdTextField().getText();
                 Tenant tenant = null;
+                Map<String, Object> record = new HashMap<>();
+
                 try {
-                    database.updatePassword("tenantpasswords",
-                            Hashing.doHashing(password, tenantId),
+                    record.put("password", Hashing.doHashing(password, tenantId));
+                    database.update("tenantpasswords",
+                            record, "username",
                             tenantId);
+
                     tenant = (Tenant) getObjectFromId(tenantId, "tenantObject");
                     try {
                         new SentEmail().sentMail(tenant.geteMail(), "Your new Password", """
@@ -154,7 +159,7 @@ public class LandlordController {
                     }
                     JOptionPane.showMessageDialog(landlordView, "Password reset successfully", "password reset",
                             JOptionPane.INFORMATION_MESSAGE);
-                } catch (NoSuchAlgorithmException exception) {
+                } catch (SQLException | NoSuchAlgorithmException exception) {
                     exception.printStackTrace();
                 }
 
@@ -187,7 +192,13 @@ public class LandlordController {
             public void actionPerformed(ActionEvent e) {
                 String value = (String) landlordView.getErrorDetailsStatusComboBox().getSelectedItem();
                 String id = (String) landlordView.getErrorDetailsLogidTextField().getText();
-                database.updateMaintenance(value, id);
+                Map<String, Object> record = new HashMap<>();
+                record.put("status", value);
+                try {
+                    database.update("maintenance", record, "logId", id);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
                 landlordView.clearErrorDetailsForm();
             }
 
@@ -252,7 +263,8 @@ public class LandlordController {
                         break;
                     case "payments":
                         landlordView.paymentButtonActionPerformed(e);
-                        TableRefresh.refreshTable(landlordView, database, "payments", landlordView.getPaymentTenantListTable());
+                        TableRefresh.refreshTable(landlordView, database, "payments",
+                                landlordView.getPaymentTenantListTable());
                         break;
                     case "others":
                         landlordView.otherButtonActionPerformed(e);
@@ -309,9 +321,13 @@ public class LandlordController {
                         break;
                     case "UPDATE":
                         House houseObject = landlordView.houseUpdateButtonActionPerformed(e);
+                        Map<String, Object> updateRecord = new HashMap<>();
+                        updateRecord.put("houseObject", FileConvertion.toByteArray(houseObject));
+
                         if (houseObject != null) {
                             try {
-                                database.updateHouse(String.valueOf(houseObject.getHouseId()), houseObject);
+                                database.update("houses", updateRecord, 
+                                "houseId", String.valueOf(houseObject.getHouseId()));
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
@@ -361,7 +377,7 @@ public class LandlordController {
                 String buttonPressedName = buttonPressed.getText();
                 switch (buttonPressedName) {
                     case "ADD":
-                    // makes the needed Tenant instance and add that to the database
+                        // makes the needed Tenant instance and add that to the database
                         Tenant tempTenantObj = landlordView.tenantAddButtonActionPerformed(e);
                         LocalDate localDate = LocalDate.now();
 
@@ -371,23 +387,24 @@ public class LandlordController {
                             try {
                                 database.insert("tenants", "tenantId, tenantObject", record);
                                 database.insert("tenantjoindate",
-                                 "tenantId, date",
-                                  new ArrayList<>(Arrays.asList(
-                                    tempTenantObj.getTenantId(),
-                                    tempTenantObj.getFormatedDob(localDate))));
+                                        "tenantId, date",
+                                        new ArrayList<>(Arrays.asList(
+                                                tempTenantObj.getTenantId(),
+                                                tempTenantObj.getFormatedDob(localDate))));
                                 Password.savePassword(tempTenantObj.getTenantId(),
                                         String.valueOf(tempTenantObj.getFormatedDob(tempTenantObj.getDob())), "Tenant");
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
-                            
+
                             record.clear();
                             landlordView.clearTenantForm();
 
                             TableRefresh.refreshTable(landlordView, database, "Tenants",
                                     landlordView.getTenantListTable());
 
-                            // sends and email to the tenant, providing them with their username and password.
+                            // sends and email to the tenant, providing them with their username and
+                            // password.
                             try {
                                 new SentEmail().sentMail(tempTenantObj.geteMail(), "YOUR CREDENTIALS", """
                                         Hi %s,
@@ -412,9 +429,13 @@ public class LandlordController {
                         break;
                     case "UPDATE":
                         Tenant tenantObject = landlordView.tenantUpdateButtonActionPerformed(e);
+                        Map<String, Object> updateRecord = new HashMap<>();
+                        updateRecord.put("tenantObject", tenantObject);
+
                         if (tenantObject != null) {
                             try {
-                                database.updateTenant(String.valueOf(tenantObject.getTenantId()), tenantObject);
+                                database.update("tenants", updateRecord, 
+                                "tenantId", String.valueOf(tenantObject.getTenantId()));
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
@@ -496,7 +517,7 @@ public class LandlordController {
                         } catch (SQLException exception) {
                             exception.printStackTrace();
                         }
-                        
+
                         break;
                     case "MAINTENANCE SECONDARY":
                         result = database.find("maintenance", "logId", id);
@@ -507,7 +528,7 @@ public class LandlordController {
                         }
                     case "TENANT PAYMENTS":
                         result = database.find("payments", "id", id);
-                        try{
+                        try {
                             landlordView.populateTenantPaymentForm(result);
                         } catch (SQLException exception) {
                             exception.printStackTrace();
@@ -615,8 +636,6 @@ public class LandlordController {
 
     }
 
-
-
     /**
      * 
      * @param id    String id of the object to be converted
@@ -627,10 +646,10 @@ public class LandlordController {
         ResultSet set = null;
         switch (label) {
             case "houseObject":
-                set = database.findHouse(id);
+                set = database.find("houses", "houseId", id);
                 break;
             case "tenantObject":
-                set = database.findTenant(id);
+                set = database.find("tenants", "tenantId", id);
                 break;
             default:
                 break;
@@ -651,17 +670,17 @@ public class LandlordController {
 
     /**
      * calculates the total rent paid by tenants and output as a Double
+     * 
      * @throws SQLException
      * @throws NumberFormatException
      * @return Double total rent paid.
      */
-    public Double calculateTotalRentFromTenants() throws NullPointerException, NumberFormatException, SQLException{
+    public Double calculateTotalRentFromTenants() throws NullPointerException, NumberFormatException, SQLException {
         ResultSet result = database.findAll("payments");
         Double rentTotal = 0.0;
-        while(result.next()){
-                rentTotal+=Double.valueOf(result.getString("Amount"));
+        while (result.next()) {
+            rentTotal += Double.valueOf(result.getString("Amount"));
 
-            
         }
         return rentTotal;
     }

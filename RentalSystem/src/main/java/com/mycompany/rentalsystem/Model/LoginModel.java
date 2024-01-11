@@ -42,9 +42,10 @@ public class LoginModel {
         } catch (NoSuchAlgorithmException e) {
             hashPassword = "";
         }
-        ResultSet result = database.passwordCheck(filename, username);
+        //ResultSet result = database.passwordCheck(filename, username);
+        ResultSet result = database.find(filename, "username", username);
         try {
-            while(result.next()){
+            if(result.next()){
                 savedPassword = result.getString("password");
             }
         } catch (SQLException e) {

@@ -30,6 +30,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.swing.JButton;
@@ -142,16 +144,24 @@ public class TenantController {
         });
 
         tenantView.accountUpdatePasswordButtonListener(new ActionListener() {
+            Map<String, Object> record = new HashMap<>();
             public void actionPerformed(ActionEvent e) {
                 String tenantId = TenantController.this.tenantModel.getTenantId();
                 String password = tenantView.accountUpdatePasswordButtonActionPerformed(e);
+
+                try {
+                    record.put("password", Hashing.doHashing(password, tenantId));
+                } catch (NoSuchAlgorithmException e1) {
+                    e1.printStackTrace();
+                }
+
                 if (password != null) {
                     try {
-                        database.updatePassword("tenantpasswords",
-                                Hashing.doHashing(password, tenantId),
+                        database.update("tenantpasswords",
+                                record, "username",
                                 tenantId);
-                    } catch (NoSuchAlgorithmException exception) {
-                        exception.printStackTrace();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
                     }
                     tenantView.clearResetPassword();
                     try {
@@ -259,7 +269,7 @@ public class TenantController {
                     .setText(dueDate);
             tenantView.getDueDateLabel().setText(dueDate);
 
-            ResultSet resultSet = database.findHouse(tenant.getHouseId());
+            ResultSet resultSet = database.find("houses", "houseId", tenant.getHouseId());
             while (resultSet.next()) {
                 house = (House) FileConvertion.toObject(resultSet.getBlob("houseObject"));
             }
@@ -410,15 +420,17 @@ public class TenantController {
     }
 
     private void updateData() {
+        Map<String, Object> record = new HashMap<>();
+        record.put("tenantObject", FileConvertion.toByteArray(this.tenantModel));
         try {
-            database.updateTenant(this.tenantModel.getTenantId(), this.tenantModel);
+            database.update("tenants", record, "tenantId", this.tenantModel.getTenantId());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void retieveTenant() {
-        ResultSet tenant = database.findTenant(tenantModel.getSessionId());
+        ResultSet tenant = database.find("tenants", "tenantId", tenantModel.getSessionId());
         try {
             while (tenant.next()) {
                 try {
