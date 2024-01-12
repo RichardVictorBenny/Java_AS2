@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Password {
@@ -23,6 +24,8 @@ public class Password {
             record.add(Hashing.doHashing(password, username));
             database.insert("tenantpasswords", "username, password", record );
         } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

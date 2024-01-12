@@ -32,7 +32,8 @@ public class RentalSystem {
             view.setVisible(true);
         });
         } catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("main exception");
         }
 
 

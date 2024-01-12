@@ -100,6 +100,18 @@ public class TenantController {
                 ArrayList<Object> data = new ArrayList<>();
                 LocalDate today = LocalDate.now();
 
+                // sets the maintenance id to latest.
+                String maintenanceId = "";
+                try {
+                    ResultSet row = database.findLastRow("maintenance", "logId");
+                    while (row.next()) {
+                        maintenanceId = row.getString("LogId");
+                        Maintenance.setLogId(Integer.valueOf(maintenanceId));
+                    }
+                } catch (SQLException | NumberFormatException e1) {
+                    e1.printStackTrace();
+                }
+
                 if (!request.equals(null)) {
                     data.add(String.valueOf(Maintenance.getLogId()));
                     data.add(TenantController.this.tenantModel.getFirstName() + " "
@@ -110,16 +122,24 @@ public class TenantController {
                     data.add(request);
                     data.add("Received");
 
-                    database.insert("maintenance",
-                            "logId, tenantName, dateOfIssue, houseId, tenantId, description, status", data);
-                    JTable[] table = { tenantView.getMaintenanceRequestListTable(),
-                            tenantView.getDashboardMaintenanceSummaryTable() };
-                    TableRefresh.refreshMaintenanceRequestListTable(database, table,
-                            TenantController.this.tenantModel.getTenantId());
+                    try {
+                        database.insert("maintenance",
+                                "logId, tenantName, dateOfIssue, houseId, tenantId, description, status", data);
 
-                    tenantView.getMaintenanceDescriptionTextArea().setText("");
-                    JOptionPane.showMessageDialog(tenantView, "New Request made successfully.", "Success",
-                            JOptionPane.INFORMATION_MESSAGE);
+                        JTable[] table = { tenantView.getMaintenanceRequestListTable(),
+                                tenantView.getDashboardMaintenanceSummaryTable() };
+                        TableRefresh.refreshMaintenanceRequestListTable(database, table,
+                                TenantController.this.tenantModel.getTenantId());
+
+                        tenantView.getMaintenanceDescriptionTextArea().setText("");
+                        JOptionPane.showMessageDialog(tenantView, "New Request made successfully.", "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
+
+                    } catch (SQLException e1) {
+                        JOptionPane.showMessageDialog(tenantView, "Transaction failed!.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        e1.printStackTrace();
+                    }
                 }
 
             }
@@ -145,6 +165,7 @@ public class TenantController {
 
         tenantView.accountUpdatePasswordButtonListener(new ActionListener() {
             Map<String, Object> record = new HashMap<>();
+
             public void actionPerformed(ActionEvent e) {
                 String tenantId = TenantController.this.tenantModel.getTenantId();
                 String password = tenantView.accountUpdatePasswordButtonActionPerformed(e);
@@ -160,7 +181,11 @@ public class TenantController {
                         database.update("tenantpasswords",
                                 record, "username",
                                 tenantId);
+                                JOptionPane.showMessageDialog(tenantView, "Password Updated", "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException e1) {
+                        JOptionPane.showMessageDialog(tenantView, "Transaction failed", "Error",
+                                JOptionPane.ERROR_MESSAGE);
                         e1.printStackTrace();
                     }
                     tenantView.clearResetPassword();
@@ -174,7 +199,10 @@ public class TenantController {
                                         --auto generated
                                         --do not reply
                                         """);
+                        
                     } catch (GeneralSecurityException | IOException | MessagingException e1) {
+                        JOptionPane.showMessageDialog(tenantView, "Transaction failed", "Error",
+                                JOptionPane.ERROR_MESSAGE);
                         e1.printStackTrace();
                     }
                 } else {
@@ -218,7 +246,12 @@ public class TenantController {
                 if (e.getSource() instanceof JTable) {
                     JTable clickedTable = (JTable) e.getSource();
                     String id = TableRefresh.getIdAtPoint(clickedTable, e);
-                    ResultSet result = database.find("maintenance", "logId", id);
+                    ResultSet result = null;
+                    try {
+                        result = database.find("maintenance", "logId", id);
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
 
                     try {
                         while (result.next()) {
@@ -386,8 +419,6 @@ public class TenantController {
                 }
 
                 String id = String.valueOf(Payments.getPaymentId());
-                System.out.println(id);
-
                 record.add(id);
                 record.add(TenantController.this.tenantModel.getTenantId());
                 record.add(TenantController.this.tenantModel.getFormatedDob(LocalDate.now()));
@@ -429,7 +460,7 @@ public class TenantController {
         }
     }
 
-    private void retieveTenant() {
+    private void retieveTenant() throws SQLException {
         ResultSet tenant = database.find("tenants", "tenantId", tenantModel.getSessionId());
         try {
             while (tenant.next()) {

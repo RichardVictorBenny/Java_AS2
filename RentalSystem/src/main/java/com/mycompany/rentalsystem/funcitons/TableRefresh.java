@@ -26,7 +26,12 @@ public class TableRefresh {
      * @param jTable    JTable table which has to be refreshed
      */
     public static void refreshTable(Object view, Database database, String tableName, JTable jTable) {
-        ResultSet allRows = database.findAll(tableName);
+        ResultSet allRows =null;
+        try {
+            allRows = database.findAll(tableName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         removeRows(jTable);
 
@@ -61,7 +66,12 @@ public class TableRefresh {
 
     public static void refreshPaymentsTable(Database database, JTable table, String id) {
         removeRows(table);
-        ResultSet result = database.find("payments", "tenantId", id);
+        ResultSet result = null;
+        try {
+            result = database.find("payments", "tenantId", id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         try {
             while (result.next()) {
@@ -152,24 +162,27 @@ public class TableRefresh {
     }
 
     public static void refreshMaintenanceRequestListTable(Database database, JTable[] table, String id) {
-        ResultSet rows = database.find("maintenance", "tenantId", id);
-        for (JTable jTable : table) {
-                    removeRows(jTable);
-        }
-        try {
-            while (rows.next()) {
-                String[] data = {
-                        rows.getString("logId"),
-                        rows.getString("dateOfIssue"),
-                        rows.getString("status")
-                };
-                for (JTable jTable : table) {
-                    insertValueTable(jTable, data);
-                }
-                Maintenance.setLogId(Integer.valueOf(rows.getString("logId")) + 1);
+        try (ResultSet rows = database.find("maintenance", "tenantId", id)) {
+            for (JTable jTable : table) {
+                        removeRows(jTable);
             }
+            try {
+                while (rows.next()) {
+                    String[] data = {
+                            rows.getString("logId"),
+                            rows.getString("dateOfIssue"),
+                            rows.getString("status")
+                    };
+                    for (JTable jTable : table) {
+                        insertValueTable(jTable, data);
+                    }
+                    Maintenance.setLogId(Integer.valueOf(rows.getString("logId")) + 1);
+                }
 
-        } catch (SQLException e) {
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (NumberFormatException | SQLException e) {
             e.printStackTrace();
         }
     }

@@ -48,7 +48,7 @@ public class Maintenance {
 
 
     public static Integer getLogId() {
-        return logId;
+        return logId+=1;
     }
 
 
