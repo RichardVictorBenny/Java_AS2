@@ -7,6 +7,8 @@ import javax.swing.table.TableRowSorter;
 
 /**
  * this class has differnt sorting functions
+ * 
+ * @author Richard
  */
 public class Sorting {
     /**

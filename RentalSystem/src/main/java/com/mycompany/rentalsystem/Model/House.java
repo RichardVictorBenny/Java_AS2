@@ -7,7 +7,7 @@ package com.mycompany.rentalsystem.Model;
 import java.io.Serializable;
 
 /**
- *
+ * implements the serializable interface
  * @author Richard
  */
 public class House implements Serializable {
@@ -63,6 +63,9 @@ public class House implements Serializable {
 
                 }
 
+    /*
+     * Getters and setters
+     */
     public static Integer getTotalHouseCount() {
         return totalHouseCount;
     }
@@ -119,13 +122,21 @@ public class House implements Serializable {
         this.extHouseId = Integer.valueOf(extHouseId);
     }
 
+    /**
+     * {@inherit}
+     * prints out the different values of the house
+     */
+    @Override
     public  String toString(){
         String value = ""+this.extHouseId+" "+this.houseType+" "+
         this.houseAddress+" "+this.houseDescription+" "+this.houseRentPrice;
-        System.out.println(value);
         return value;
     }
 
+    /**
+     * Mostly used for updating the table.
+     * @return String[] of all the needed values for the table.
+     */
     public String[] getDataArray(){
         String[] dataArray = {String.valueOf(houseId), this.houseType, this.houseAddress, String.valueOf(this.houseRentPrice)};
         return dataArray;

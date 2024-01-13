@@ -28,13 +28,20 @@ public class LoginController {
         this.loginView = loginView;
         this.loginModel = loginModel;
 
+        //adding listener for differnet elements
         loginView.addLoginButtonListener(new LoginListener());
         loginView.addforgotPasswordListener(new ForgotPasswordListener());
 
     }
 
+    /**
+     * inner class for performing login button acitons.
+     */
     class LoginListener implements ActionListener {
 
+        /**
+         * {@inherit}
+         */
         @Override
         public void actionPerformed(ActionEvent event) {
             String username, password, usermode;
@@ -68,7 +75,6 @@ public class LoginController {
                             java.awt.EventQueue.invokeLater(() -> {
                                 view.setVisible(true);
                             });
-
                         }
 
                         case "Landlord" -> {
@@ -80,9 +86,7 @@ public class LoginController {
                                 view.setVisible(true);
                             });
                         }
-
                     }
-
                 } else {
                     JOptionPane.showMessageDialog(loginView, "Wrong credentials", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -90,11 +94,16 @@ public class LoginController {
                 System.out.println(exception);
             }
         }
-
     }
 
+    /**
+     * inner class for performing forgort password button.
+     */
     class ForgotPasswordListener implements MouseListener {
 
+        /**
+         * {@inherit}
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             String userMode;

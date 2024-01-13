@@ -4,27 +4,32 @@
  */
 package com.mycompany.rentalsystem.Model;
 
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import com.mycompany.rentalsystem.funcitons.*;
 
 /**
  * Does the necessary calculations and validates the user and password.
- * @author Richard
- *         refernce https://www.baeldung.com/sha-256-hashing-java
+ * 
+ * refernce https://www.baeldung.com/sha-256-hashing-java
  *         https://www.tutorialspoint.com/java_cryptography/java_cryptography_message_digest.htm
+ * 
+ * @author Richard
+ *         
  */
 public class LoginModel {
     private Database database = new Database();
 
+    /**
+     * Performs validation of the user.
+     * 
+     * @param username String - username
+     * @param password String - password provided by the user
+     * @param userMode String - type of user
+     * @return
+     */
     public boolean validate(String username, String password, String userMode) {
         String hashPassword, filename;
         String savedPassword = "";
@@ -42,7 +47,7 @@ public class LoginModel {
         } catch (NoSuchAlgorithmException e) {
             hashPassword = "";
         }
-        try (//ResultSet result = database.passwordCheck(filename, username);
+        try (
         ResultSet result = database.find(filename, "username", username)) {
             try {
                 if(result.next()){
@@ -67,7 +72,11 @@ public class LoginModel {
             return false;
         }
     }
-
+    
+    /**
+     * @deprecated
+     * @param pin
+     */
     public void resetPassword(String pin) {
         if (pin.equals("123456798")){
            System.out.println("reset password allowed");

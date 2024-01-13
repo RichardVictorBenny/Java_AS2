@@ -64,7 +64,6 @@ public class TenantController {
         this.tenantView = tenantView;
         this.tenantModel = tenantModel;
 
-        // make this into a function
         retieveTenant();
 
         setRentDetails(this.tenantModel, this.tenantView);
@@ -73,6 +72,7 @@ public class TenantController {
                 tenantView.getDashboardMaintenanceSummaryTable() };
         TableRefresh.refreshMaintenanceRequestListTable(database, table, this.tenantModel.getTenantId());
 
+        // adding listeners to the different elements.
         tenantView.addDashboardButtonListener(new MenubarListener());
         tenantView.addPaymentButtonListener(new MenubarListener());
         tenantView.addMaintenanceButtonListener(new MenubarListener());
@@ -86,13 +86,22 @@ public class TenantController {
 
         tenantView.maintenanceRequestSearchTextFieldListener(new TenantKeyListener());
 
+        // for saving the changes made to the tenant object when the window is close
+        // abruptly.
         tenantView.windowListener(new WindowAdapter() {
+            /**
+             * {@inherit}
+             */
             @Override
             public void windowClosing(WindowEvent e) {
-                updateData();
+                try {
+                    updateData();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
-
         });
+
         tenantView.maintenanceRequestSubmitButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -146,7 +155,12 @@ public class TenantController {
 
         });
         tenantView.contactMessageSendButtonListener(new ActionListener() {
-
+            /**
+             * {@inherit}
+             * Sends an email to the landlord.
+             * 
+             * @param e
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 String message = tenantView.contactMessageSendButtonActionPerformed(e);
@@ -166,6 +180,11 @@ public class TenantController {
         tenantView.accountUpdatePasswordButtonListener(new ActionListener() {
             Map<String, Object> record = new HashMap<>();
 
+            /**
+             * {@inherit}
+             * Updates the password of Tenant.
+             */
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String tenantId = TenantController.this.tenantModel.getTenantId();
                 String password = tenantView.accountUpdatePasswordButtonActionPerformed(e);
@@ -178,10 +197,8 @@ public class TenantController {
 
                 if (password != null) {
                     try {
-                        database.update("tenantpasswords",
-                                record, "username",
-                                tenantId);
-                                JOptionPane.showMessageDialog(tenantView, "Password Updated", "Success",
+                        database.update("tenantpasswords", record, "username", tenantId);
+                        JOptionPane.showMessageDialog(tenantView, "Password Updated", "Success",
                                 JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException e1) {
                         JOptionPane.showMessageDialog(tenantView, "Transaction failed", "Error",
@@ -189,6 +206,8 @@ public class TenantController {
                         e1.printStackTrace();
                     }
                     tenantView.clearResetPassword();
+
+                    // sends email to tenant about password change.
                     try {
                         new SentEmail().sentMail(TenantController.this.tenantModel.geteMail(),
                                 "Password Change Detected", """
@@ -199,7 +218,6 @@ public class TenantController {
                                         --auto generated
                                         --do not reply
                                         """);
-                        
                     } catch (GeneralSecurityException | IOException | MessagingException e1) {
                         JOptionPane.showMessageDialog(tenantView, "Transaction failed", "Error",
                                 JOptionPane.ERROR_MESSAGE);
@@ -209,11 +227,15 @@ public class TenantController {
                     throw new NullPointerException("passwords didn't match");
                 }
             }
-
         });
 
         tenantView.addAccountLabelListener(new MouseListener() {
 
+            /**
+             * {@inherit}
+             * 
+             * @param e
+             */
             @Override
             public void mouseClicked(MouseEvent e) {
                 tenantView.accountLabelMouseClicked(e);
@@ -239,24 +261,19 @@ public class TenantController {
         });
 
         tenantView.maintenanceRequestListTableListener(new MouseListener() {
-
+            /**
+             * {@inherit}
+             */
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 if (e.getSource() instanceof JTable) {
                     JTable clickedTable = (JTable) e.getSource();
                     String id = TableRefresh.getIdAtPoint(clickedTable, e);
                     ResultSet result = null;
                     try {
                         result = database.find("maintenance", "logId", id);
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
-                    }
-
-                    try {
                         while (result.next()) {
-                            tenantView.getMaintenanceDescriptionTextArea().setText(
-                                    result.getString("description"));
+                            tenantView.getMaintenanceDescriptionTextArea().setText(result.getString("description"));
                         }
                     } catch (SQLException exception) {
                         exception.printStackTrace();
@@ -284,53 +301,13 @@ public class TenantController {
     }
 
     /**
-     * Sets the Payment dates
-     * Calculate the next payment day
-     * sets the rent to pay.
-     * does calulations for late fee. current rate 50.
-     * 
-     * @param tenant     Tenant - current object instance
-     * @param tenantView TenantView - current object instance
-     */
-    private void setRentDetails(Tenant tenant, TenantView tenantView) {
-        House house = null;
-        Integer lateFee = 0;
-        Integer rent = 0;
-        try {
-            String dueDate = tenant.getFormatedDob(tenant.getRentPayDate());
-            tenantView.getDisplayDateLabel()
-                    .setText(dueDate);
-            tenantView.getDueDateLabel().setText(dueDate);
-
-            ResultSet resultSet = database.find("houses", "houseId", tenant.getHouseId());
-            while (resultSet.next()) {
-                house = (House) FileConvertion.toObject(resultSet.getBlob("houseObject"));
-            }
-            rent = house.getHouseRentPrice();
-
-            // setting the value to the proper rent
-            tenantView.getBreakdownRentAmountLabel().setText(String.valueOf(rent));
-            tenantView.getBreakdownLateAmountLabel().setText(String.valueOf(lateFee));
-
-            LocalDate todayDate = LocalDate.now();
-            if (todayDate.isAfter(tenant.getRentPayDate())) {
-                lateFee = 50;
-                rent += lateFee;
-            }
-
-            tenantView.getBreakdownTotalAmountLabel().setText(String.valueOf(rent));
-            tenantView.getDisplayRentLabel().setText(String.valueOf(rent));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Inner class that implements the ActionListener interface that handles
      * switching between different panels.
      */
     class MenubarListener implements ActionListener {
+        /**
+         * {@inherit}
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() instanceof JButton) {
@@ -345,7 +322,6 @@ public class TenantController {
                         TableRefresh.refreshPaymentsTable(database,
                                 TenantController.this.tenantView.getPaymentHistoryListTable(),
                                 TenantController.this.tenantModel.getTenantId());
-
                         break;
                     case "Maintenance":
                         tenantView.maintenanceButtonActionPerformed(e);
@@ -355,7 +331,11 @@ public class TenantController {
                         break;
                     case "signOut":
                         tenantView.signoutButtonActionPerformed(e);
-                        updateData();
+                        try {
+                            updateData();
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
                         break;
                     default:
                         break;
@@ -398,7 +378,9 @@ public class TenantController {
      * handles all the payment
      */
     class PayListener implements ActionListener {
-
+        /**
+         * {@inherit}
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             ArrayList<Object> record = new ArrayList<>();
@@ -447,19 +429,69 @@ public class TenantController {
 
             }
         }
-
     }
 
-    private void updateData() {
-        Map<String, Object> record = new HashMap<>();
-        record.put("tenantObject", FileConvertion.toByteArray(this.tenantModel));
+    /**
+     * Sets the Payment dates
+     * Calculate the next payment day
+     * sets the rent to pay.
+     * does calulations for late fee. current rate 50.
+     * 
+     * @param tenant     Tenant - current object instance
+     * @param tenantView TenantView - current object instance
+     */
+    private void setRentDetails(Tenant tenant, TenantView tenantView) {
+        House house = null;
+        Integer lateFee = 0;
+        Integer rent = 0;
         try {
-            database.update("tenants", record, "tenantId", this.tenantModel.getTenantId());
+            String dueDate = tenant.getFormatedDob(tenant.getRentPayDate());
+            tenantView.getDisplayDateLabel().setText(dueDate);
+            tenantView.getDueDateLabel().setText(dueDate);
+
+            ResultSet resultSet = database.find("houses", "houseId", tenant.getHouseId());
+            while (resultSet.next()) {
+                house = (House) FileConvertion.toObject(resultSet.getBlob("houseObject"));
+                rent = house.getHouseRentPrice();
+            }
+
+            // setting the value to the proper rent
+            tenantView.getBreakdownRentAmountLabel().setText(String.valueOf(rent));
+            tenantView.getBreakdownLateAmountLabel().setText(String.valueOf(lateFee));
+
+            // calculates late fee.
+            LocalDate todayDate = LocalDate.now();
+            if (todayDate.isAfter(tenant.getRentPayDate())) {
+                lateFee = 50;
+                rent += lateFee;
+            }
+
+            tenantView.getBreakdownTotalAmountLabel().setText(String.valueOf(rent));
+            tenantView.getDisplayRentLabel().setText(String.valueOf(rent));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * function made to save the changes made to the tenantObject when called on.
+     * 
+     * @throws SQLException
+     */
+    private void updateData() throws SQLException {
+        Map<String, Object> record = new HashMap<>();
+        record.put("tenantObject", FileConvertion.toByteArray(this.tenantModel));
+
+        database.update("tenants", record, "tenantId", this.tenantModel.getTenantId());
+    }
+
+    /**
+     * Opens the session file and fetches the relevant tenant object from the
+     * database.
+     * 
+     * @throws SQLException
+     */
     private void retieveTenant() throws SQLException {
         ResultSet tenant = database.find("tenants", "tenantId", tenantModel.getSessionId());
         try {

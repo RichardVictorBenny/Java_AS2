@@ -5,12 +5,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.SQLException;
 
+import java.sql.SQLException;
 import java.sql.Blob;
 
 /**
  * A class to handle convertions form one type to another
+ * @author Richard
  */
 public class FileConvertion {
     /**
@@ -24,7 +25,6 @@ public class FileConvertion {
         try {
             oos = new ObjectOutputStream(bos);
             oos.writeObject(objectToConvert);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

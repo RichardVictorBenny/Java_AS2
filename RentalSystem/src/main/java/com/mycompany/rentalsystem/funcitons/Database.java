@@ -23,7 +23,8 @@ public class Database {
 
     /**
      * Constructor for the database class
-     * @throws SQLException 
+     * 
+     * @throws SQLException
      */
     public Database() {
         try {
@@ -31,11 +32,11 @@ public class Database {
         } catch (ClassNotFoundException e) {
             System.out.println("connection failed");
         }
-            try {
-                this.connnection = DriverManager.getConnection(url, username, password);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            this.connnection = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -122,8 +123,8 @@ public class Database {
      * @param id          String - value of the column
      * @throws SQLException
      */
-    public void delete(String table, String columnLabel, String id) throws SQLException {
-        String query = "DELETE FROM " + table + " WHERE " + columnLabel + " = " + id;
+    public void delete(String table, String idColumnLabel, String id) throws SQLException {
+        String query = "DELETE FROM " + table + " WHERE " + idColumnLabel + " = " + id;
 
         this.statement = connnection.prepareStatement(query);
         this.statement.execute();
@@ -163,6 +164,9 @@ public class Database {
 
     }
 
+    /**
+     * @return String - different values used to make the database connection
+     */
     @Override
     public String toString() {
         return "Database [username=" + username + ", password=" + password + ", database=" + database + ", url=" + url

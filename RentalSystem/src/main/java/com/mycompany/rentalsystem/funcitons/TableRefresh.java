@@ -12,6 +12,11 @@ import com.mycompany.rentalsystem.Model.House;
 import com.mycompany.rentalsystem.Model.Tenant;
 import com.mycompany.rentalsystem.View.LandlordView;
 
+/**
+ * Class to handle changing the values insdie a JTable.
+ * 
+ * @author Richard
+ */
 public class TableRefresh {
 
     /**
@@ -67,11 +72,6 @@ public class TableRefresh {
         ResultSet result = null;
         try {
             result = database.find("payments", "tenantId", id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
             while (result.next()) {
                 String[] data = {
                         result.getString("id"),

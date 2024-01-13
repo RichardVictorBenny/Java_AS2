@@ -4,15 +4,12 @@
  */
 package com.mycompany.rentalsystem.Model;
 
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Scanner;
 
-import javax.annotation.processing.Filer;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -40,7 +37,6 @@ public class Tenant implements Serializable{
      */
     public Tenant() throws IOException{
         //reading session file for getting correct object
-        //FileReader in = new FileReader("src/main/java/com/mycompany/rentalsystem/files/SESSION.txt");
         Scanner in = new Scanner(new FileReader("src/main/java/com/mycompany/rentalsystem/files/SESSION.txt"));
         this.sessionId = in.nextLine();
         in.close();
@@ -95,11 +91,17 @@ public class Tenant implements Serializable{
         this.rentPayDate = LocalDate.now().plusDays(7);
     }
 
+
+    @Override
     public String toString(){
         String string = (this.firstName+this.surName+this.gender+this.eMail+this.getFormatedDob(this.dateOfBirth)+phoneNumber+this.extTenantID+this.houseId);
         return string;
     }
 
+
+    /*
+     * Getters and setters
+     */
     public String getGender(){
         return gender;
     }
@@ -112,6 +114,12 @@ public class Tenant implements Serializable{
     public void setGender(String value){
         this.gender = value;
     }
+    
+    /**
+     * converts Localdate to String
+     * @param date LocalDate - provided by user
+     * @return String - date in the format DD-MM-YYYY
+     */
     public String getFormatedDob(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return formatter.format(date);

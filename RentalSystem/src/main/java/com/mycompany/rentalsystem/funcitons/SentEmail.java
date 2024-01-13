@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
 
@@ -34,6 +33,11 @@ import com.google.api.services.gmail.model.Message;
 import javax.mail.internet.MimeMessage;
 import org.apache.commons.codec.binary.Base64;
 
+/**
+ * Code from Java Gmail api quickstart guide
+ * 
+ * @author Richard
+ */
 public class SentEmail {
     private static final String filePath = "src/main/java/com/mycompany/rentalsystem/files/credentials.json";
     private static final JsonFactory JsonFactory = GsonFactory.getDefaultInstance();

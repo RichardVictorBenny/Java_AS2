@@ -11,14 +11,16 @@ import java.security.NoSuchAlgorithmException;
  * the method takes in username and password, and then runs them through a hashing alogrithm. 
  * outputs the encoded password as a string.
  * reference: https://www.baeldung.com/java-password-hashing, https://stackoverflow.com/questions/5531455/how-to-hash-some-string-with-sha-256-in-java
+ * 
  * @author Richard
  */
 public class Hashing {
     /**
-     * performs the one way hashing 
+     * performs one way hashing 
+     * 
      * @param password String - user password
      * @param username String - user username
-     * @return String the hashed password
+     * @return String - hashed password
      * @throws NoSuchAlgorithmException
      */
     public static String doHashing(String password, String username) throws NoSuchAlgorithmException{

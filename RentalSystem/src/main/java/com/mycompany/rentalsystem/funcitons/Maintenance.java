@@ -2,6 +2,8 @@ package com.mycompany.rentalsystem.funcitons;
 
 /**
  * Class to set ids to maintenance request.
+ * 
+ * @author Richard
  */
 public class Maintenance {
     private static Integer logId = 80000;
