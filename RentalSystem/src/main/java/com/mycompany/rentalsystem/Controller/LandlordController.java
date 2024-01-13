@@ -30,6 +30,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 import com.mycompany.rentalsystem.Model.*;
 import com.mycompany.rentalsystem.View.LandlordView;
@@ -345,19 +346,22 @@ public class LandlordController {
                         break;
                     case "DELETE":
                         String id = landlordView.houseDeleteButtonActionPerformed(e);
-                        try {
-                            database.delete("houses", "houseId", id);
-                            JOptionPane.showMessageDialog(landlordView, "House deleted.", "Successful",
-                                    JOptionPane.INFORMATION_MESSAGE);
+                        if (!houseOccupied(id)) {
+                            try {
+                                database.delete("houses", "houseId", id);
+                                JOptionPane.showMessageDialog(landlordView, "House deleted.", "Successful",
+                                        JOptionPane.INFORMATION_MESSAGE);
 
-                        } catch (Exception exception) {
-                            JOptionPane.showMessageDialog(landlordView, "Transaction failed", "Unuccessful",
-                                    JOptionPane.ERROR_MESSAGE);
-                            exception.printStackTrace();
+                            } catch (Exception exception) {
+                                JOptionPane.showMessageDialog(landlordView, "Transaction failed", "Unsuccessful",
+                                        JOptionPane.ERROR_MESSAGE);
+                                exception.printStackTrace();
+                            }
+                            landlordView.clearHouseForm();
+
+                            TableRefresh.refreshTable(landlordView, database, "Houses",
+                                    landlordView.getHouseListTable());
                         }
-                        landlordView.clearHouseForm();
-
-                        TableRefresh.refreshTable(landlordView, database, "Houses", landlordView.getHouseListTable());
 
                         break;
                     default:
@@ -390,7 +394,7 @@ public class LandlordController {
                         Tenant tempTenantObj = landlordView.tenantAddButtonActionPerformed(e);
                         LocalDate localDate = LocalDate.now();
 
-                        if (tempTenantObj != null) {
+                        if (tempTenantObj != null && !tenantEmailCheck(tempTenantObj.geteMail())) {
                             record.add(tempTenantObj.getTenantId());
                             record.add(FileConvertion.toByteArray(tempTenantObj));
                             try {
@@ -735,6 +739,40 @@ public class LandlordController {
 
         }
         return rentTotal;
+    }
+
+    private boolean houseOccupied(String houseId){
+        try {
+            ResultSet result = database.findAll("tenants");
+            while (result.next()) {
+                String tenantId = result.getString("tenantId");
+                Tenant tenantObj = (Tenant) FileConvertion.toObject(result.getBlob("tenantObject"));
+                if (tenantObj.getHouseId().equals(houseId)){
+                    JOptionPane.showMessageDialog(landlordView, "House Occupied by "+ tenantId, "error", JOptionPane.ERROR_MESSAGE);
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean tenantEmailCheck(String email){
+        try {
+            ResultSet result = database.findAll("tenants");
+            while (result.next()) {
+                String tenantId = result.getString("tenantId");
+                Tenant tenantObj = (Tenant) FileConvertion.toObject(result.getBlob("tenantObject"));
+                if (tenantObj.geteMail().equals(email)){
+                    JOptionPane.showMessageDialog(landlordView, "Email already exsists", "error", JOptionPane.ERROR_MESSAGE);
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**

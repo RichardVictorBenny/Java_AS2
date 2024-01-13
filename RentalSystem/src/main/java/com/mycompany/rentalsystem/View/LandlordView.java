@@ -4184,6 +4184,7 @@ public class LandlordView extends javax.swing.JFrame {
         }
 
         public LocalDate getDobDateChooser() {
+                LocalDate ageLimiter = LocalDate.now().minusYears(18);
                 if (this.dobDateChooser.getDate() != null) {
 
                         // reference
@@ -4191,7 +4192,13 @@ public class LandlordView extends javax.swing.JFrame {
 
                         LocalDate date = this.dobDateChooser.getDate().toInstant().atZone(ZoneId.systemDefault())
                                         .toLocalDate();
-                        return date;
+                        if (date.isBefore(ageLimiter)) {
+                                return date;
+                        } else {
+                                JOptionPane.showMessageDialog(this, "the date entered is not valid", "Date error",
+                                                JOptionPane.ERROR_MESSAGE);
+                        }
+                        ;
                 }
                 JOptionPane.showMessageDialog(this, "Please select date!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return null;
@@ -4670,4 +4677,6 @@ public class LandlordView extends javax.swing.JFrame {
                         this.getPaymentTenantHouseTextField().setText(row.getString("houseId"));
                 }
         }
+
+        
 }

@@ -11,8 +11,6 @@ import java.awt.event.MouseEvent;
 import com.mycompany.rentalsystem.Model.House;
 import com.mycompany.rentalsystem.Model.Tenant;
 import com.mycompany.rentalsystem.View.LandlordView;
-import com.mycompany.rentalsystem.View.TenantView;
-import com.mysql.cj.jdbc.Blob;
 
 public class TableRefresh {
 
